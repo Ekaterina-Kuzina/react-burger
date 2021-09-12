@@ -1,0 +1,40 @@
+.custom-scroll {
+    scrollbar-color: #2F2F37 #8585AD;
+    scrollbar-width: thin;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #2F2F37;
+    border-radius: 6px;
+}
+.block-ingredients{
+    display: block;
+}
+.row-ingredients{
+    display: block;
+}
+.cards{
+    display: flex;
+    justify-content: space-between;
+}
+.card{
+    width: 272px;
+    height: 208px;
+    text-align: center;
+    background-color: red;
+}
+.cost{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.name-ingredient{
+
+}
