@@ -1,34 +1,37 @@
-.custom-scroll {
+
+.blockIngredients{
+    width: 600px;
+    height: 756px;
+    overflow-y: auto;
+}
+.customScroll {
     scrollbar-color: #2F2F37 #8585AD;
     scrollbar-width: thin;
 }
 
-.custom-scroll::-webkit-scrollbar {
+.customScroll::-webkit-scrollbar {
     width: 12px;
 }
-.custom-scroll::-webkit-scrollbar-track {
+.customScroll::-webkit-scrollbar-track {
     background: #2F2F37;
 }
-.custom-scroll::-webkit-scrollbar-thumb {
+.customScroll::-webkit-scrollbar-thumb {
     background: #8585AD;
     border: 3px solid #2F2F37;
     border-radius: 6px;
 }
-.block-ingredients{
-    display: block;
-}
-.row-ingredients{
+.row{
     display: block;
 }
 .cards{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .card{
     width: 272px;
     height: 208px;
     text-align: center;
-    background-color: red;
 }
 .cost{
     display: flex;
