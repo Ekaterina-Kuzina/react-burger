@@ -1,9 +1,14 @@
-
-.blockIngredients{
+.ingredients_wrapper {
     width: 600px;
-    height: 756px;
+    max-height: 912px;
+}
+
+.blockIngredients {
+    width: 600px;
+    max-height: 756px;
     overflow-y: auto;
 }
+
 .customScroll {
     scrollbar-color: #2F2F37 #8585AD;
     scrollbar-width: thin;
@@ -12,32 +17,32 @@
 .customScroll::-webkit-scrollbar {
     width: 12px;
 }
+
 .customScroll::-webkit-scrollbar-track {
     background: #2F2F37;
 }
+
 .customScroll::-webkit-scrollbar-thumb {
     background: #8585AD;
     border: 3px solid #2F2F37;
     border-radius: 6px;
 }
-.row{
-    display: block;
-}
-.cards{
+
+.cards {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.card{
+
+.card {
+    position: relative;
     width: 272px;
-    height: 208px;
+    max-height: 208px;
     text-align: center;
 }
-.cost{
+
+.cost {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.name-ingredient{
-
 }

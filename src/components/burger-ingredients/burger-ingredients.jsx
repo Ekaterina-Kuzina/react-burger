@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
@@ -10,19 +11,19 @@ function BurgerIngredients(props) {
     let types = []
 
     props.data.forEach(element => {
-        if(!types.includes(element.type)){
+        if (!types.includes(element.type)) {
             types.push(element.type)
         }
     });
 
     return (
-        <div >
+        <section className={ingredients.ingredients_wrapper} >
             <h1 className="mb-5 text text_type_main-large">Соберите бургер</h1>
-            <TabsContent/>
-            <div className={`${ingredients.blockIngredients} ${ingredients.customScroll}`}>
+            <TabsContent />
+            <div className={`${ingredients.blockIngredients} ${ingredients.customScroll} mt-2`}>
                 {types.map(type => {
-                    return (<div key={type} className={`${ingredients.row - ingredients}`}>
-                        <p className="mt-10 text_type_main-medium">{getTypeName(type)}</p>
+                    return (<div key={type} className="mb-2">
+                        <p className="mt-8 text_type_main-medium">{getTypeName(type)}</p>
                         <div className={`${ingredients.cards} mt-6`}>
                             {
                                 props.data
@@ -30,9 +31,8 @@ function BurgerIngredients(props) {
                                         return item.type === type;
                                     })
                                     .map(item => {
-                                        console.log(item)
-                                        return( 
-                                        <IngredientCard key={item._id} img={item.image} cost={item.price} name={item.name} />
+                                        return (
+                                            <IngredientCard key={item._id} img={item.image} cost={item.price} name={item.name} />
                                         )
 
                                     })
@@ -41,18 +41,27 @@ function BurgerIngredients(props) {
                     </div>)
                 })}
             </div>
-        </div>
+        </section>
     )
 }
 
-function getTypeName(type){
-    if(type === "bun"){
+function getTypeName(type) {
+    if (type === "bun") {
         return "Булки"
-    }else if(type === "sauce"){
+    } else if (type === "sauce") {
         return "Соусы"
-    }else{
+    } else {
         return "Начинки"
     }
+}
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string,
+        price: PropTypes.number,
+        image: PropTypes.string,
+        _id: PropTypes.string,
+    }))
 }
 
 export default BurgerIngredients;

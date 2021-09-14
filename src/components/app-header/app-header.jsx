@@ -7,7 +7,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function AppHeader(props) {
     return (
-        <header className={`${header.header} text text_type_main-default m-10 p-4`}>
+        <header className={`${header.header} text text_type_main-default mr-10 ml-10 mb-10 p-4`}>
             <div className={header.container}>
                 <div className={header.wrapper}>
                     <div style={{ display: 'flex' }} >
@@ -25,7 +25,7 @@ function AppHeader(props) {
                         <Logo />
                     </a>
                     <div style={{ display: 'flex' }}>
-                        <div style={{ width: 176 , opacity: 0 }}></div>
+                        <div style={{ width: 176, opacity: 0 }}></div>
                         <a href="{#}" className={`${header.ref} pt-4 pb-4 pl-5 pr-5`}>
                             <ProfileIcon type="secondary" />
                             <p style={{ color: '#8585AD' }} className="ml-2">Личный кабинет</p>
