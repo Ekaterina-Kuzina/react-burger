@@ -57,10 +57,10 @@ function getTypeName(type) {
 
 BurgerIngredients.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        price: PropTypes.number,
-        image: PropTypes.string,
-        _id: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
     }))
 }
 

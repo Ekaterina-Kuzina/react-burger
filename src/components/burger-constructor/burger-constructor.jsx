@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { data__list } from '../../ utils/data';
 import constructor from './burger-constructor.module.css';
-
-
 function BurgerConstructor(props) {
     return (
         <section className={`${constructor.wrapper} pt-15`}>
@@ -57,9 +55,9 @@ function BurgerConstructor(props) {
 function ItemOfConstructor(props) {
     return (props.data
         .filter(item => item.type !== 'bun')
-        .map(item => {
+        .map((item, index) => {
             return (
-                <div key={item._id} style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
+                <div key={index} style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
                     <DragIcon type="primary" />
 
                     <ConstructorElement
@@ -75,11 +73,20 @@ function ItemOfConstructor(props) {
 
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        price: PropTypes.number,
-        image: PropTypes.string,
-        type: PropTypes.string,
-        _id: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
+    }))
+}
+ItemOfConstructor.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
     }))
 }
 

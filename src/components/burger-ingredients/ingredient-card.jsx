@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from './burger-ingredients.module.css';
@@ -16,6 +17,12 @@ function IngredientCard(props){
             <p className="mt-1 text text_type_main-default">{props.name}</p>
         </div>
     )
+}
+
+IngredientCard.propTypes = {
+    cost: PropTypes.number.isRequired,
+    img: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
 }
 
 export default IngredientCard;
