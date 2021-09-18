@@ -7,7 +7,7 @@ import ingredients from './burger-ingredients.module.css';
 
 function IngredientCard(props){
     return (
-        <div className={`${ingredients.card} mt-6 mb-2`}>
+        <div onClick={props.openModal} className={`${ingredients.card} mt-6 mb-2`}>
             <img src={props.img} alt="bun" />
             <Counter count={1} size="default" />
             <div className={`${ingredients.cost} mt-1 mb-1`}>

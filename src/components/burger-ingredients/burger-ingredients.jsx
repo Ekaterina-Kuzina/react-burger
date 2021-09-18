@@ -32,7 +32,7 @@ function BurgerIngredients(props) {
                                     })
                                     .map(item => {
                                         return (
-                                            <IngredientCard key={item._id} img={item.image} cost={item.price} name={item.name} />
+                                            <IngredientCard openModal={props.openModal} key={item._id} img={item.image} cost={item.price} name={item.name} />
                                         )
 
                                     })
