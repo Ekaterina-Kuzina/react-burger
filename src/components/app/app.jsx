@@ -6,14 +6,15 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Modal from '../modal/modal';
 
-import app from "./app.module.css";
+import appStyle  from "./app.module.css";
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-    const [stateData, setStateData] = useState()
-    const [isOpen, setIsOpen] = useState(false)
-    const [isClosed, setIsClosed] = useState(false)
+    const [stateData, setStateData] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+    const [isClosed, setIsClosed] = useState(false);
+    const [target, setTarget] = useState('');
 
     useEffect(() => {
 
@@ -21,11 +22,11 @@ function App() {
             .then(res => res.json())
             .then(data => setStateData(data))
             .catch(err => console.log(err))
-
     }, [])
 
-    const handleOpenModal = () => {
+    const handleOpenModal = (e) => {
         setIsOpen(true)
+        setTarget(e.target.tagName)
     }
 
     const handleCloseModal = () => {
@@ -49,10 +50,10 @@ function App() {
     },[]);
 
     return (
-        <div className="pt-10 pb-10">
+        <div className={`${appStyle.app} pt-10 pb-10`}>
             <AppHeader />
 
-            <div style={{ display: 'flex', justifyContent: "space-between" }} className={app.container}>
+            <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
                 {stateData &&
                     <>
@@ -65,7 +66,7 @@ function App() {
 
             {
                 isOpen &&
-                <Modal closeModal={handleCloseModal} />
+                <Modal closeModal={handleCloseModal} data={stateData.data} targetName={target} />
             }
 
         </div>

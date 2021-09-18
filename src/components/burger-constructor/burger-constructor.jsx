@@ -5,6 +5,7 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktiku
 import { data__list } from '../../ utils/data';
 import constructor from './burger-constructor.module.css';
 function BurgerConstructor(props) {
+
     return (
         <section className={`${constructor.wrapper} pt-15`}>
             <div className={`${constructor.inner_wrapper}`}>
