@@ -2,6 +2,7 @@ import React from 'react'
 
 import modalStyle from "./modal.module.css";
 import done from "../../images/done.png";
+
 function OrderDetails(){
     return(
         <div className={`${modalStyle.order_wrapper} pl-15 pr-15`}>

@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useState} from 'react'
+
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from './burger-ingredients.module.css';
-
-
-function IngredientCard(props){
+function IngredientCard(props) {
     return (
         <div onClick={props.openModal} className={`${ingredients.card} mt-6 mb-2`}>
             <img src={props.img} alt="bun" />
@@ -16,6 +14,7 @@ function IngredientCard(props){
             </div>
             <p className="mt-1 text text_type_main-default">{props.name}</p>
         </div>
+
     )
 }
 

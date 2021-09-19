@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data__list } from '../../ utils/data';
 import constructor from './burger-constructor.module.css';
 function BurgerConstructor(props) {
 
@@ -21,7 +21,7 @@ function BurgerConstructor(props) {
 
                 <div>
                     <div className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
-                        <ItemOfConstructor data={data__list} />
+                        <ItemOfConstructor data={props.data} />
                     </div>
                 </div>
 
@@ -41,7 +41,7 @@ function BurgerConstructor(props) {
                         <CurrencyIcon type="primary" />
                     </div>
 
-                    <Button onClick={props.openModal} type="primary" size="large">Оформить заказ</Button>
+                    <Button onClick={(e) => { props.switchOpenState(e) }} type="primary" size="large">Оформить заказ</Button>
 
                 </div>
 
@@ -49,6 +49,7 @@ function BurgerConstructor(props) {
 
                 </div>
             </div>
+
         </section>
     )
 }

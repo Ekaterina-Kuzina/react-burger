@@ -12,15 +12,13 @@
     border-radius: 40px;
     color: #F2F2F3;
 }
-.header_of_modal{
+
+.header_of_modal {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 64px;
 }
-/* .header_of_modal svg{
-    text-align: right;
-} */
 
 .ingredient_img {
     margin: 0 auto;
@@ -41,9 +39,6 @@
     text-align: center;
 }
 
-.order_wrapper{
+.order_wrapper {
     text-align: center;
-}
-.order_wrapper .header_of_modal{
-    justify-content: flex-end;
 }

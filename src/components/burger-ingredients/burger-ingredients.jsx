@@ -6,7 +6,6 @@ import TabsContent from './tabs-content';
 
 import ingredients from './burger-ingredients.module.css';
 
-
 function BurgerIngredients(props) {
     let types = []
 
@@ -30,11 +29,13 @@ function BurgerIngredients(props) {
                                     .filter(item => {
                                         return item.type === type;
                                     })
-                                    .map(item => {
+                                    .map((item) => {
                                         return (
-                                            <IngredientCard openModal={props.openModal} key={item._id} img={item.image} cost={item.price} name={item.name} />
+                                            <IngredientCard openModal={(e) => {
+                                                props.switchOpenState(e);
+                                                props.setSelectedItem(item);
+                                            }} key={item._id} img={item.image} cost={item.price} name={item.name} />
                                         )
-
                                     })
                             }
                         </div>
