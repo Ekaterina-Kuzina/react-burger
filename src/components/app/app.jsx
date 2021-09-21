@@ -21,7 +21,12 @@ function App() {
 
     useEffect(() => {
         fetch(url)
-            .then(res => res.json())
+        .then(res => {
+            if (res.ok) {
+            return res.json();
+            }
+            return Promise.reject(res.status);
+            })
             .then(data => setStateData(data))
             .catch(err => console.log(err))
     }, [])
