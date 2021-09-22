@@ -1,0 +1,50 @@
+.wrapper {
+    width: 584px;
+    max-height: 912px;
+}
+
+.inner_wrapper {
+    width: 568px;
+    height: 656px;
+}
+
+.item_wrapper {
+    width: 568px;
+    max-height: 496px;
+    overflow-y: auto;
+}
+
+.custom_scroll {
+    scrollbar-color: #2F2F37 #8585AD;
+    scrollbar-width: thin;
+}
+
+.custom_scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.custom_scroll::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #2F2F37;
+    border-radius: 6px;
+}
+
+.order {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.final_cost {
+    display: flex;
+    align-items: center;
+}
+
+.final_cost svg {
+    width: 36px;
+    height: 36px;
+}
