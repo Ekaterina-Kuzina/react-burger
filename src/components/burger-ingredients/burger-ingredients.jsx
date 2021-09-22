@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 
 import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
 
 import ingredients from './burger-ingredients.module.css';
+import { DataContext, SelectedItemDataContext, ConstructerData } from '../app/data-context';
 
 function BurgerIngredients(props) {
+    const [stateData] = useContext(DataContext)
+    const [selectedItem, setSelectedItem] = useContext(SelectedItemDataContext)
+    const [constructerData, setConstructerData] = useContext(ConstructerData)
+
     let types = []
 
-    props.data.forEach(element => {
+    stateData.data.forEach(element => {
         if (!types.includes(element.type)) {
             types.push(element.type)
         }
@@ -25,7 +30,7 @@ function BurgerIngredients(props) {
                         <p className="mt-8 text_type_main-medium">{getTypeName(type)}</p>
                         <div className={`${ingredients.cards} mt-6`}>
                             {
-                                props.data
+                                stateData.data
                                     .filter(item => {
                                         return item.type === type;
                                     })
@@ -33,8 +38,9 @@ function BurgerIngredients(props) {
                                         return (
                                             <IngredientCard openModal={(e) => {
                                                 props.switchOpenState(e);
-                                                props.setSelectedItem(item);
-                                            }} key={item._id} img={item.image} cost={item.price} name={item.name} />
+                                                setSelectedItem(item);
+                                                setConstructerData([...constructerData,item]);
+                                            }} key={item._id} item={item} />
                                         )
                                     })
                             }

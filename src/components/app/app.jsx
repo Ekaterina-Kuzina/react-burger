@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -7,12 +7,20 @@ import Modal from '../modal/modal';
 
 import appStyle from "./app.module.css";
 
+import { DataContext, SelectedItemDataContext, ConstructerData } from './data-context'
+
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-    const [stateData, setStateData] = useState();
+    const dataState = useState();
+    const [stateData, setStateData] = dataState;
+    const selectedItemData = useState()
+    const [selectedItem, setSelectedItem] = selectedItemData;
+    const constructerSelectedItemData = useState([])
+    const [constructerData, setConstructerData] = constructerSelectedItemData
+
+
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState();
     const [target, setTarget] = useState('');
 
     const switchOpenState = () => {
@@ -21,11 +29,11 @@ function App() {
 
     useEffect(() => {
         fetch(url)
-        .then(res => {
-            if (res.ok) {
-            return res.json();
-            }
-            return Promise.reject(res.status);
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(res.status);
             })
             .then(data => setStateData(data))
             .catch(err => console.log(err))
@@ -33,31 +41,36 @@ function App() {
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <AppHeader />
+            <DataContext.Provider value={dataState}>
+                <SelectedItemDataContext.Provider value={selectedItemData}>
+                    <ConstructerData.Provider value={constructerSelectedItemData}>
+                        <AppHeader />
+                        <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
-            <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
+                            {stateData &&
+                                <>
+                                    <BurgerIngredients switchOpenState={(e) => {
+                                        setTarget()
+                                        switchOpenState(e.target.tagName)
+                                    }} />
+                                    <BurgerConstructor data={stateData.data} switchOpenState={(e) => {
+                                        switchOpenState()
+                                        setTarget(e.target.tagName)
+                                    }} />
+                                </>
+                            }
 
-                {stateData &&
-                    <>
-                        <BurgerIngredients data={stateData.data} switchOpenState={(e) => {
-                            setTarget()
-                            switchOpenState(e.target.tagName)
-                        }} setSelectedItem={setSelectedItem} />
-                        <BurgerConstructor data={stateData.data} switchOpenState={(e) => {
-                            switchOpenState()
-                            setTarget(e.target.tagName)
-                        }} />
-                    </>
-                }
+                        </div>
 
-            </div>
+                        {isOpen &&
+                            <Modal target={target} switchOpenState={switchOpenState} closeModal={() => {
+                                switchOpenState()
+                            }} selectedItem={selectedItem} />
+                        }
+                    </ConstructerData.Provider>
 
-            {isOpen &&
-                <Modal target={target} switchOpenState={switchOpenState} closeModal={() => {
-                    switchOpenState()
-                    setSelectedItem()
-                }} selectedItem={selectedItem} />
-            }
+                </SelectedItemDataContext.Provider>
+            </DataContext.Provider>
 
         </div>
     )

@@ -37,7 +37,7 @@ function Modal(props) {
 
                     <CloseIcon className={modalStyle.close} onClick={props.closeModal} type="primary" />
                 </div>
-                {props.target === 'BUTTON' ? <OrderDetails /> : <IngredientDetails selectedItem={props.selectedItem} />}
+                {props.target === 'BUTTON' ? <OrderDetails /> : <IngredientDetails/>}
             </div>
         </>,
         document.getElementById('modal-root')

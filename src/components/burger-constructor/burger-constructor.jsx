@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
-
+import { SelectedItemDataContext, ConstructerData } from '../app/data-context';
 
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructor from './burger-constructor.module.css';
 function BurgerConstructor(props) {
-
+    const [selectedItem] = useContext(SelectedItemDataContext)
+    const [constructerData, setConstructerData] = useContext(ConstructerData)
+    console.log(constructerData);
     return (
         <section className={`${constructor.wrapper} pt-15`}>
             <div className={`${constructor.inner_wrapper}`}>
@@ -20,9 +22,18 @@ function BurgerConstructor(props) {
                 </div>
 
                 <div>
-                    <div className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
-                        <ItemOfConstructor data={props.data} />
-                    </div>
+                    {constructerData !== undefined &&
+                        constructerData.map((constructerItemData)=>{
+                            return(
+                                <div className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
+                                    <ItemOfConstructor constructerItemData={constructerItemData}/>
+                                </div>
+                            )
+
+                        })
+
+                    }
+
                 </div>
 
                 <div className="pl-10">
@@ -55,22 +66,19 @@ function BurgerConstructor(props) {
 }
 
 function ItemOfConstructor(props) {
-    return (props.data
-        .filter(item => item.type !== 'bun')
-        .map((item, index) => {
-            return (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
-                    <DragIcon type="primary" />
+    const [selectedItem, setSelectedItem] = useContext(SelectedItemDataContext)
 
-                    <ConstructorElement
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image} />
+        return (
+            <div  style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
+                <DragIcon type="primary" />
 
-                </div>
-            )
-        })
-    )
+                <ConstructorElement
+                    text={props.constructerItemData.name}
+                    price={props.constructerItemData.price}
+                    thumbnail={props.constructerItemData.image} />
+
+            </div>
+        )
 }
 
 BurgerConstructor.propTypes = {
