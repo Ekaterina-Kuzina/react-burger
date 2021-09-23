@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect } from "react";
 import ReactDom from "react-dom";
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,6 @@ import modalStyle from "./modal.module.css"
 import ModalOverlay from "../modal-overlay/modal-overlay"
 import IngredientDetails from './ingredient-details'
 import OrderDetails from './order-details'
-
 function Modal(props) {
 
     const handleKeyDown = (e) => {

@@ -6,6 +6,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Modal from '../modal/modal';
 
+
 import appStyle from "./app.module.css";
 
 import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from './data-context'
@@ -16,17 +17,15 @@ function App() {
     const dataState = useState();
     const [stateData, setStateData] = dataState;
     const selectedItemData = useState()
-    const [selectedItem, setSelectedItem] = selectedItemData;
+    const [selectedItem] = selectedItemData;
     const constructerSelectedItemData = useState([])
-    const [constructerData, setConstructerData] = constructerSelectedItemData
-    const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg })
+    const [constructerData] = constructerSelectedItemData
+    const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' })
     const [praceState, setPraceState] = useState(0)
     const makeOrder = useState()
 
     const [isOpen, setIsOpen] = useState(false);
     const [target, setTarget] = useState('');
-
-
 
     const switchOpenState = () => {
         setIsOpen(!isOpen)
@@ -63,6 +62,7 @@ function App() {
                 <SelectedItemDataContext.Provider value={selectedItemData}>
                     <ConstructerData.Provider value={constructerSelectedItemData}>
                         <MakeOrder.Provider value={makeOrder}>
+
                             <AppHeader />
                             <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 

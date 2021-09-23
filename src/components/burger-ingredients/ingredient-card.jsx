@@ -1,6 +1,5 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { SelectedItemDataContext } from '../app/data-context';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from './burger-ingredients.module.css';
@@ -21,10 +20,12 @@ function IngredientCard(props) {
     )
 }
 
-// IngredientCard.propTypes = {
-//     cost: PropTypes.number.isRequired,
-//     img: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-// }
+IngredientCard.propTypes = {
+    item: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+    }),
+}
 
 export default IngredientCard;

@@ -1,26 +1,40 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { SelectedItemDataContext, ConstructerData, MakeOrder } from '../app/data-context';
+import { ConstructerData, MakeOrder } from '../app/data-context';
 
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructor from './burger-constructor.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor(props) {
-    const [selectedItem] = useContext(SelectedItemDataContext)
-    const [constructerData, setConstructerData] = useContext(ConstructerData)
-    const [makeOrder, setMakeOrder] = useContext(MakeOrder)
+    const [constructerData] = useContext(ConstructerData)
+    const [sendOrder, setSendOrder] = useState([])
+    const [makeOrder,setMakeOrder] = useContext(MakeOrder)
 
-    
+    useEffect(()=>{
+        let ids = [props.bunData._id]
+        constructerData.forEach(item => {
+            ids.push(item._id)
+        });
+        setSendOrder(ids)
+    }, [constructerData, props.bunData])
 
-    // useEffect(() => {
-    //     fetch('https://norma.nomoreparties.space/api/orders', {
-    //         method: "POST",
-    //         body: { 
-    //             "ingredients": ["609646e4dc916e00276b286e","609646e4dc916e00276b2870"]
-    //         } 
-    //     })
-
-    // }, [makeOrder])
+    const sendRequest =()=>{
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "ingredients": sendOrder })
+        };
+        fetch('https://norma.nomoreparties.space/api/orders', requestOptions)
+            .then(res =>{
+                if(res.ok){
+                    return res.json()
+                }
+                return Promise.reject(res.status)
+            })
+            .then(data => setMakeOrder(data))
+            .catch(err => console.log(err))
+    }
 
     return (
         <section className={`${constructor.wrapper} pt-15`}>
@@ -35,15 +49,16 @@ function BurgerConstructor(props) {
                             thumbnail={props.bunData.image}
                         />
                     }
-
                 </div>
 
                 <div>
                     {constructerData !== undefined &&
                         constructerData.map((constructerItemData) => {
+                            constructerItemData.constructerID = uuidv4();
+                            
                             return (
                                 constructerItemData.type !== 'bun' &&
-                                <div className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
+                                <div key={constructerItemData.constructerID} className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
                                     <ItemOfConstructor constructerItemData={constructerItemData} />
                                 </div>
                             )
@@ -72,22 +87,16 @@ function BurgerConstructor(props) {
 
                     <Button onClick={(e) => {
                         props.switchOpenState(e);
-                        // setMakeOrder()
+                        sendRequest()
                     }} type="primary" size="large">Оформить заказ</Button>
 
                 </div>
-
-                <div>
-
-                </div>
             </div>
-
         </section>
     )
 }
 
 function ItemOfConstructor(props) {
-    const [selectedItem, setSelectedItem] = useContext(SelectedItemDataContext)
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
@@ -102,23 +111,21 @@ function ItemOfConstructor(props) {
     )
 }
 
-// BurgerConstructor.propTypes = {
-//     data: PropTypes.arrayOf(PropTypes.shape({
-//         name: PropTypes.string.isRequired,
-//         price: PropTypes.number.isRequired,
-//         image: PropTypes.string.isRequired,
-//         type: PropTypes.string.isRequired,
-//         _id: PropTypes.string.isRequired,
-//     }))
-// }
+BurgerConstructor.propTypes = {
+    bunData: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+    }),
+    praceState: PropTypes.number.isRequired,
+}
 ItemOfConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
+    constructerItemData: PropTypes.shape({
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-    }))
+    })
 }
 
 export default BurgerConstructor;

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import IngredientCard from './ingredient-card'
@@ -19,19 +19,20 @@ function BurgerIngredients(props) {
             types.push(element.type)
         }
     });
-    const handleCostructerData =(item)=>{
-        if(item.type !== 'bun'){
-            setConstructerData([...constructerData,item])
+    const handleCostructerData = (item) => {
+        if (item.type !== 'bun') {
+            setConstructerData([...constructerData, item])
         }
     }
 
-    const handleBunData =(item)=>{
-        if(item.type === 'bun'){
+    const handleBunData = (item) => {
+        if (item.type === 'bun') {
             props.setBunData(item)
         }
     }
 
     return (
+
         <section className={ingredients.ingredients_wrapper} >
             <h1 className="mb-5 text text_type_main-large">Соберите бургер</h1>
             <TabsContent />
