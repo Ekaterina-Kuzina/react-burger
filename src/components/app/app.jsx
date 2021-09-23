@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import bunImg from '../../images/bun-01.png'
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -7,7 +8,7 @@ import Modal from '../modal/modal';
 
 import appStyle from "./app.module.css";
 
-import { DataContext, SelectedItemDataContext, ConstructerData } from './data-context'
+import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from './data-context'
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -18,14 +19,31 @@ function App() {
     const [selectedItem, setSelectedItem] = selectedItemData;
     const constructerSelectedItemData = useState([])
     const [constructerData, setConstructerData] = constructerSelectedItemData
-
+    const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg })
+    const [praceState, setPraceState] = useState(0)
+    const makeOrder = useState()
 
     const [isOpen, setIsOpen] = useState(false);
     const [target, setTarget] = useState('');
 
+
+
     const switchOpenState = () => {
         setIsOpen(!isOpen)
     }
+
+    const handlePriceState = () => {
+        let sum = bunData.price * 2
+        constructerData.forEach((item) => {
+            sum += item.price
+        })
+        setPraceState(sum)
+    }
+
+    useEffect(() => {
+        handlePriceState()
+    }, [bunData, constructerData])
+
 
     useEffect(() => {
         fetch(url)
@@ -44,31 +62,32 @@ function App() {
             <DataContext.Provider value={dataState}>
                 <SelectedItemDataContext.Provider value={selectedItemData}>
                     <ConstructerData.Provider value={constructerSelectedItemData}>
-                        <AppHeader />
-                        <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
+                        <MakeOrder.Provider value={makeOrder}>
+                            <AppHeader />
+                            <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
-                            {stateData &&
-                                <>
-                                    <BurgerIngredients switchOpenState={(e) => {
-                                        setTarget()
-                                        switchOpenState(e.target.tagName)
-                                    }} />
-                                    <BurgerConstructor data={stateData.data} switchOpenState={(e) => {
-                                        switchOpenState()
-                                        setTarget(e.target.tagName)
-                                    }} />
-                                </>
+                                {stateData &&
+                                    <>
+                                        <BurgerIngredients switchOpenState={(e) => {
+                                            setTarget()
+                                            switchOpenState(e.target.tagName)
+                                        }} bunData={bunData} setBunData={setBunData} />
+                                        <BurgerConstructor switchOpenState={(e) => {
+                                            switchOpenState()
+                                            setTarget(e.target.tagName)
+                                        }} bunData={bunData} praceState={praceState} />
+                                    </>
+                                }
+
+                            </div>
+
+                            {isOpen &&
+                                <Modal target={target} switchOpenState={switchOpenState} closeModal={() => {
+                                    switchOpenState()
+                                }} selectedItem={selectedItem} />
                             }
-
-                        </div>
-
-                        {isOpen &&
-                            <Modal target={target} switchOpenState={switchOpenState} closeModal={() => {
-                                switchOpenState()
-                            }} selectedItem={selectedItem} />
-                        }
+                        </MakeOrder.Provider>
                     </ConstructerData.Provider>
-
                 </SelectedItemDataContext.Provider>
             </DataContext.Provider>
 

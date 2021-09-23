@@ -19,6 +19,17 @@ function BurgerIngredients(props) {
             types.push(element.type)
         }
     });
+    const handleCostructerData =(item)=>{
+        if(item.type !== 'bun'){
+            setConstructerData([...constructerData,item])
+        }
+    }
+
+    const handleBunData =(item)=>{
+        if(item.type === 'bun'){
+            props.setBunData(item)
+        }
+    }
 
     return (
         <section className={ingredients.ingredients_wrapper} >
@@ -39,7 +50,8 @@ function BurgerIngredients(props) {
                                             <IngredientCard openModal={(e) => {
                                                 props.switchOpenState(e);
                                                 setSelectedItem(item);
-                                                setConstructerData([...constructerData,item]);
+                                                handleCostructerData(item)
+                                                handleBunData(item)
                                             }} key={item._id} item={item} />
                                         )
                                     })

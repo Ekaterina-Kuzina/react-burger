@@ -4,6 +4,7 @@ import { SelectedItemDataContext } from '../app/data-context';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from './burger-ingredients.module.css';
+
 function IngredientCard(props) {
 
     return (
@@ -11,7 +12,7 @@ function IngredientCard(props) {
             <img src={props.item.image} alt="bun" />
             <Counter count={1} size="default" />
             <div className={`${ingredients.cost} mt-1 mb-1`}>
-                <p className="mr-2 text text_type_digits-default">{props.item.cost}</p>
+                <p className="mr-2 text text_type_digits-default">{props.item.price}</p>
                 <CurrencyIcon type="primary" />
             </div>
             <p className="mt-1 text text_type_main-default">{props.item.name}</p>
