@@ -6,6 +6,8 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Modal from '../modal/modal';
 
+import OrderDetails from '../modal/order-details'
+import IngredientDetails from '../modal/ingredient-details'
 
 import appStyle from "./app.module.css";
 
@@ -14,14 +16,12 @@ import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-    const dataState = useState();
-    const [stateData, setStateData] = dataState;
+    const [stateData, setStateData] = useState();
     const selectedItemData = useState()
-    const [selectedItem] = selectedItemData;
     const constructerSelectedItemData = useState([])
     const [constructerData] = constructerSelectedItemData
     const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' })
-    const [praceState, setPraceState] = useState(0)
+    const [priceState, setPriceState] = useState(0)
     const makeOrder = useState()
 
     const [isOpen, setIsOpen] = useState(false);
@@ -36,13 +36,12 @@ function App() {
         constructerData.forEach((item) => {
             sum += item.price
         })
-        setPraceState(sum)
+        setPriceState(sum)
     }
 
     useEffect(() => {
         handlePriceState()
     }, [bunData, constructerData])
-
 
     useEffect(() => {
         fetch(url)
@@ -58,7 +57,7 @@ function App() {
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <DataContext.Provider value={dataState}>
+            <DataContext.Provider value={stateData}>
                 <SelectedItemDataContext.Provider value={selectedItemData}>
                     <ConstructerData.Provider value={constructerSelectedItemData}>
                         <MakeOrder.Provider value={makeOrder}>
@@ -75,16 +74,19 @@ function App() {
                                         <BurgerConstructor switchOpenState={(e) => {
                                             switchOpenState()
                                             setTarget(e.target.tagName)
-                                        }} bunData={bunData} praceState={praceState} />
+                                        }} bunData={bunData} priceState={priceState} />
                                     </>
                                 }
 
                             </div>
 
                             {isOpen &&
-                                <Modal target={target} switchOpenState={switchOpenState} closeModal={() => {
+                                <Modal target={target} title='Детали ингредиента' switchOpenState={switchOpenState} closeModal={() => {
                                     switchOpenState()
-                                }} selectedItem={selectedItem} />
+                                }}>
+                                    <OrderDetails /> 
+                                    <IngredientDetails/>
+                                </Modal>
                             }
                         </MakeOrder.Provider>
                     </ConstructerData.Provider>

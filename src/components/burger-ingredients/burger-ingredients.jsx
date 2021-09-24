@@ -8,8 +8,8 @@ import ingredients from './burger-ingredients.module.css';
 import { DataContext, SelectedItemDataContext, ConstructerData } from '../app/data-context';
 
 function BurgerIngredients(props) {
-    const [stateData] = useContext(DataContext)
-    const [selectedItem, setSelectedItem] = useContext(SelectedItemDataContext)
+    const stateData = useContext(DataContext)
+    const setSelectedItem = useContext(SelectedItemDataContext)[1]
     const [constructerData, setConstructerData] = useContext(ConstructerData)
 
     let types = []

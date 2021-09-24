@@ -6,8 +6,6 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import modalStyle from "./modal.module.css"
 
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import IngredientDetails from './ingredient-details'
-import OrderDetails from './order-details'
 function Modal(props) {
 
     const handleKeyDown = (e) => {
@@ -22,7 +20,7 @@ function Modal(props) {
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
         };
-    }, []);
+    });
 
     return ReactDom.createPortal(
         <>
@@ -30,13 +28,13 @@ function Modal(props) {
             <div className={`${modalStyle.modal_wrapper} pt-10 pr-10 pl-10 pb-15`}>
                 <div className={modalStyle.header_of_modal}>
                     {props.target !== 'BUTTON' ?
-                        <h3 className="text text_type_main-large">Детали ингредиента</h3> :
-                        <h3 style={{ fontSize: 0 }} className="text text_type_main-large">Детали ингредиента</h3>
+                        <h3 className="text text_type_main-large">{props.title}</h3> :
+                        <h3 style={{ fontSize: 0 }} className="text text_type_main-large">{props.title}</h3>
                     }
 
                     <CloseIcon className={modalStyle.close} onClick={props.closeModal} type="primary" />
                 </div>
-                {props.target === 'BUTTON' ? <OrderDetails /> : <IngredientDetails/>}
+                {props.target === 'BUTTON' ? props.children[0] : props.children[1]}
             </div>
         </>,
         document.getElementById('modal-root')

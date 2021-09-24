@@ -6,10 +6,11 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktiku
 import constructor from './burger-constructor.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
+const url = 'https://norma.nomoreparties.space/api/orders';
 function BurgerConstructor(props) {
     const [constructerData] = useContext(ConstructerData)
     const [sendOrder, setSendOrder] = useState([])
-    const [makeOrder,setMakeOrder] = useContext(MakeOrder)
+    const setMakeOrder = useContext(MakeOrder)[1]
 
     useEffect(()=>{
         let ids = [props.bunData._id]
@@ -25,7 +26,7 @@ function BurgerConstructor(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "ingredients": sendOrder })
         };
-        fetch('https://norma.nomoreparties.space/api/orders', requestOptions)
+        fetch(url, requestOptions)
             .then(res =>{
                 if(res.ok){
                     return res.json()
@@ -81,7 +82,7 @@ function BurgerConstructor(props) {
 
                 <div className={`${constructor.order} mt-10`}>
                     <div className={`${constructor.final_cost} mr-10`}>
-                        <span className="mr-2 text text_type_digits-medium">{props.praceState}</span>
+                        <span className="mr-2 text text_type_digits-medium">{props.priceState}</span>
                         <CurrencyIcon type="primary" />
                     </div>
 
@@ -118,7 +119,7 @@ BurgerConstructor.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
     }),
-    praceState: PropTypes.number.isRequired,
+    priceState: PropTypes.number.isRequired,
 }
 ItemOfConstructor.propTypes = {
     constructerItemData: PropTypes.shape({
