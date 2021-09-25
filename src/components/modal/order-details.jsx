@@ -5,7 +5,7 @@ import done from "../../images/done.png";
 import { MakeOrder } from '../app/data-context'
 
 function OrderDetails() {
-    const [makeOrder] = useContext(MakeOrder)
+    const {makeOrder} = useContext(MakeOrder)
 
     return (
         <div className={`${modalStyle.order_wrapper} pl-15 pr-15`}>

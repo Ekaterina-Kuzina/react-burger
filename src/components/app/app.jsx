@@ -15,21 +15,17 @@ import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
+const ingridientCardType = 'indridient_card'
+const orderCardType = 'order_card'
+
 function App() {
     const [stateData, setStateData] = useState();
-    const selectedItemData = useState()
-    const constructerSelectedItemData = useState([])
-    const [constructerData] = constructerSelectedItemData
+    const [selectedItem, setSelectedItem] = useState()
+    const [constructerData, setConstructerData] = useState([])
     const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' })
     const [priceState, setPriceState] = useState(0)
-    const makeOrder = useState()
-
-    const [isOpen, setIsOpen] = useState(false);
-    const [target, setTarget] = useState('');
-
-    const switchOpenState = () => {
-        setIsOpen(!isOpen)
-    }
+    const [makeOrder, setMakeOrder] = useState()
+    const [cardType, setCardType] = useState('')
 
     const handlePriceState = () => {
         let sum = bunData.price * 2
@@ -58,34 +54,37 @@ function App() {
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
             <DataContext.Provider value={stateData}>
-                <SelectedItemDataContext.Provider value={selectedItemData}>
-                    <ConstructerData.Provider value={constructerSelectedItemData}>
-                        <MakeOrder.Provider value={makeOrder}>
+                <SelectedItemDataContext.Provider value={{ selectedItem: selectedItem, setSelectedItem: setSelectedItem }}>
+                    <ConstructerData.Provider value={{ constructerData: constructerData, setConstructerData: setConstructerData }}>
+                        <MakeOrder.Provider value={{makeOrder: makeOrder, setMakeOrder: setMakeOrder}}>
 
                             <AppHeader />
                             <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
                                 {stateData &&
                                     <>
-                                        <BurgerIngredients switchOpenState={(e) => {
-                                            setTarget()
-                                            switchOpenState(e.target.tagName)
+                                        <BurgerIngredients ingridientClicked={() => {
+                                            setCardType(ingridientCardType)
                                         }} bunData={bunData} setBunData={setBunData} />
-                                        <BurgerConstructor switchOpenState={(e) => {
-                                            switchOpenState()
-                                            setTarget(e.target.tagName)
+                                        <BurgerConstructor orderButtonClicked={() => {
+                                            setCardType(orderCardType)
                                         }} bunData={bunData} priceState={priceState} />
                                     </>
                                 }
 
                             </div>
 
-                            {isOpen &&
-                                <Modal target={target} title='Детали ингредиента' switchOpenState={switchOpenState} closeModal={() => {
-                                    switchOpenState()
-                                }}>
-                                    <OrderDetails /> 
-                                    <IngredientDetails/>
+                            {
+                                cardType === ingridientCardType &&
+                                <Modal title='Детали ингредиента' closeModal={() => setCardType('')}>
+                                    <IngredientDetails />
+                                </Modal>
+                            }
+
+                            {
+                                cardType === orderCardType &&
+                                <Modal closeModal={() => setCardType('')}>
+                                    <OrderDetails />
                                 </Modal>
                             }
                         </MakeOrder.Provider>

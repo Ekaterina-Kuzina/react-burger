@@ -4,7 +4,7 @@ import { SelectedItemDataContext } from '../app/data-context';
 import modalStyle from "./modal.module.css"
 
 function IngredientDetails() {
-    const [selectedItem] = useContext(SelectedItemDataContext)
+    const {selectedItem} = useContext(SelectedItemDataContext)
 
     return (
         <div className='pl-15 pr-15'>

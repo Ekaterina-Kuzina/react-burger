@@ -8,9 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const url = 'https://norma.nomoreparties.space/api/orders';
 function BurgerConstructor(props) {
-    const [constructerData] = useContext(ConstructerData)
+    const {constructerData} = useContext(ConstructerData)
+    const {setMakeOrder} = useContext(MakeOrder)
     const [sendOrder, setSendOrder] = useState([])
-    const setMakeOrder = useContext(MakeOrder)[1]
 
     useEffect(()=>{
         let ids = [props.bunData._id]
@@ -86,8 +86,8 @@ function BurgerConstructor(props) {
                         <CurrencyIcon type="primary" />
                     </div>
 
-                    <Button onClick={(e) => {
-                        props.switchOpenState(e);
+                    <Button onClick={() => {
+                        props.orderButtonClicked();
                         sendRequest()
                     }} type="primary" size="large">Оформить заказ</Button>
 

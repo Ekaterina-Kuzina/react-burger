@@ -9,8 +9,8 @@ import { DataContext, SelectedItemDataContext, ConstructerData } from '../app/da
 
 function BurgerIngredients(props) {
     const stateData = useContext(DataContext)
-    const setSelectedItem = useContext(SelectedItemDataContext)[1]
-    const [constructerData, setConstructerData] = useContext(ConstructerData)
+    const {setSelectedItem} = useContext(SelectedItemDataContext)
+    const {constructerData, setConstructerData} = useContext(ConstructerData)
 
     let types = []
 
@@ -48,8 +48,8 @@ function BurgerIngredients(props) {
                                     })
                                     .map((item) => {
                                         return (
-                                            <IngredientCard openModal={(e) => {
-                                                props.switchOpenState(e);
+                                            <IngredientCard openModal={() => {
+                                                props.ingridientClicked();
                                                 setSelectedItem(item);
                                                 handleCostructerData(item)
                                                 handleBunData(item)
