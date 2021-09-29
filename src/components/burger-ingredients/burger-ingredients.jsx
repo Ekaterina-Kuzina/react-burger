@@ -5,13 +5,17 @@ import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import { SelectedItemDataContext, ConstructerData } from '../app/data-context';
+import { ConstructerData } from '../app/data-context';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectIngredients } from '../../services/actions/index'
+import {SELECT_INGREDIENT} from '../../services/actions/index'
 function BurgerIngredients(props) {
-    const {setSelectedItem} = useContext(SelectedItemDataContext)
-    const {constructerData, setConstructerData} = useContext(ConstructerData)
 
-    const ingredients = useSelector((state)=> state.ingredientsReducer.ingredients)
+    const { constructerData, setConstructerData } = useContext(ConstructerData)
+
+    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
+
+    const dispatch = useDispatch()
 
     let types = []
 
@@ -51,7 +55,10 @@ function BurgerIngredients(props) {
                                         return (
                                             <IngredientCard openModal={() => {
                                                 props.ingridientClicked();
-                                                setSelectedItem(item);
+                                                dispatch({
+                                                    type: SELECT_INGREDIENT,
+                                                    selected: item
+                                                })
                                                 handleCostructerData(item)
                                                 handleBunData(item)
                                             }} key={item._id} item={item} />
