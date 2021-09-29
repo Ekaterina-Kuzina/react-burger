@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
 
-import ingredients from './burger-ingredients.module.css';
-import { DataContext, SelectedItemDataContext, ConstructerData } from '../app/data-context';
-
+import ingredientsStyle from './burger-ingredients.module.css';
+import { SelectedItemDataContext, ConstructerData } from '../app/data-context';
+import { useSelector, useDispatch } from 'react-redux';
 function BurgerIngredients(props) {
-    const stateData = useContext(DataContext)
     const {setSelectedItem} = useContext(SelectedItemDataContext)
     const {constructerData, setConstructerData} = useContext(ConstructerData)
 
+    const ingredients = useSelector((state)=> state.ingredientsReducer.ingredients)
+
     let types = []
 
-    stateData.data.forEach(element => {
+    ingredients.forEach(element => {
         if (!types.includes(element.type)) {
             types.push(element.type)
         }
@@ -33,16 +34,16 @@ function BurgerIngredients(props) {
 
     return (
 
-        <section className={ingredients.ingredients_wrapper} >
+        <section className={ingredientsStyle.ingredients_wrapper} >
             <h1 className="mb-5 text text_type_main-large">Соберите бургер</h1>
             <TabsContent />
-            <div className={`${ingredients.blockIngredients} ${ingredients.customScroll} mt-2`}>
+            <div className={`${ingredientsStyle.blockIngredients} ${ingredientsStyle.customScroll} mt-2`}>
                 {types.map(type => {
                     return (<div key={type} className="mb-2">
                         <p className="mt-8 text_type_main-medium">{getTypeName(type)}</p>
-                        <div className={`${ingredients.cards} mt-6`}>
+                        <div className={`${ingredientsStyle.cards} mt-6`}>
                             {
-                                stateData.data
+                                ingredients
                                     .filter(item => {
                                         return item.type === type;
                                     })

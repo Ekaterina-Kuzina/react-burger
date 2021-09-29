@@ -11,21 +11,28 @@ import IngredientDetails from '../modal/ingredient-details'
 
 import appStyle from "./app.module.css";
 
+import { useSelector, useDispatch } from 'react-redux';
+import {getIngredients} from '../../services/actions/index'
+
 import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from './data-context'
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+// const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
 
 function App() {
-    const [stateData, setStateData] = useState();
     const [selectedItem, setSelectedItem] = useState()
     const [constructerData, setConstructerData] = useState([])
     const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' })
     const [priceState, setPriceState] = useState(0)
     const [makeOrder, setMakeOrder] = useState()
     const [cardType, setCardType] = useState('')
+
+
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state)=> state.ingredientsReducer)
+
+    const dispatch = useDispatch();
 
     const handlePriceState = () => {
         let sum = bunData.price * 2
@@ -40,20 +47,11 @@ function App() {
     }, [bunData, constructerData])
 
     useEffect(() => {
-        fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(res.status);
-            })
-            .then(data => setStateData(data))
-            .catch(err => console.log(err))
+        dispatch(getIngredients())
     }, [])
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <DataContext.Provider value={stateData}>
                 <SelectedItemDataContext.Provider value={{ selectedItem: selectedItem, setSelectedItem: setSelectedItem }}>
                     <ConstructerData.Provider value={{ constructerData: constructerData, setConstructerData: setConstructerData }}>
                         <MakeOrder.Provider value={{makeOrder: makeOrder, setMakeOrder: setMakeOrder}}>
@@ -61,7 +59,7 @@ function App() {
                             <AppHeader />
                             <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
-                                {stateData &&
+                                {ingredients &&
                                     <>
                                         <BurgerIngredients ingridientClicked={() => {
                                             setCardType(ingridientCardType)
@@ -90,8 +88,6 @@ function App() {
                         </MakeOrder.Provider>
                     </ConstructerData.Provider>
                 </SelectedItemDataContext.Provider>
-            </DataContext.Provider>
-
         </div>
     )
 }
