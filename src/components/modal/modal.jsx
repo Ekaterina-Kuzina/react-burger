@@ -6,14 +6,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import modalStyle from "./modal.module.css"
 
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import IngredientDetails from './ingredient-details'
-import OrderDetails from './order-details'
-
 function Modal(props) {
 
     const handleKeyDown = (e) => {
         if (e.keyCode === 27) {
-            props.switchOpenState()
+            props.closeModal()
         }
     }
 
@@ -23,21 +20,23 @@ function Modal(props) {
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
         };
-    }, []);
+    });
 
     return ReactDom.createPortal(
         <>
             <ModalOverlay closeModal={props.closeModal} />
             <div className={`${modalStyle.modal_wrapper} pt-10 pr-10 pl-10 pb-15`}>
                 <div className={modalStyle.header_of_modal}>
-                    {props.target !== 'BUTTON' ?
-                        <h3 className="text text_type_main-large">Детали ингредиента</h3> :
-                        <h3 style={{ fontSize: 0 }} className="text text_type_main-large">Детали ингредиента</h3>
+                    {
+                        props.title !== undefined ?
+                        <h3 className="text text_type_main-large">{props.title}</h3>
+                        :
+                        <div></div>
                     }
 
                     <CloseIcon className={modalStyle.close} onClick={props.closeModal} type="primary" />
                 </div>
-                {props.target === 'BUTTON' ? <OrderDetails /> : <IngredientDetails selectedItem={props.selectedItem} />}
+                {props.children}
             </div>
         </>,
         document.getElementById('modal-root')
@@ -45,8 +44,7 @@ function Modal(props) {
 }
 
 Modal.propTypes = {
-    closeModal: PropTypes.func,
-    switchOpenState: PropTypes.func
+    closeModal: PropTypes.func
 }
 
 export default Modal;
