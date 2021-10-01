@@ -33,8 +33,9 @@ function Modal(props) {
                         :
                         <div></div>
                     }
-
-                    <CloseIcon className={modalStyle.close} onClick={props.closeModal} type="primary" />
+                    <div className={modalStyle.close} >
+                        <CloseIcon  onClick={props.closeModal} type="primary" />
+                    </div>
                 </div>
                 {props.children}
             </div>

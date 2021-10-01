@@ -3,17 +3,17 @@ import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function TabsContent(props) {
-  const [current, setCurrent] = React.useState('one')
+  const [current, setCurrent] = React.useState(0)
   return (
     <div style={{ display: 'flex' }}>
-      <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+      <Tab value= {0} active={props.tabIndex === 0} onClick={()=> props.changeTabIndex(0)}>
         Булки
       </Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-        Соусы
-      </Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+      <Tab value= {1} active={props.tabIndex === 1} onClick={()=> props.changeTabIndex(1)}>
         Начинки
+      </Tab>
+      <Tab value={2} active={props.tabIndex === 2} onClick={()=> props.changeTabIndex(2)}>
+        Соусы
       </Tab>
     </div>
   )
