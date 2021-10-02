@@ -16,13 +16,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/index'
 import { CLEAR_INGREDIENT, CLEAR_ORDER, COUNT_PRICE } from '../../services/actions/index'
 
-import { MakeOrder } from './data-context'
-
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
 
-function App() {
-    // const [makeOrder, setMakeOrder] = useState()
+export default function App() {
     const [cardType, setCardType] = useState('')
 
     const dispatch = useDispatch();
@@ -88,9 +85,7 @@ function App() {
                     <OrderDetails />
                 </Modal>
             }
-            
+
         </div>
     )
 }
-
-export default App;

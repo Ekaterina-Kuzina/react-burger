@@ -1,15 +1,15 @@
 .wrapper {
-    width: 584px;
+    max-width: 584px;
     max-height: 912px;
 }
 
 .inner_wrapper {
-    width: 568px;
+    max-width: 568px;
     height: 656px;
 }
 
 .item_wrapper {
-    width: 568px;
+    max-width: 568px;
     max-height: 496px;
     overflow-y: auto;
 }

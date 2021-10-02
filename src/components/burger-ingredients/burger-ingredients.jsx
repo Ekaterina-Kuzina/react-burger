@@ -1,15 +1,14 @@
-import React, { useState, useContext ,useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import { ConstructerData } from '../app/data-context';
 import { useSelector, useDispatch } from 'react-redux';
-import {SELECT_INGREDIENT, GET_CONSTRUCTER_DATA, GET_BUN_DATA} from '../../services/actions/index'
+import { SELECT_INGREDIENT } from '../../services/actions/index'
 
-function BurgerIngredients(props) {
+export default function BurgerIngredients(props) {
     const dispatch = useDispatch()
     const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
 
@@ -27,15 +26,13 @@ function BurgerIngredients(props) {
                 })
                 .sort((a, b) => a.getBoundingClientRect().y - b.getBoundingClientRect().y)
 
-            if(sortedByY.lenght !== 0){
+            if (sortedByY.lenght !== 0) {
                 const nearestChild = sortedByY[0]
                 const index = childrenArray.indexOf(nearestChild)
                 setTabIndex(index)
             }
         })
     })
-
-
 
     let types = []
 
@@ -45,35 +42,18 @@ function BurgerIngredients(props) {
         }
     });
 
-    const handleSelectedData=(item)=>{
+    const handleSelectedData = (item) => {
         dispatch({
             type: SELECT_INGREDIENT,
             selected: item
         })
     }
-    // const handleCostructerData = (item) => {
-    //     if (item.type !== 'bun') {
-    //         dispatch({
-    //             type: GET_CONSTRUCTER_DATA,
-    //             constructerIngredients: item
-    //         })
-    //     }
-    // }
-
-    // const handleBunData = (item) => {
-    //     if (item.type === 'bun') {
-    //         dispatch({
-    //             type: GET_BUN_DATA, 
-    //             constructerBun: item
-    //         })
-    //     }
-    // }
 
     return (
 
         <section className={ingredientsStyle.ingredients_wrapper} >
             <h1 className="mb-5 text text_type_main-large">Соберите бургер</h1>
-            <TabsContent changeTabIndex={(index)=>{setTabIndex(index)}} tabIndex={tabIndex} />
+            <TabsContent changeTabIndex={(index) => { setTabIndex(index) }} tabIndex={tabIndex} />
             <div ref={listRef} className={`${ingredientsStyle.blockIngredients} ${ingredientsStyle.customScroll} mt-2`}>
                 {types.map(type => {
                     return (<div key={type} className="mb-2">
@@ -86,17 +66,17 @@ function BurgerIngredients(props) {
                                     })
                                     .map((item) => {
                                         let counter = 0
-                                            constructerIngredients.forEach(constructerIng=>{
-                                                if(constructerIng === item){
-                                                    counter ++;
-                                                }
-                                            })
-                                        
+                                        constructerIngredients.forEach(constructerIng => {
+                                            if (constructerIng === item) {
+                                                counter++;
+                                            }
+                                        })
+
                                         return (
                                             <IngredientCard openModal={() => {
                                                 props.ingridientClicked();
                                                 handleSelectedData(item)
-                                            }} key={item._id} item={item} counter={counter}/>
+                                            }} key={item._id} item={item} counter={counter} />
                                         )
                                     })
                             }
@@ -120,12 +100,5 @@ function getTypeName(type) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-    }))
+    ingridientClicked: PropTypes.func
 }
-
-export default BurgerIngredients;

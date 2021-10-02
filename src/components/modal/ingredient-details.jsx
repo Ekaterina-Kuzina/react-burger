@@ -1,10 +1,10 @@
 import React from 'react'
 
 import modalStyle from "./modal.module.css"
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails() {
-    const selected = useSelector((state)=> state.selectedIngredient.selected)
+export default function IngredientDetails() {
+    const selected = useSelector((state) => state.selectedIngredient.selected)
 
     return (
         <div className='pl-15 pr-15'>
@@ -33,5 +33,3 @@ function IngredientDetails() {
         </div>
     )
 }
-
-export default IngredientDetails;

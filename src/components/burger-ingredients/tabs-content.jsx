@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
-function TabsContent(props) {
-  const [current, setCurrent] = React.useState(0)
+export default function TabsContent(props) {
+
   return (
     <div style={{ display: 'flex' }}>
       <Tab value= {0} active={props.tabIndex === 0} onClick={()=> props.changeTabIndex(0)}>
@@ -18,5 +18,3 @@ function TabsContent(props) {
     </div>
   )
 }
-
-export default TabsContent;

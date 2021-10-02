@@ -1,12 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import modalStyle from "./modal.module.css";
 import done from "../../images/done.png";
-// import { MakeOrder } from '../app/data-context'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function OrderDetails() {
-    // const {makeOrder} = useContext(MakeOrder)
+export default function OrderDetails() {
     const order = useSelector(state => state.orderData.order)
 
     return (
@@ -24,4 +22,3 @@ function OrderDetails() {
         </div>
     )
 }
-export default OrderDetails;

@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-function IngredientCard({item, openModal, counter}) {
-    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
+export default function IngredientCard({ item, openModal, counter }) {
 
-    const [{isDrag}, dragRef] = useDrag({
+    const [{ isDrag }, dragRef] = useDrag({
         type: "ingredients",
         item: item,
+
         collect: monitor => ({
             isDrag: monitor.isDragging()
         })
@@ -22,8 +21,8 @@ function IngredientCard({item, openModal, counter}) {
             <div ref={dragRef} onClick={openModal} className={`${ingredientsStyles.card} mt-6 mb-2`}>
                 <img src={item.image} alt="bun" />
                 {counter > 0 &&
-                    <Counter count={counter} size="default"/>
-                } 
+                    <Counter count={counter} size="default" />
+                }
                 <div className={`${ingredientsStyles.cost} mt-1 mb-1`}>
                     <p className="mr-2 text text_type_digits-default">{item.price}</p>
                     <CurrencyIcon type="primary" />
@@ -41,5 +40,3 @@ IngredientCard.propTypes = {
         price: PropTypes.number.isRequired,
     }),
 }
-
-export default IngredientCard;

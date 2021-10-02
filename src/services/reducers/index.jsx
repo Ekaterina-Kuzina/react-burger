@@ -20,7 +20,7 @@ import {
     SEND_INGREDIENTS_SUCCESS,
     SEND_INGREDIENTS_FAILED,
     CLEAR_ORDER
-    
+
 } from '../actions/index'
 
 
@@ -53,7 +53,7 @@ const ingredientsData = (state = initialState, action) => {
 
         case GET_INGREDIENTS_SUCCESS: {
             return {
-                ...state, 
+                ...state,
                 ingredients: action.ingredients,
                 ingredientsRequest: false
             }
@@ -93,22 +93,26 @@ const selectedIngredient = (state = initialState, action) => {
     }
 }
 
-const constructerData = (state = initialState, action)=>{
+const constructerData = (state = initialState, action) => {
     switch (action.type) {
-        case GET_CONSTRUCTER_DATA:{
+        case GET_CONSTRUCTER_DATA: {
             return {
                 ...state,
-                constructerIngredients: [...state.constructerIngredients , action.constructerIngredients]
+                constructerIngredients: [...state.constructerIngredients, action.constructerIngredients]
             }
         }
-        case FILTER_CONSTRUCTER:{
+        case FILTER_CONSTRUCTER: {
+            const constructerIngredientsNew = [...state.constructerIngredients];
+            constructerIngredientsNew.splice(action.toIndex, 0, constructerIngredientsNew.splice(action.fromIndex, 1)[0]);
             return {
+                ...state,
+                constructerIngredients: constructerIngredientsNew
             }
         }
 
         case REMOVE_CONSTRUCTER_DATA: {
             const itemToRemove = state.constructerIngredients.find(item => item._id === action._id)
-            if (!itemToRemove){
+            if (!itemToRemove) {
                 return state
             }
             const index = state.constructerIngredients.indexOf(itemToRemove)
@@ -120,42 +124,42 @@ const constructerData = (state = initialState, action)=>{
                 constructerIngredients: modifiedConstructerIngridients
             }
         }
-        default:{
+        default: {
             return state
         }
     }
 }
 
-const bunData = (state = initialState, action)=>{
+const bunData = (state = initialState, action) => {
     switch (action.type) {
-        case GET_BUN_DATA:{
-            return{
+        case GET_BUN_DATA: {
+            return {
                 ...state,
                 constructerBun: action.constructerBun
             }
         }
-            
-        default:{
+
+        default: {
             return state
-        }   
+        }
     }
 }
 
-const countedPrice= (state = initialState, action)=>{
+const countedPrice = (state = initialState, action) => {
     switch (action.type) {
-        case COUNT_PRICE:{
-            return{
+        case COUNT_PRICE: {
+            return {
                 ...state,
                 price: action.price
             }
         }
-        default:{
+        default: {
             return state
-        }   
+        }
     }
 }
 
-const orderData = (state = initialState, action)=>{
+const orderData = (state = initialState, action) => {
     switch (action.type) {
         case SEND_INGREDIENTS: {
             return {
@@ -166,7 +170,7 @@ const orderData = (state = initialState, action)=>{
 
         case SEND_INGREDIENTS_SUCCESS: {
             return {
-                ...state, 
+                ...state,
                 order: action.order,
                 orderRequest: false
             }
@@ -182,12 +186,12 @@ const orderData = (state = initialState, action)=>{
         case CLEAR_ORDER: {
             return {
                 ...state,
-                order:[],
+                order: [],
                 orderFailed: false,
                 orderRequest: false
             }
         }
-        
+
 
         default: {
             return state
