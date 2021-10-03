@@ -14,7 +14,7 @@ import appStyle from "./app.module.css";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/index'
-import { CLEAR_INGREDIENT, CLEAR_ORDER, COUNT_PRICE } from '../../services/actions/index'
+import { CLEAR_INGREDIENT, CLEAR_ORDER, COUNT_PRICE} from '../../services/actions/index'
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
@@ -28,11 +28,20 @@ export default function App() {
     const constructerBun = useSelector((state) => state.bunData.constructerBun)
 
     const handlePriceState = () => {
-        let sum = constructerBun.price * 2
-        constructerIngredients.forEach((item) => {
-            sum += item.price
-        })
-        dispatch({ type: COUNT_PRICE, price: sum })
+        if(constructerBun){
+            let sum = constructerBun.price * 2
+            constructerIngredients.forEach((item) => {
+                sum += item.price
+            })
+            dispatch({ type: COUNT_PRICE, price: sum })
+        }else{
+            let sum = 0;
+            constructerIngredients.forEach((item) => {
+                sum += item.price
+            })
+            dispatch({ type: COUNT_PRICE, price: sum })
+        }
+
     }
 
     useEffect(() => {

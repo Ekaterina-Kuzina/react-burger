@@ -7,22 +7,26 @@ export const CLEAR_INGREDIENT = 'CLEAR_INGREDIENT'
 
 export const GET_CONSTRUCTER_DATA = 'GET_CONSTRUCTER_DATA';
 export const REMOVE_CONSTRUCTER_DATA = 'REMOVE_CONSTRUCTER_DATA'
+export const CLEAR_CONSTRUCTER_DATA = 'CLEAR_CONSTRUCTER_DATA'
 export const FILTER_CONSTRUCTER = 'FILTER_CONSTRUCTER'
 export const GET_BUN_DATA = 'GET_BUN_DATA';
+export const CLEAR_BUN_DATA = 'CLEAR_BUN_DATA'
 export const COUNT_PRICE = 'COUNT_PRICE';
 
 export const SEND_INGREDIENTS = 'SEND_INGREDIENTS';
 export const SEND_INGREDIENTS_SUCCESS = 'SEND_INGREDIENTS_SUCCESS';
 export const SEND_INGREDIENTS_FAILED = 'SEND_INGREDIENTS_FAILED';
 export const CLEAR_ORDER = 'CLEAR_ORDER';
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+
+const urlIngredients = 'https://norma.nomoreparties.space/api/ingredients';
+const urlOrder = 'https://norma.nomoreparties.space/api/orders'
 
 export function getIngredients() {
     return function (dispatch) {
         dispatch({
             type: GET_INGREDIENTS
         })
-        fetch(url)
+        fetch(urlIngredients)
             .then(res=> res.json())
             .then(res => {
                 if (res && res.success) {
@@ -54,7 +58,7 @@ export function sendOrder(orderList){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "ingredients": orderList })
         };
-        fetch('https://norma.nomoreparties.space/api/orders', requestOptions)
+        fetch(urlOrder, requestOptions)
         .then(res=> res.json())
         .then(res => {
             if (res && res.success) {
@@ -62,6 +66,8 @@ export function sendOrder(orderList){
                     type: SEND_INGREDIENTS_SUCCESS,
                     order: res.order
                 })
+                dispatch({ type: CLEAR_CONSTRUCTER_DATA })
+                dispatch({ type: CLEAR_BUN_DATA })
             } else {
                 dispatch({
                     type: SEND_INGREDIENTS_FAILED,

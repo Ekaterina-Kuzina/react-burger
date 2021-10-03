@@ -20,11 +20,14 @@ export default function BurgerConstructor({orderButtonClicked}) {
 
 
     useEffect(() => {
-        let ids = [constructerBun._id]
-        constructerIngredients.forEach(item => {
-            ids.push(item._id)
-        });
-        setOrderList(ids)
+        if(constructerBun){
+            let ids = [constructerBun._id]
+            constructerIngredients.forEach(item => {
+                ids.push(item._id)
+            });
+            setOrderList(ids)
+        }
+
     }, [constructerIngredients, constructerBun])
 
     const sendRequest = (orderList) => {
@@ -65,32 +68,37 @@ export default function BurgerConstructor({orderButtonClicked}) {
 
 
     }, [constructerIngredients]);
-
+    
     return (
 
         <section className={`${constructor.wrapper} pt-15`}>
             <div className={`${constructor.inner_wrapper}`}>
                 <div style={{ border: '2px solid #131316', borderRadius: '20px', borderColor }} ref={dropTarget}>
-                    <div className="pl-10">
-                        {constructerBun !== undefined &&
+                    <div className={`${constructor.bun_wrapper} pl-10 `}>
+                        {constructerBun ?
                             <ConstructorElement
                                 type="top"
                                 isLocked={true}
                                 text={`${constructerBun.name} (верх)`}
                                 price={constructerBun.price}
                                 thumbnail={constructerBun.image}
-                            />
+                            />:
+                            <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_top} text text_type_main-default`}>
+                                Выберите булку
+                            </div>
+
                         }
+
                     </div>
 
-                    <div className={constructor.item_wrapper}>
-                        {constructerIngredients !== [] &&
+                    <div className={`${constructor.item_wrapper} ${constructor.custom_scroll}`}>
+                        {constructerIngredients !== null &&
                             constructerIngredients.map((constructerItemData, index) => {
                                 constructerItemData.constructerID = uuidv4();
                                 constructerItemData.index = index
                                 return (
                                     constructerItemData.type !== 'bun' &&
-                                    <div key={index} className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 `}>
+                                    <div key={index} className={`${constructor.item}pl-2 `}>
                                         <ItemOfConstructor id={constructerIngredients._id} moveCard={moveCard} index={index} constructerItemData={constructerItemData} />
                                     </div>
                                 )
@@ -98,15 +106,18 @@ export default function BurgerConstructor({orderButtonClicked}) {
                         }
                     </div>
 
-                    <div className="pl-10">
-                        {constructerBun !== undefined &&
+                    <div className= {`${constructor.bun_wrapper} pl-10 `}>
+                        {constructerBun?
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
                                 text={`${constructerBun.name} (низ)`}
                                 price={constructerBun.price}
                                 thumbnail={constructerBun.image}
-                            />
+                            />:
+                            <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_bottom} text text_type_main-default `}>
+                                Выберите булку
+                            </div>
                         }
 
                     </div>

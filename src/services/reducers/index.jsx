@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import bunImg from '../../images/bun-01.png'
 
 import {
     GET_INGREDIENTS,
@@ -12,8 +11,10 @@ import {
     GET_CONSTRUCTER_DATA,
     FILTER_CONSTRUCTER,
     REMOVE_CONSTRUCTER_DATA,
+    CLEAR_CONSTRUCTER_DATA,
 
     GET_BUN_DATA,
+    CLEAR_BUN_DATA,
     COUNT_PRICE,
 
     SEND_INGREDIENTS,
@@ -36,7 +37,7 @@ const initialState = {
     orderRequest: false,
     orderFailed: false,
 
-    constructerBun: { name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' },
+    constructerBun: null,
     price: ''
 
 
@@ -124,6 +125,13 @@ const constructerData = (state = initialState, action) => {
                 constructerIngredients: modifiedConstructerIngridients
             }
         }
+        case CLEAR_CONSTRUCTER_DATA: {
+            return {
+                ...state,
+                constructerIngredients: []
+            }
+        }
+
         default: {
             return state
         }
@@ -136,6 +144,12 @@ const bunData = (state = initialState, action) => {
             return {
                 ...state,
                 constructerBun: action.constructerBun
+            }
+        }
+        case CLEAR_BUN_DATA: {
+            return {
+                ...state,
+                constructerBun: null
             }
         }
 

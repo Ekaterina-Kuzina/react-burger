@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -17,4 +18,9 @@ export default function TabsContent(props) {
       </Tab>
     </div>
   )
+}
+
+TabsContent.propTypes = {
+  changeTabIndex: PropTypes.func,
+  tabIndex: PropTypes.number.isRequired,
 }

@@ -45,5 +45,6 @@ export default function Modal(props) {
 }
 
 Modal.propTypes = {
-    closeModal: PropTypes.func
+    closeModal: PropTypes.func,
+    title: PropTypes.string
 }

@@ -34,9 +34,11 @@ export default function IngredientCard({ item, openModal, counter }) {
 }
 
 IngredientCard.propTypes = {
+    counter: PropTypes.number.isRequired,
     item: PropTypes.shape({
         image: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
     }),
+    openModal: PropTypes.func,
 }
