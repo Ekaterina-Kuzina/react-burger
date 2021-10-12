@@ -6,7 +6,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import modalStyle from "./modal.module.css"
 
 import ModalOverlay from "../modal-overlay/modal-overlay"
-function Modal(props) {
+export default function Modal(props) {
 
     const handleKeyDown = (e) => {
         if (e.keyCode === 27) {
@@ -29,12 +29,13 @@ function Modal(props) {
                 <div className={modalStyle.header_of_modal}>
                     {
                         props.title !== undefined ?
-                        <h3 className="text text_type_main-large">{props.title}</h3>
-                        :
-                        <div></div>
+                            <h3 className="text text_type_main-large">{props.title}</h3>
+                            :
+                            <div></div>
                     }
-
-                    <CloseIcon className={modalStyle.close} onClick={props.closeModal} type="primary" />
+                    <div className={modalStyle.close} >
+                        <CloseIcon onClick={props.closeModal} type="primary" />
+                    </div>
                 </div>
                 {props.children}
             </div>
@@ -44,7 +45,6 @@ function Modal(props) {
 }
 
 Modal.propTypes = {
-    closeModal: PropTypes.func
+    closeModal: PropTypes.func,
+    title: PropTypes.string
 }
-
-export default Modal;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import bunImg from '../../images/bun-01.png'
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -11,89 +12,89 @@ import IngredientDetails from '../modal/ingredient-details'
 
 import appStyle from "./app.module.css";
 
-import { DataContext, SelectedItemDataContext, ConstructerData, MakeOrder } from './data-context'
-
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/index'
+import { CLEAR_INGREDIENT, CLEAR_ORDER, COUNT_PRICE} from '../../services/actions/index'
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
 
-function App() {
-    const [stateData, setStateData] = useState();
-    const [selectedItem, setSelectedItem] = useState()
-    const [constructerData, setConstructerData] = useState([])
-    const [bunData, setBunData] = useState({ name: 'Краторная булка N-200i', price: 1255, image: bunImg, _id: '60d3b41abdacab0026a733c6' })
-    const [priceState, setPriceState] = useState(0)
-    const [makeOrder, setMakeOrder] = useState()
+export default function App() {
     const [cardType, setCardType] = useState('')
 
+    const dispatch = useDispatch();
+    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
+    const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector((state) => state.bunData.constructerBun)
+
     const handlePriceState = () => {
-        let sum = bunData.price * 2
-        constructerData.forEach((item) => {
-            sum += item.price
-        })
-        setPriceState(sum)
+        if(constructerBun){
+            let sum = constructerBun.price * 2
+            constructerIngredients.forEach((item) => {
+                sum += item.price
+            })
+            dispatch({ type: COUNT_PRICE, price: sum })
+        }else{
+            let sum = 0;
+            constructerIngredients.forEach((item) => {
+                sum += item.price
+            })
+            dispatch({ type: COUNT_PRICE, price: sum })
+        }
+
     }
 
     useEffect(() => {
         handlePriceState()
-    }, [bunData, constructerData])
+    }, [constructerBun, constructerIngredients])
 
     useEffect(() => {
-        fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(res.status);
-            })
-            .then(data => setStateData(data))
-            .catch(err => console.log(err))
+        dispatch(getIngredients())
     }, [])
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <DataContext.Provider value={stateData}>
-                <SelectedItemDataContext.Provider value={{ selectedItem: selectedItem, setSelectedItem: setSelectedItem }}>
-                    <ConstructerData.Provider value={{ constructerData: constructerData, setConstructerData: setConstructerData }}>
-                        <MakeOrder.Provider value={{makeOrder: makeOrder, setMakeOrder: setMakeOrder}}>
 
-                            <AppHeader />
-                            <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
+            <AppHeader />
+            <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
-                                {stateData &&
-                                    <>
-                                        <BurgerIngredients ingridientClicked={() => {
-                                            setCardType(ingridientCardType)
-                                        }} bunData={bunData} setBunData={setBunData} />
-                                        <BurgerConstructor orderButtonClicked={() => {
-                                            setCardType(orderCardType)
-                                        }} bunData={bunData} priceState={priceState} />
-                                    </>
-                                }
+                {ingredients &&
+                    <DndProvider backend={HTML5Backend}>
+                        <BurgerIngredients ingridientClicked={() => {
+                            setCardType(ingridientCardType)
+                        }} />
+                        <BurgerConstructor orderButtonClicked={() => {
+                            setCardType(orderCardType)
+                        }} />
+                    </DndProvider>
+                }
 
-                            </div>
+            </div>
 
-                            {
-                                cardType === ingridientCardType &&
-                                <Modal title='Детали ингредиента' closeModal={() => setCardType('')}>
-                                    <IngredientDetails />
-                                </Modal>
-                            }
+            {
+                cardType === ingridientCardType &&
+                <Modal title='Детали ингредиента' closeModal={
+                    () => {
+                        setCardType('')
+                        dispatch({ type: CLEAR_INGREDIENT })
+                    }
+                }>
+                    <IngredientDetails />
+                </Modal>
+            }
 
-                            {
-                                cardType === orderCardType &&
-                                <Modal closeModal={() => setCardType('')}>
-                                    <OrderDetails />
-                                </Modal>
-                            }
-                        </MakeOrder.Provider>
-                    </ConstructerData.Provider>
-                </SelectedItemDataContext.Provider>
-            </DataContext.Provider>
+            {
+                cardType === orderCardType &&
+                <Modal closeModal={
+                    () => {
+                        setCardType('')
+                        dispatch({ type: CLEAR_ORDER })
+                    }
+                }>
+                    <OrderDetails />
+                </Modal>
+            }
 
         </div>
     )
 }
-
-export default App;

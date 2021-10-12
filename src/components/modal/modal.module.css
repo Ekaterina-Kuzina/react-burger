@@ -19,7 +19,9 @@
     align-items: center;
     height: 64px;
 }
-
+.close{
+    cursor: pointer;
+}
 .ingredient_img {
     margin: 0 auto;
     width: 480px;

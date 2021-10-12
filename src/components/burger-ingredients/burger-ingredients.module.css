@@ -6,7 +6,7 @@
 .blockIngredients {
     width: 600px;
     max-height: 756px;
-    overflow-y: auto;
+    overflow-y: auto;   
 }
 
 .customScroll {
@@ -39,6 +39,7 @@
     width: 272px;
     max-height: 208px;
     text-align: center;
+    cursor: pointer;
 }
 
 .cost {

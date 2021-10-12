@@ -1,94 +1,136 @@
-import React, { useState,useEffect, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { ConstructerData, MakeOrder } from '../app/data-context';
-
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from "react-dnd";
+import ItemOfConstructor from './item-of-constructor'
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructor from './burger-constructor.module.css';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
+import { sendOrder } from '../../services/actions/index'
+import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
-const url = 'https://norma.nomoreparties.space/api/orders';
-function BurgerConstructor(props) {
-    const {constructerData} = useContext(ConstructerData)
-    const {setMakeOrder} = useContext(MakeOrder)
-    const [sendOrder, setSendOrder] = useState([])
+export default function BurgerConstructor({orderButtonClicked}) {
+    const dispatch = useDispatch();
 
-    useEffect(()=>{
-        let ids = [props.bunData._id]
-        constructerData.forEach(item => {
-            ids.push(item._id)
-        });
-        setSendOrder(ids)
-    }, [constructerData, props.bunData])
+    const price = useSelector((state) => state.countedPrice.price)
+    const [orderList, setOrderList] = useState([])
 
-    const sendRequest =()=>{
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "ingredients": sendOrder })
-        };
-        fetch(url, requestOptions)
-            .then(res =>{
-                if(res.ok){
-                    return res.json()
-                }
-                return Promise.reject(res.status)
-            })
-            .then(data => setMakeOrder(data))
-            .catch(err => console.log(err))
+    const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector((state) => state.bunData.constructerBun)
+
+
+    useEffect(() => {
+        if(constructerBun){
+            let ids = [constructerBun._id]
+            constructerIngredients.forEach(item => {
+                ids.push(item._id)
+            });
+            setOrderList(ids)
+        }
+
+    }, [constructerIngredients, constructerBun])
+
+    const sendRequest = (orderList) => {
+        dispatch(sendOrder(orderList))
     }
 
+    const onDropHandler = (item) => {
+        if (item.type === 'bun') {
+            dispatch({
+                type: GET_BUN_DATA,
+                constructerBun: item
+            })
+        } else {
+            dispatch({
+                type: GET_CONSTRUCTER_DATA,
+                constructerIngredients: item
+            })
+        }
+    }
+    const [{ isOver }, dropTarget] = useDrop({
+        accept: "ingredients",
+        drop(item) {
+            onDropHandler(item);
+        },
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    });
+
+    const borderColor = isOver ? '#762D76' : '#131316';
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        dispatch({
+            type: FILTER_CONSTRUCTER,
+            fromIndex: dragIndex,
+            toIndex: hoverIndex
+        })
+
+
+    }, [constructerIngredients]);
+    
     return (
+
         <section className={`${constructor.wrapper} pt-15`}>
             <div className={`${constructor.inner_wrapper}`}>
-                <div className="pl-10">
-                    {props.bunData !== undefined &&
-                        <ConstructorElement
-                            type="top"
-                            isLocked={true}
-                            text={`${props.bunData.name} (верх)`}
-                            price={props.bunData.price}
-                            thumbnail={props.bunData.image}
-                        />
-                    }
+                <div style={{ border: '2px solid #131316', borderRadius: '20px', borderColor }} ref={dropTarget}>
+                    <div className={`${constructor.bun_wrapper} pl-10 `}>
+                        {constructerBun ?
+                            <ConstructorElement
+                                type="top"
+                                isLocked={true}
+                                text={`${constructerBun.name} (верх)`}
+                                price={constructerBun.price}
+                                thumbnail={constructerBun.image}
+                            />:
+                            <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_top} text text_type_main-default`}>
+                                Выберите булку
+                            </div>
+
+                        }
+
+                    </div>
+
+                    <div className={`${constructor.item_wrapper} ${constructor.custom_scroll}`}>
+                        {constructerIngredients !== null &&
+                            constructerIngredients.map((constructerItemData, index) => {
+                                constructerItemData.constructerID = uuidv4();
+                                constructerItemData.index = index
+                                return (
+                                    constructerItemData.type !== 'bun' &&
+                                    <div key={index} className={`${constructor.item}pl-2 `}>
+                                        <ItemOfConstructor id={constructerIngredients._id} moveCard={moveCard} index={index} constructerItemData={constructerItemData} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
+                    <div className= {`${constructor.bun_wrapper} pl-10 `}>
+                        {constructerBun?
+                            <ConstructorElement
+                                type="bottom"
+                                isLocked={true}
+                                text={`${constructerBun.name} (низ)`}
+                                price={constructerBun.price}
+                                thumbnail={constructerBun.image}
+                            />:
+                            <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_bottom} text text_type_main-default `}>
+                                Выберите булку
+                            </div>
+                        }
+
+                    </div>
                 </div>
-
-                <div>
-                    {constructerData !== undefined &&
-                        constructerData.map((constructerItemData) => {
-                            constructerItemData.constructerID = uuidv4();
-                            
-                            return (
-                                constructerItemData.type !== 'bun' &&
-                                <div key={constructerItemData.constructerID} className={`${constructor.item_wrapper} ${constructor.custom_scroll} pl-2 pr-2`}>
-                                    <ItemOfConstructor constructerItemData={constructerItemData} />
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-
-                <div className="pl-10">
-                    {props.bunData !== undefined &&
-                        <ConstructorElement
-                            type="bottom"
-                            isLocked={true}
-                            text={`${props.bunData.name} (низ)`}
-                            price={props.bunData.price}
-                            thumbnail={props.bunData.image}
-                        />
-                    }
-
-                </div>
-
                 <div className={`${constructor.order} mt-10`}>
                     <div className={`${constructor.final_cost} mr-10`}>
-                        <span className="mr-2 text text_type_digits-medium">{props.priceState}</span>
+                        <span className="mr-2 text text_type_digits-medium">{price}</span>
                         <CurrencyIcon type="primary" />
                     </div>
 
                     <Button onClick={() => {
-                        props.orderButtonClicked();
-                        sendRequest()
+                        orderButtonClicked();
+                        sendRequest(orderList)
                     }} type="primary" size="large">Оформить заказ</Button>
 
                 </div>
@@ -97,36 +139,6 @@ function BurgerConstructor(props) {
     )
 }
 
-function ItemOfConstructor(props) {
-
-    return (
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
-            <DragIcon type="primary" />
-
-            <ConstructorElement
-                text={props.constructerItemData.name}
-                price={props.constructerItemData.price}
-                thumbnail={props.constructerItemData.image} />
-
-        </div>
-    )
-}
-
 BurgerConstructor.propTypes = {
-    bunData: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }),
-    priceState: PropTypes.number.isRequired,
+    orderButtonClicked: PropTypes.func
 }
-ItemOfConstructor.propTypes = {
-    constructerItemData: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    })
-}
-
-export default BurgerConstructor;
