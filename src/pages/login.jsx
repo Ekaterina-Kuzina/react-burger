@@ -1,7 +1,7 @@
 import React from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
-import formStyle from './login.module.css'
+import formStyle from './forms.module.css'
 
 export default function SignIn() {
     const [value, setValue] = React.useState('')
@@ -22,7 +22,7 @@ export default function SignIn() {
                 <p className="text text_type_main-medium mb-6">Вход</p>
                 <div className='mb-6'>
                     <Input
-                        type={'text'}
+                        type={'email'}
                         placeholder={'Email'}
                         onChange={e => setValue(e.target.value)}
                         value = {value}

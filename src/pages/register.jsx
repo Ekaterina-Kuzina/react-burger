@@ -1,7 +1,7 @@
 import React from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
-import formStyle from './login.module.css'
+import formStyle from './forms.module.css'
 
 export default function Registration() {
     const [valueName, setValueName] = React.useState('')
@@ -45,7 +45,7 @@ export default function Registration() {
                 <div className='mb-6'>
 
                     <Input
-                        type={'text'}
+                        type={'email'}
                         placeholder={'Email'}
                         onChange={e => setValueEmail(e.target.value)}
                         value={valueEmail}
