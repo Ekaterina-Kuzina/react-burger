@@ -27,8 +27,10 @@ export default function App() {
                     <Route path='/login'>
                         <SignIn/>
                     </Route>
-                    <Route path='/registration'>
+                    <Route path='/register'>
                         <Registration/>
+                    </Route>
+                    <Route path='/forgot-password'>
                     </Route>
                     <Route path='*'>
                         <Page404/>

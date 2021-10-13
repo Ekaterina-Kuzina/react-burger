@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.link_wrapper {
+    display: flex;
+}
+
+.text {
+    color: #8585AD;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}
