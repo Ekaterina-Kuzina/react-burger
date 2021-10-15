@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
+import { useSelector,useDispatch } from 'react-redux';
+import {sendReqLoginUser} from '../services/actions/auth'
 
 export default function SignIn() {
+    const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
     const inputRef = React.useRef(null)
+
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
-        alert('Icon Click Callback')
     }
 
     const [valuePassword, setValuePassword] = React.useState('')
     const onChange = e => {
         setValuePassword(e.target.value)
+    }
+
+    const loginBody = {
+        email: value,
+        password : valuePassword
+    }
+    console.log(loginBody);
+    const sendRequest= (loginBody)=>{
+        dispatch(sendReqLoginUser(loginBody))
     }
 
     return (
@@ -40,7 +52,11 @@ export default function SignIn() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large">
+                    <Button type="primary" size="large" onClick={(e)=>{
+                        e.preventDefault()
+                        sendRequest(loginBody)
+                        }
+                    }>
                         Войти
                     </Button>
                 </div>

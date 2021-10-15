@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import {register, login, saveUserInfo} from './auth'
 
 import {
     GET_INGREDIENTS,
@@ -39,7 +40,6 @@ const initialState = {
 
     constructerBun: null,
     price: ''
-
 
 }
 
@@ -221,6 +221,9 @@ export const rootReducer = combineReducers({
     constructerData,
     bunData,
     countedPrice,
-    orderData
+    orderData,
+    register,
+    login,
+    saveUserInfo,
 })
 

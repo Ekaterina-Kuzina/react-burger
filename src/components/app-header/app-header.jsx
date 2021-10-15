@@ -13,10 +13,10 @@ export default function AppHeader() {
                             <BurgerIcon type="primary" />
                             <p className="ml-2">Конструктор</p>
                         </Link>
-                        <a href="{#}" className={`${header.ref} ml-2 pt-4 pb-4 pl-5 pr-5`}>
+                        <Link to="/" className={`${header.ref} ml-2 pt-4 pb-4 pl-5 pr-5`}>
                             <ListIcon type="secondary" />
                             <p style={{ color: '#8585AD' }} className="ml-2">Лента заказов</p>
-                        </a>
+                        </Link>
                     </div>
 
                     <Link to="/" className={`${header.ref}`}>

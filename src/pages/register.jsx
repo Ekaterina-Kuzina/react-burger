@@ -2,26 +2,39 @@ import React from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
+import {useDispatch} from 'react-redux';
+import { sendReqRegisterUser } from '../services/actions/auth'
 
 export default function Registration() {
+    const dispatch = useDispatch();
     const [valueName, setValueName] = React.useState('')
     const inputRefName = React.useRef(null)
     const onIconClickName = () => {
         setTimeout(() => inputRefName.current.focus(), 0)
-        alert('Icon Click Callback')
     }
 
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef(null)
     const onIconClickEmail = () => {
         setTimeout(() => inputRefEmail.current.focus(), 0)
-        alert('Icon Click Callback')
     }
 
     const [valuePassword, setValuePassword] = React.useState('')
     const onChange = e => {
         setValuePassword(e.target.value)
     }
+
+    const body = {
+        email: valueEmail, 
+        password: valuePassword, 
+        name: valueName 
+    } 
+    console.log(body);
+    const sendRequest = (body) => {
+        dispatch(sendReqRegisterUser(body))
+    }
+
+
     return (
         <div className ={formStyle.wrapper }>
             <form  className={`${formStyle.form}`} action="">
@@ -63,7 +76,9 @@ export default function Registration() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large">
+                    <Button type="primary" size="large" onClick={(e)=>{
+                        e.preventDefault()
+                        sendRequest(body)}}>
                         Зарегистрироваться
                     </Button>
                 </div>
