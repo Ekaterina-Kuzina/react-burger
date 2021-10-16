@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
+import { useHistory } from "react-router-dom";
 
 const url = 'https://norma.nomoreparties.space/api/password-reset'
 
-export default function ForgotPassword() {
-
+export default function ForgotPassword({saveForgotPassword}) {
+    const history = useHistory()
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef(null)
     const onIconClickEmail = () => {
@@ -27,10 +28,14 @@ export default function ForgotPassword() {
             },
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            // saveForgotPassword(true)
+            // history.push('/reset-password');
+            console.log(data)
+        })
         .catch(err => console.log(err))
     }
-
+console.log(history);
     return (
         <div className ={formStyle.wrapper }>
             <form  className={`${formStyle.form}`} action="">

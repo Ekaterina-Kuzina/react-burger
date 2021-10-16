@@ -20,6 +20,7 @@ export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
 export const USER_INFO = 'USER_INFO';
+export const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 
 
 export function sendReqRegisterUser(registerBody){

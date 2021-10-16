@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
@@ -6,7 +6,7 @@ import formStyle from './forms.module.css'
 const url = 'https://norma.nomoreparties.space/api/password-reset/reset'
 
 
-export default function ResetPassword() {
+export default function ResetPassword({removeForgotPassword}) {
     const [valuePass, setValuePass] = React.useState('')
     const [switchIcon, setSwitchIcon]= React.useState(true)
     const inputRefPass = React.useRef(null)
@@ -48,6 +48,10 @@ export default function ResetPassword() {
         .then(data => console.log(data))
         .catch(err => console.log(err))
     }
+
+    useEffect(() => {
+        removeForgotPassword(false)
+    }, [])
 
     return (
         <div className ={formStyle.wrapper }>

@@ -12,6 +12,7 @@ import {
     REFRESH_TOKEN_FAILED,
 
     USER_INFO,
+    CLEAR_USER_INFO
 
 
 } from '../actions/auth'
@@ -103,6 +104,12 @@ export const saveUserInfo  = (state = initialState, action) =>{
             return {
                 ...state,
                 userInfo : action.userInfo
+            }
+        }
+        case CLEAR_USER_INFO: {
+            return {
+                ...state,
+                userInfo : null
             }
         }
             

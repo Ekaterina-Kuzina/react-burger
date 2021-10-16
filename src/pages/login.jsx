@@ -23,7 +23,7 @@ export default function SignIn() {
         email: value,
         password : valuePassword
     }
-    console.log(loginBody);
+
     const sendRequest= (loginBody)=>{
         dispatch(sendReqLoginUser(loginBody))
     }
@@ -55,8 +55,8 @@ export default function SignIn() {
                     <Button type="primary" size="large" onClick={(e)=>{
                         e.preventDefault()
                         sendRequest(loginBody)
-                        }
-                    }>
+                        
+                    }}>
                         Войти
                     </Button>
                 </div>

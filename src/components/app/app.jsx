@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react';
 
 import AppHeader from '../app-header/app-header';
 import appStyle from "./app.module.css";
+import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
 import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
-import {USER_INFO} from '../../services/actions/auth'
+import { USER_INFO } from '../../services/actions/auth'
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function App() {
     const dispatch = useDispatch()
+    const history = useHistory()
     const loginData = useSelector((state) => state.login.loginData);
     const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
+    const [wasInForgotPasswordPage, setWasInForgotPasswordPage]  = useState(false)
 
     async function authUser() {
         return fetch(`https://norma.nomoreparties.space/api/auth/user`, {
@@ -31,8 +35,9 @@ export default function App() {
             referrerPolicy: 'no-referrer'
         })
     }
+    console.log(wasInForgotPasswordPage);
 
-    async function authToken() {
+    async function authToken(endPoint) {
         return fetch(`https://norma.nomoreparties.space/api/auth/token`, {
             method: 'POST',
             body: JSON.stringify({
@@ -50,11 +55,10 @@ export default function App() {
     const userInfoRequest = async () => {
         if (localStorage.getItem('accessToken')) {
             let res = await (await authUser()).json()
-            console.log(res);
-            if (res.success) {
+            if (res && res.success) {
                 dispatch({
                     type: USER_INFO,
-                    userInfo: res
+                    userInfo: res.user
                 })
 
             } else if (localStorage.getItem('refreshToken')) {
@@ -65,7 +69,7 @@ export default function App() {
                 res = await (await authUser()).json()
                 dispatch({
                     type: USER_INFO,
-                    userInfo: res
+                    userInfo: res.user
                 })
             }
         }
@@ -74,6 +78,10 @@ export default function App() {
 
     useEffect(() => {
         userInfoRequest()
+    }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')])
+
+    useEffect(() => {
+        console.log(wasInForgotPasswordPage);
     }, [])
 
     return (
@@ -83,24 +91,23 @@ export default function App() {
                 <Switch>
                     <Route path='/' exact>
                         <HomePage />
-
                     </Route>
                     <Route path='/login'>
                         {userInfo ? <Redirect to="/" /> : <SignIn />}
-
                     </Route>
                     <Route path='/register'>
-                        <Registration />
+                        {userInfo ? <Redirect to="/" /> : <Registration />}
                     </Route>
                     <Route path='/forgot-password'>
-                        <ForgotPassword />
+                        {userInfo ? <Redirect to="/" /> : <ForgotPassword saveForgotPassword={setWasInForgotPasswordPage} />}
                     </Route>
                     <Route path='/reset-password'>
-                        <ResetPassword />
+                    {userInfo ? <Redirect to="/" /> :  <ResetPassword removeForgotPassword={setWasInForgotPasswordPage}/>}
+                        {/* {wasInForgotPasswordPage ?  <ResetPassword removeForgotPassword={setWasInForgotPasswordPage}/>: <Redirect to="/" /> } */}
                     </Route>
-                    <Route path='/profile'>
-                        <Profile />
-                    </Route>
+                    <ProtectedRoute path='/profile'>
+                        <Profile/>
+                    </ProtectedRoute>
                     <Route path='*'>
                         <Page404 />
                     </Route>
