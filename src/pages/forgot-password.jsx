@@ -1,15 +1,19 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {FLAG_FORGOT_PASSWORD} from '../services/actions/auth'
 
 const url = 'https://norma.nomoreparties.space/api/password-reset'
 
-export default function ForgotPassword({saveForgotPassword}) {
+export default function ForgotPassword() {
     const history = useHistory()
+    const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef(null)
+
     const onIconClickEmail = () => {
         setTimeout(() => inputRefEmail.current.focus(), 0)
         alert('Icon Click Callback')
@@ -20,22 +24,24 @@ export default function ForgotPassword({saveForgotPassword}) {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(newPost), 
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-        })
-        .then(res => res.json())
-        .then(data => {
-            // saveForgotPassword(true)
-            // history.push('/reset-password');
-            console.log(data)
-        })
-        .catch(err => console.log(err))
+        if(newPost.email){
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify(newPost), 
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                dispatch({type: FLAG_FORGOT_PASSWORD})
+                history.push('/reset-password')
+                console.log(data)
+            })
+            .catch(err => console.log(err))
+        }
     }
-console.log(history);
+
     return (
         <div className ={formStyle.wrapper }>
             <form  className={`${formStyle.form}`} action="">

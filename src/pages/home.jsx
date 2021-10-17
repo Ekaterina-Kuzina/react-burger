@@ -7,20 +7,22 @@ import BurgerIngredients from '../components/burger-ingredients/burger-ingredien
 import Modal from '../components/modal/modal';
 
 import OrderDetails from '../components/modal/order-details';
-import IngredientDetails from '../components/modal/ingredient-details';
 
 import appStyle from "../components/app/app.module.css"
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../services/actions/index'
-import { CLEAR_INGREDIENT, CLEAR_ORDER, COUNT_PRICE } from '../services/actions/index'
+import { CLEAR_ORDER, COUNT_PRICE } from '../services/actions/index'
+import { useHistory } from 'react-router-dom';
+import {CLEAR_LOGIN_USER} from '../services/actions/auth'
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
 
 export default function HomePage() {
     const [cardType, setCardType] = useState('')
-    console.log(cardType);
+    const history = useHistory()
+    const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
 
     const dispatch = useDispatch();
     const ingredients = useSelector((state) => state.ingredientsData.ingredients)
@@ -50,6 +52,7 @@ export default function HomePage() {
 
     useEffect(() => {
         dispatch(getIngredients())
+        dispatch({type: CLEAR_LOGIN_USER})
     }, [])
 
     return (
@@ -62,23 +65,16 @@ export default function HomePage() {
                             setCardType(ingridientCardType)
                         }} />
                         <BurgerConstructor orderButtonClicked={() => {
-                            setCardType(orderCardType)
+                            if(userInfo){
+                                setCardType(orderCardType)
+                            }else{
+                                history.push('/login')
+                            }
                         }} />
                     </DndProvider>
                 }
 
             </div>
-            {/* {
-                cardType === ingridientCardType &&
-                <Modal title='Детали ингредиента' closeModal={
-                    () => {
-                        setCardType('')
-                        dispatch({ type: CLEAR_INGREDIENT })
-                    }
-                }>
-                    <IngredientDetails />
-                </Modal>
-            } */}
 
             {
                 cardType === orderCardType &&

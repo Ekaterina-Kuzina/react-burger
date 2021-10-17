@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {register, login, saveUserInfo} from './auth'
+import {register, login, saveUserInfo, flagForForgotPassword} from './auth'
 
 import {
     GET_INGREDIENTS,
@@ -225,5 +225,6 @@ export const rootReducer = combineReducers({
     register,
     login,
     saveUserInfo,
+    flagForForgotPassword
 })
 

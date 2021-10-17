@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
-import { useSelector,useDispatch } from 'react-redux';
-import {sendReqLoginUser} from '../services/actions/auth'
+import { useDispatch } from 'react-redux';
+import { sendReqLoginUser } from '../services/actions/auth'
 
 export default function SignIn() {
     const dispatch = useDispatch()
@@ -21,10 +21,10 @@ export default function SignIn() {
 
     const loginBody = {
         email: value,
-        password : valuePassword
+        password: valuePassword
     }
 
-    const sendRequest= (loginBody)=>{
+    const sendRequest = (loginBody) => {
         dispatch(sendReqLoginUser(loginBody))
     }
 
@@ -37,7 +37,7 @@ export default function SignIn() {
                         type={'email'}
                         placeholder={'Email'}
                         onChange={e => setValue(e.target.value)}
-                        value = {value}
+                        value={value}
                         name={'name'}
                         error={false}
                         ref={inputRef}
@@ -52,24 +52,24 @@ export default function SignIn() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large" onClick={(e)=>{
+                    <Button type="primary" size="large" onClick={(e) => {
                         e.preventDefault()
                         sendRequest(loginBody)
-                        
+
                     }}>
                         Войти
                     </Button>
                 </div>
 
                 <div className={`${formStyle.link_wrapper} mb-4 text text_type_main-default`}>
-                    <p className ={formStyle.text}>Вы — новый пользователь?</p>
-                    <Link className = {`${formStyle.link} ml-2`} to='/register'>Зарегистрироваться</Link>
+                    <p className={formStyle.text}>Вы — новый пользователь?</p>
+                    <Link className={`${formStyle.link} ml-2`} to='/register'>Зарегистрироваться</Link>
 
                 </div>
 
                 <div className={`${formStyle.link_wrapper} text text_type_main-default`}>
-                    <p className ={formStyle.text}>Забыли пароль?</p>
-                    <Link className = {`${formStyle.link} ml-2`} to='/forgot-password' >Восстановить пароль</Link>
+                    <p className={formStyle.text}>Забыли пароль?</p>
+                    <Link className={`${formStyle.link} ml-2`} to='/forgot-password' >Восстановить пароль</Link>
                 </div>
             </form>
         </div>

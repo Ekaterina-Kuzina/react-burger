@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
 
 import modalStyle from "./modal.module.css"
-import { useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom'
 
 export default function IngredientDetailsForFullPage() {
     let { id } = useParams();
-    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
     const [ingForFullPageInfo, setIngForFullPageInfo] = useState(null)
     
     useEffect(() => {
@@ -15,25 +13,20 @@ export default function IngredientDetailsForFullPage() {
         .then(res => {
             if (res && res.success) {
                 setIngForFullPageInfo(res.data)
-            } else {
-            }
+            } 
         })
         .catch(err =>{
             console.log(err);
         })
     }, [])
 
-    let viewIngredient = null;
+    let viewIngredient;
     if(ingForFullPageInfo){
         viewIngredient = ingForFullPageInfo.find(element => element._id === id)
     }
-    console.log(viewIngredient); 
-
-
-    const selected = useSelector((state) => state.selectedIngredient.selected)
 
     return (
-        <div className='pl-15 pr-15'>
+        <div className={`${modalStyle.full_page_ingredient} pl-15 pr-15`}>
             <div className={modalStyle.ingredient_img}>
                 <img src={viewIngredient ? viewIngredient.image_large : ''} alt="ingredient" />
             </div>

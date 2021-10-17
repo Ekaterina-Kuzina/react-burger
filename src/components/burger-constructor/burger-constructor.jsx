@@ -11,6 +11,7 @@ import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../se
 
 export default function BurgerConstructor({orderButtonClicked}) {
     const dispatch = useDispatch();
+    const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
 
     const price = useSelector((state) => state.countedPrice.price)
     const [orderList, setOrderList] = useState([])
@@ -129,8 +130,10 @@ export default function BurgerConstructor({orderButtonClicked}) {
                     </div>
 
                     <Button onClick={() => {
-                        orderButtonClicked();
-                        sendRequest(orderList)
+                            orderButtonClicked();
+                        if(userInfo){
+                            sendRequest(orderList)
+                        }
                     }} type="primary" size="large">Оформить заказ</Button>
 
                 </div>

@@ -5,7 +5,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientsStyles from './burger-ingredients.module.css';
 import { useDrag } from "react-dnd";
 import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 import { useLocation } from 'react-router-dom'
 export default function IngredientCard({ item, openModal, counter }) {
@@ -19,7 +19,7 @@ export default function IngredientCard({ item, openModal, counter }) {
         })
     });
     let location = useLocation();
-    
+
     return (
         !isDrag && (
             <Link to={{

@@ -1,19 +1,18 @@
 import {
-    REGISTER_USER ,
+    REGISTER_USER,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
 
-    LOGIN_USER ,
+    LOGIN_USER,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILED,
-
-    REFRESH_TOKEN,
-    REFRESH_TOKEN_SUCCESS,
-    REFRESH_TOKEN_FAILED,
+    CLEAR_LOGIN_USER,
 
     USER_INFO,
-    CLEAR_USER_INFO
+    CLEAR_USER_INFO,
 
+    FLAG_FORGOT_PASSWORD,
+    REMOVE_FLAG_FORGOT_PASSWORD
 
 } from '../actions/auth'
 
@@ -31,6 +30,7 @@ const initialState = {
     refreshTokenFailed: false,
 
     userInfo: null,
+    flagForgotPass: false
 
 }
 
@@ -90,6 +90,12 @@ export const login = (state = initialState, action) => {
                 loginRequest: false
             }
         }
+        case CLEAR_LOGIN_USER: {
+            return{
+                ...state,
+                loginData: null
+            }
+        }
 
         default: {
             return state
@@ -98,22 +104,43 @@ export const login = (state = initialState, action) => {
     }
 }
 
-export const saveUserInfo  = (state = initialState, action) =>{
+export const saveUserInfo = (state = initialState, action) => {
     switch (action.type) {
         case USER_INFO: {
             return {
                 ...state,
-                userInfo : action.userInfo
+                userInfo: action.userInfo
             }
         }
         case CLEAR_USER_INFO: {
             return {
                 ...state,
-                userInfo : null
+                userInfo: null
             }
         }
-            
-        default:{
+
+        default: {
+            return state
+        }
+    }
+}
+
+export const flagForForgotPassword = (state = initialState, action) => {
+    switch (action.type) {
+        case FLAG_FORGOT_PASSWORD: {
+            return {
+                ...state,
+                flagForgotPass: true
+            }
+        }
+        case REMOVE_FLAG_FORGOT_PASSWORD: {
+            return {
+                ...state,
+                flagForgotPass: false
+            }
+        }
+
+        default: {
             return state
         }
     }

@@ -1,16 +1,14 @@
 import React from 'react';
 import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useHistory, useLocation } from "react-router-dom"
+import { NavLink} from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { CLEAR_USER_INFO, USER_INFO } from '../services/actions/auth'
 
 export default function Profile() {
     const dispatch = useDispatch()
-    let history = useHistory();
-    let location = useLocation()
-
     const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
+
     const [valueName, setValueName] = React.useState(userInfo.name)
     const inputRefName = React.useRef(null)
     const onIconClickName = () => {
@@ -27,7 +25,6 @@ export default function Profile() {
     const onChangePass = e => {
         setValuePassword(e.target.value)
     }
-
 
     async function logout() {
         return fetch(`https://norma.nomoreparties.space/api/auth/logout`, {
@@ -48,18 +45,13 @@ export default function Profile() {
         if (localStorage.getItem('refreshToken')) {
             let res = await (await logout()).json()
             if (res.success) {
-                console.log(res);
                 localStorage.removeItem('refreshToken')
                 localStorage.removeItem('accessToken')
                 dispatch({ type: CLEAR_USER_INFO })
-                console.log(res);
             }
         }
 
     }
-
-    console.log(history);
-    console.log(location);
 
     const changedBody = {
         name: valueName,
