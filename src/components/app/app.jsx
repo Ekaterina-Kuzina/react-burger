@@ -4,15 +4,18 @@ import AppHeader from '../app-header/app-header';
 import appStyle from "./app.module.css";
 import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
-import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
+import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, IngredientModal } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
 import { USER_INFO } from '../../services/actions/auth'
+import IngredientDetails from '../modal/ingredient-details'
+import ModalSwitch from '../../pages/modal-switch'
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    useHistory, 
+    useLocation
 } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 
 export default function App() {
     const dispatch = useDispatch()
@@ -80,9 +83,6 @@ export default function App() {
         userInfoRequest()
     }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')])
 
-    useEffect(() => {
-        console.log(wasInForgotPasswordPage);
-    }, [])
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
@@ -108,6 +108,16 @@ export default function App() {
                     <ProtectedRoute path='/profile'>
                         <Profile/>
                     </ProtectedRoute>
+                    <Route>
+                        <ModalSwitch></ModalSwitch>
+                    </Route>
+                    {/* <Route path='/ingredients/:id'>
+                        <IngredientModal/>
+                    </Route>
+                    <Route path='/ingredients/:id'>
+                        <IngredientDetails />
+                    </Route> */}
+
                     <Route path='*'>
                         <Page404 />
                     </Route>

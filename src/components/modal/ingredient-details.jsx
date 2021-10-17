@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import modalStyle from "./modal.module.css"
 import { useSelector } from 'react-redux';
+import {useParams} from 'react-router-dom'
 
 export default function IngredientDetails() {
+    let { id } = useParams();
+    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
+    const [ingForFullPageInfo, setIngForFullPageInfo]= useState(null)
+    
+    console.log(ingredients);
+    console.group('id')
+    console.log(id);
     const selected = useSelector((state) => state.selectedIngredient.selected)
 
     return (

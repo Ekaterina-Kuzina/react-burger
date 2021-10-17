@@ -5,5 +5,6 @@ import Registration from './register';
 import ForgotPassword from './forgot-password';
 import ResetPassword from './reset-password';
 import Profile from './profile'
+import IngredientModal from './ingredients'
 
-export {HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile};
+export {HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, IngredientModal};

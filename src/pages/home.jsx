@@ -20,6 +20,7 @@ const orderCardType = 'order_card'
 
 export default function HomePage() {
     const [cardType, setCardType] = useState('')
+    console.log(cardType);
 
     const dispatch = useDispatch();
     const ingredients = useSelector((state) => state.ingredientsData.ingredients)
@@ -67,7 +68,7 @@ export default function HomePage() {
                 }
 
             </div>
-            {
+            {/* {
                 cardType === ingridientCardType &&
                 <Modal title='Детали ингредиента' closeModal={
                     () => {
@@ -77,7 +78,7 @@ export default function HomePage() {
                 }>
                     <IngredientDetails />
                 </Modal>
-            }
+            } */}
 
             {
                 cardType === orderCardType &&
