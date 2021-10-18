@@ -6,7 +6,7 @@ import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
 import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
-import { USER_INFO } from '../../services/actions/auth'
+import { USER_INFO } from '../../services/actions'
 import ModalSwitch from '../../pages/modal-switch'
 import {
     BrowserRouter as Router,

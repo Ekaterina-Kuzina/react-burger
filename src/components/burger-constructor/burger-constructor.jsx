@@ -6,7 +6,7 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import constructor from './burger-constructor.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { sendOrder } from '../../services/actions/index'
+import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
 export default function BurgerConstructor({orderButtonClicked}) {

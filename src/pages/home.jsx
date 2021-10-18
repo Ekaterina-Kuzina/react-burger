@@ -11,10 +11,9 @@ import OrderDetails from '../components/modal/order-details';
 import appStyle from "../components/app/app.module.css"
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../services/actions/index'
-import { CLEAR_ORDER, COUNT_PRICE } from '../services/actions/index'
+import { getIngredients } from '../services/actions/get-ingredients-data'
+import { CLEAR_ORDER, COUNT_PRICE, CLEAR_LOGIN_USER } from '../services/actions'
 import { useHistory } from 'react-router-dom';
-import {CLEAR_LOGIN_USER} from '../services/actions/auth'
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'

@@ -3,7 +3,7 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useDispatch } from 'react-redux';
-import { sendReqLoginUser } from '../services/actions/auth'
+import { sendReqLoginUser } from '../services/actions/requests-from-forms'
 
 export default function SignIn() {
     const dispatch = useDispatch()

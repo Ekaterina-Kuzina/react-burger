@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom"
 import formStyle from './forms.module.css';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
-import { REMOVE_FLAG_FORGOT_PASSWORD } from '../services/actions/auth'
+import { REMOVE_FLAG_FORGOT_PASSWORD } from '../services/actions'
 const url = 'https://norma.nomoreparties.space/api/password-reset/reset'
 
 

@@ -3,7 +3,7 @@ import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-de
 import { NavLink} from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { CLEAR_USER_INFO, USER_INFO } from '../services/actions/auth'
+import { CLEAR_USER_INFO, USER_INFO } from '../services/actions'
 
 export default function Profile() {
     const dispatch = useDispatch()

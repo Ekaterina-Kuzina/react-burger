@@ -17,8 +17,7 @@ export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 export const FLAG_FORGOT_PASSWORD = 'FLAG_FORGOT_PASSWORD';
 export const REMOVE_FLAG_FORGOT_PASSWORD = 'REMOVE_FLAG_FORGOT_PASSWORD'
 
-const loginUrl = 'https://norma.nomoreparties.space/api/auth/login';
-const registerUrl = 'https://norma.nomoreparties.space/api/auth/register'
+const authUrl = 'https://norma.nomoreparties.space/api/auth';
 
 export function sendReqRegisterUser(registerBody) {
     return function (dispatch) {
@@ -26,7 +25,7 @@ export function sendReqRegisterUser(registerBody) {
             type: REGISTER_USER
         })
 
-        fetch(registerUrl, {
+        fetch(`${authUrl}/register`, {
             method: 'POST',
             body: JSON.stringify(registerBody),
             headers: {
@@ -62,7 +61,7 @@ export function sendReqLoginUser(loginBody) {
             type: LOGIN_USER
         })
 
-        fetch(loginUrl, {
+        fetch(`${authUrl}/login`, {
             method: 'POST',
             body: JSON.stringify(loginBody),
             headers: {
