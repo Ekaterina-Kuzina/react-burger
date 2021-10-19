@@ -11,6 +11,7 @@ import { SELECT_INGREDIENT } from '../../services/actions/index'
 export default function BurgerIngredients(props) {
     const dispatch = useDispatch()
     const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector((state) => state.bunData.constructerBun)
 
     const ingredients = useSelector((state) => state.ingredientsData.ingredients)
     const [tabIndex, setTabIndex] = useState(0)
@@ -71,6 +72,9 @@ export default function BurgerIngredients(props) {
                                                 counter++;
                                             }
                                         })
+                                        if(constructerBun === item){
+                                            counter = 2;
+                                        }
 
                                         return (
                                             <IngredientCard openModal={() => {

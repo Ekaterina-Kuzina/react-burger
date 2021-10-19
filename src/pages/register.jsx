@@ -29,15 +29,17 @@ export default function Registration() {
         password: valuePassword, 
         name: valueName 
     } 
-    console.log(body);
     const sendRequest = (body) => {
         dispatch(sendReqRegisterUser(body))
     }
 
-
     return (
         <div className ={formStyle.wrapper }>
-            <form  className={`${formStyle.form}`} action="">
+            <form  onSubmit={(e)=>{
+                e.preventDefault()
+                sendRequest(body)}
+
+            } className={`${formStyle.form}`} action="">
                 <p className="text text_type_main-medium mb-6">Регистрация</p>
 
                 <div  className='mb-6'>
@@ -76,9 +78,7 @@ export default function Registration() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large" onClick={(e)=>{
-                        e.preventDefault()
-                        sendRequest(body)}}>
+                    <Button type="primary" size="large">
                         Зарегистрироваться
                     </Button>
                 </div>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useHistory } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {FLAG_FORGOT_PASSWORD} from '../services/actions'
+import {forgotPassword} from '../services/actions/requests-from-forms'
 
 const url = 'https://norma.nomoreparties.space/api/password-reset'
 
@@ -13,7 +14,8 @@ export default function ForgotPassword() {
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef(null)
-
+    const flagForgotPass =  useSelector(state => state.flagForForgotPassword.flagForgotPass)
+console.log(flagForgotPass);
     const onIconClickEmail = () => {
         setTimeout(() => inputRefEmail.current.focus(), 0)
         alert('Icon Click Callback')
@@ -25,26 +27,19 @@ export default function ForgotPassword() {
     const onSubmit = (e) => {
         e.preventDefault()
         if(newPost.email){
-            fetch(url, {
-                method: "POST",
-                body: JSON.stringify(newPost), 
-                headers: {
-                  "Content-type": "application/json; charset=UTF-8",
-                },
-            })
-            .then(res => res.json())
-            .then(data => {
-                dispatch({type: FLAG_FORGOT_PASSWORD})
-                history.push('/reset-password')
-                console.log(data)
-            })
-            .catch(err => console.log(err))
+            dispatch(forgotPassword(newPost))
         }
     }
 
+    useEffect(() => {
+        if(flagForgotPass){
+            history.push('/reset-password')
+        }
+    }, [flagForgotPass])
+
     return (
         <div className ={formStyle.wrapper }>
-            <form  className={`${formStyle.form}`} action="">
+            <form  onSubmit={onSubmit} className={`${formStyle.form}`} action="">
                 <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
 
                 <div className='mb-6'>
@@ -63,7 +58,7 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large" onClick = {onSubmit}>
+                    <Button type="primary" size="large" >
                         Восстановить
                     </Button>
                 </div>

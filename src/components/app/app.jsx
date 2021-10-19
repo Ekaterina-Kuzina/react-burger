@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom'
 import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
 import { USER_INFO } from '../../services/actions'
+import {userInfoRequest, refreshToken} from '../../services/actions/user-info'
 import ModalSwitch from '../../pages/modal-switch'
 import {
     BrowserRouter as Router,
@@ -14,70 +15,15 @@ import {
     Route,
 } from "react-router-dom";
 
-const userUrl = 'https://norma.nomoreparties.space/api/auth/user'
-const tokenUrl = 'https://norma.nomoreparties.space/api/auth/token'
-
 export default function App() {
     const dispatch = useDispatch()
-    const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
+    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
     const loginData = useSelector(state => state.login.loginData)
-    
-    async function authUser() {
-        return fetch(userUrl, {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('accessToken')
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer'
-        })
-    }
-
-    async function authToken() {
-        return fetch(tokenUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-                token: localStorage.getItem('refreshToken')
-            }),
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-    }
-
-    const userInfoRequest = async () => {
-        if (localStorage.getItem('accessToken')) {
-            let res = await (await authUser()).json()
-            if (res && res.success) {
-                dispatch({
-                    type: USER_INFO,
-                    userInfo: res.user
-                })
-
-            } else if (localStorage.getItem('refreshToken')) {
-                let tokens = await (await authToken()).json()
-                localStorage.setItem('refreshToken', tokens.refreshToken)
-                localStorage.setItem('accessToken', tokens.accessToken)
-                res = await (await authUser()).json()
-                dispatch({
-                    type: USER_INFO,
-                    userInfo: res.user
-                })
-            } else {
-                console.log('error');
-            }
-        }
-    }
+    const registerData = useSelector(state => state.register.registerData)
 
     useEffect(() => {
-        userInfoRequest()
+        dispatch(userInfoRequest())
+
     }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')])
 
     return (
@@ -89,10 +35,10 @@ export default function App() {
                         <HomePage />
                     </Route>
                     <Route path='/login'>
-                        {loginData ? <Redirect to="/" /> : <SignIn />}
+                        {loginData|| userInfo ? <Redirect to="/" /> : <SignIn />}
                     </Route>
                     <Route path='/register'>
-                        {userInfo ? <Redirect to="/" /> : <Registration />}
+                        {registerData ? <Redirect to="/" /> : <Registration />}
                     </Route>
                     <Route path='/forgot-password'>
                         {userInfo ? <Redirect to="/" /> : <ForgotPassword />}

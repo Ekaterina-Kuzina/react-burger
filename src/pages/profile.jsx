@@ -3,11 +3,12 @@ import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-de
 import { NavLink} from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { CLEAR_USER_INFO, USER_INFO } from '../services/actions'
+import {changeUserInfo} from '../services/actions/user-info'
+import {sendReqLogOutUser} from '../services/actions/requests-from-forms'
 
 export default function Profile() {
     const dispatch = useDispatch()
-    const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
+    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
 
     const [valueName, setValueName] = React.useState(userInfo.name)
     const inputRefName = React.useRef(null)
@@ -26,60 +27,16 @@ export default function Profile() {
         setValuePassword(e.target.value)
     }
 
-    async function logout() {
-        return fetch(`https://norma.nomoreparties.space/api/auth/logout`, {
-            method: 'POST',
-            body: JSON.stringify({
-                token: localStorage.getItem('refreshToken')
-            }),
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-    }
-
-    const logoutRequest = async () => {
-        if (localStorage.getItem('refreshToken')) {
-            let res = await (await logout()).json()
-            if (res.success) {
-                localStorage.removeItem('refreshToken')
-                localStorage.removeItem('accessToken')
-                dispatch({ type: CLEAR_USER_INFO })
-            }
-        }
-
-    }
-
     const changedBody = {
         name: valueName,
         email: value
     }
-
-    async function changeUserInfo() {
-        return fetch(`https://norma.nomoreparties.space/api/auth/user`, {
-            method: 'PATCH',
-            body: JSON.stringify(changedBody),
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('accessToken')
-            },
-        })
+    const changeUserInfoRequest =(changedBody)=>{
+        dispatch(changeUserInfo(changedBody)) 
     }
-
-    const changeUserInfoRequest = async () => {
-        let res = await (await changeUserInfo()).json()
-        if (res.success) {
-            dispatch({ type: USER_INFO, userInfo: res.user })
-            console.log(res);
-        } else {
-            console.log('err');
-        }
+    const logoutRequest = (e)=>{
+        e.preventDefault()
+        dispatch(sendReqLogOutUser())
     }
 
     return (
@@ -89,14 +46,16 @@ export default function Profile() {
                     <NavLink to='/profile' activeClassName={formStyle.selected_link} className='text text_type_main-medium mt-6 mb-6'>Профиль</NavLink>
                     <NavLink to='/profile' className={`${formStyle.inactive_link} text text_type_main-medium mt-6 mb-6`}>История заказов</NavLink>
                     <NavLink to='/profile' onClick={(e) => {
-                        e.preventDefault()
-                        logoutRequest()
+                        logoutRequest(e)
                     }} className={`${formStyle.inactive_link} text text_type_main-medium mt-6 mb-6`}>Выход</NavLink>
 
                     <p className={`${formStyle.subtext} text text_type_main-default mt-20`}>В этом разделе вы можете <br />
                         изменить свои персональные данные</p>
                 </div>
-                <form className={`${formStyle.form_profile}`} action="">
+                <form onSubmit={(e)=>{
+                    e.preventDefault()
+                    changeUserInfoRequest(changedBody)
+                }} className={`${formStyle.form_profile}`} action="">
                     <div className='mb-6'>
                         <Input
                             type={'text'}
@@ -128,10 +87,7 @@ export default function Profile() {
                     }>
                         Отмена
                     </Button>
-                    <Button type="primary" size="medium" onClick={(e) => {
-                        e.preventDefault()
-                        changeUserInfoRequest()
-                    }}>
+                    <Button type="primary" size="medium" >
                         Сохранить
                     </Button>
 

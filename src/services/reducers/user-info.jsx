@@ -1,5 +1,7 @@
 import {
     USER_INFO,
+    USER_INFO_SUCCESS,
+    USER_INFO_FAILED,
     CLEAR_USER_INFO,
 
     FLAG_FORGOT_PASSWORD,
@@ -9,15 +11,32 @@ import {
 
 const initialState = {
     userInfo: null,
-    flagForgotPass: false
+    userInfoRequest : false,
+    userInfoFailed: false,
 }
 
-export const saveUserInfo = (state = initialState, action) => {
+export const getUserInfo =(state = initialState, action) =>{
     switch (action.type) {
         case USER_INFO: {
             return {
                 ...state,
-                userInfo: action.userInfo
+                ingredientsRequest: true
+            }
+        }
+
+        case USER_INFO_SUCCESS: {
+            return {
+                ...state,
+                userInfo: action.userInfo,
+                userInfoRequest: false
+            }
+        }
+
+        case USER_INFO_FAILED: {
+            return {
+                ...state,
+                userInfoFailed: true,
+                userInfoRequest: false
             }
         }
         case CLEAR_USER_INFO: {
@@ -33,18 +52,34 @@ export const saveUserInfo = (state = initialState, action) => {
     }
 }
 
-export const flagForForgotPassword = (state = initialState, action) => {
+export const changeUserInfo =(state = initialState, action) =>{
     switch (action.type) {
-        case FLAG_FORGOT_PASSWORD: {
+        case USER_INFO: {
             return {
                 ...state,
-                flagForgotPass: true
+                ingredientsRequest: true
             }
         }
-        case REMOVE_FLAG_FORGOT_PASSWORD: {
+
+        case USER_INFO_SUCCESS: {
             return {
                 ...state,
-                flagForgotPass: false
+                userInfo: action.userInfo,
+                userInfoRequest: false
+            }
+        }
+
+        case USER_INFO_FAILED: {
+            return {
+                ...state,
+                userInfoFailed: true,
+                userInfoRequest: false
+            }
+        }
+        case CLEAR_USER_INFO: {
+            return {
+                ...state,
+                userInfo: null
             }
         }
 
@@ -53,3 +88,27 @@ export const flagForForgotPassword = (state = initialState, action) => {
         }
     }
 }
+
+
+// export const saveUserInfo = (state = initialState, action) => {
+//     switch (action.type) {
+//         case USER_INFO: {
+//             return {
+//                 ...state,
+//                 userInfo: action.userInfo
+//             }
+//         }
+//         case CLEAR_USER_INFO: {
+//             return {
+//                 ...state,
+//                 userInfo: null
+//             }
+//         }
+
+//         default: {
+//             return state
+//         }
+//     }
+// }
+
+

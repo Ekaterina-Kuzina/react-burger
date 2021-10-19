@@ -1,3 +1,5 @@
+import {url} from './index'
+
 export const SEND_INGREDIENTS = 'SEND_INGREDIENTS';
 export const SEND_INGREDIENTS_SUCCESS = 'SEND_INGREDIENTS_SUCCESS';
 export const SEND_INGREDIENTS_FAILED = 'SEND_INGREDIENTS_FAILED';
@@ -5,8 +7,6 @@ export const CLEAR_ORDER = 'CLEAR_ORDER';
 
 export const CLEAR_CONSTRUCTER_DATA = 'CLEAR_CONSTRUCTER_DATA';
 export const CLEAR_BUN_DATA = 'CLEAR_BUN_DATA';
-
-const urlOrder = 'https://norma.nomoreparties.space/api/orders'
 
 export function sendOrder(orderList){
     return function (dispatch){
@@ -18,7 +18,7 @@ export function sendOrder(orderList){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "ingredients": orderList })
         };
-        fetch(urlOrder, requestOptions)
+        fetch(`${url}/orders`, requestOptions)
         .then(res=> res.json())
         .then(res => {
             if (res && res.success) {

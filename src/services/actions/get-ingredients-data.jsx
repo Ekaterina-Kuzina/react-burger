@@ -1,15 +1,15 @@
+import {url} from './index'
+
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-
-const urlIngredients = 'https://norma.nomoreparties.space/api/ingredients';
 
 export function getIngredients() {
     return function (dispatch) {
         dispatch({
             type: GET_INGREDIENTS
         })
-        fetch(urlIngredients)
+        fetch(`${url}/ingredients`)
             .then(res=> res.json())
             .then(res => {
                 if (res && res.success) {

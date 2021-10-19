@@ -21,7 +21,7 @@ const orderCardType = 'order_card'
 export default function HomePage() {
     const [cardType, setCardType] = useState('')
     const history = useHistory()
-    const userInfo = useSelector((state) => state.saveUserInfo.userInfo);
+    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
 
     const dispatch = useDispatch();
     const ingredients = useSelector((state) => state.ingredientsData.ingredients)

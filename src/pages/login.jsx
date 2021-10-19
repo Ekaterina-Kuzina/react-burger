@@ -30,7 +30,10 @@ export default function SignIn() {
 
     return (
         <div className={formStyle.wrapper}>
-            <form className={`${formStyle.form}`} action="">
+            <form onSubmit={(e)=>{  
+                e.preventDefault()
+                sendRequest(loginBody)
+            }} className={`${formStyle.form}`} action="">
                 <p className="text text_type_main-medium mb-6">Вход</p>
                 <div className='mb-6'>
                     <Input
@@ -52,11 +55,7 @@ export default function SignIn() {
                 </div>
 
                 <div className='mb-20'>
-                    <Button type="primary" size="large" onClick={(e) => {
-                        e.preventDefault()
-                        sendRequest(loginBody)
-
-                    }}>
+                    <Button type="primary" size="large">
                         Войти
                     </Button>
                 </div>

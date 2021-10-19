@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useHistory } from "react-router-dom"
 import formStyle from './forms.module.css';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
+import {resetPassword} from '../services/actions/requests-from-forms'
 import { REMOVE_FLAG_FORGOT_PASSWORD } from '../services/actions'
 const url = 'https://norma.nomoreparties.space/api/password-reset/reset'
 
@@ -32,7 +33,6 @@ export default function ResetPassword() {
     const inputRefToken = React.useRef(null)
     const onIconClickToken = () => {
         setTimeout(() => inputRefToken.current.focus(), 0)
-        alert('Icon Click Callback')
     }
 
     const newPost = {
@@ -43,24 +43,18 @@ export default function ResetPassword() {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(newPost),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                dispatch({ type: REMOVE_FLAG_FORGOT_PASSWORD })
-                history.push('/')
-                console.log(data)
-            })
-            .catch(err => console.log(err))
+        dispatch(resetPassword(newPost))
     }
-    if (flagForgotPass) {
-        return (
 
+    useEffect(() => {
+        if(!flagForgotPass ){
+            history.push('/')
+        }
+    }, [flagForgotPass])
+
+    if (flagForgotPass) {
+        
+        return (
             <div className={formStyle.wrapper}>
                 <form className={`${formStyle.form}`} action="">
                     <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
