@@ -2,7 +2,7 @@ import React from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { sendReqRegisterUser } from '../services/actions/requests-from-forms'
 
 export default function Registration() {
@@ -25,24 +25,25 @@ export default function Registration() {
     }
 
     const body = {
-        email: valueEmail, 
-        password: valuePassword, 
-        name: valueName 
-    } 
+        email: valueEmail,
+        password: valuePassword,
+        name: valueName
+    }
     const sendRequest = (body) => {
         dispatch(sendReqRegisterUser(body))
     }
 
     return (
-        <div className ={formStyle.wrapper }>
-            <form  onSubmit={(e)=>{
+        <div className={formStyle.wrapper}>
+            <form onSubmit={(e) => {
                 e.preventDefault()
-                sendRequest(body)}
+                sendRequest(body)
+            }
 
             } className={`${formStyle.form}`} action="">
                 <p className="text text_type_main-medium mb-6">Регистрация</p>
 
-                <div  className='mb-6'>
+                <div className='mb-6'>
                     <Input
                         type={'text'}
                         placeholder={'Имя'}

@@ -4,9 +4,6 @@ import {
     USER_INFO_FAILED,
     CLEAR_USER_INFO,
 
-    FLAG_FORGOT_PASSWORD,
-    REMOVE_FLAG_FORGOT_PASSWORD
-
 } from '../actions'
 
 const initialState = {
@@ -88,27 +85,3 @@ export const changeUserInfo =(state = initialState, action) =>{
         }
     }
 }
-
-
-// export const saveUserInfo = (state = initialState, action) => {
-//     switch (action.type) {
-//         case USER_INFO: {
-//             return {
-//                 ...state,
-//                 userInfo: action.userInfo
-//             }
-//         }
-//         case CLEAR_USER_INFO: {
-//             return {
-//                 ...state,
-//                 userInfo: null
-//             }
-//         }
-
-//         default: {
-//             return state
-//         }
-//     }
-// }
-
-

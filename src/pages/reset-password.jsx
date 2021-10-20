@@ -1,13 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useHistory } from "react-router-dom"
 import formStyle from './forms.module.css';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
-import {resetPassword} from '../services/actions/requests-from-forms'
-import { REMOVE_FLAG_FORGOT_PASSWORD } from '../services/actions'
-const url = 'https://norma.nomoreparties.space/api/password-reset/reset'
-
+import { resetPassword } from '../services/actions/requests-from-forms'
+import { Redirect } from 'react-router-dom'
 
 export default function ResetPassword() {
     const history = useHistory()
@@ -17,6 +15,7 @@ export default function ResetPassword() {
 
     const dispatch = useDispatch()
     const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
+    const successResetPassword = useSelector(state => state.flagForForgotPassword.successResetPassword)
 
     const onIconClickPass = () => {
         setTimeout(() => inputRefPass.current.focus(), 0)
@@ -44,17 +43,15 @@ export default function ResetPassword() {
     const onSubmit = (e) => {
         e.preventDefault()
         dispatch(resetPassword(newPost))
-    }
 
+    }
     useEffect(() => {
-        if(!flagForgotPass ){
+        if(successResetPassword){
             history.push('/')
         }
-    }, [flagForgotPass])
+    }, [history, successResetPassword])
 
-    if (flagForgotPass) {
-        
-        return (
+        return (flagForgotPass?
             <div className={formStyle.wrapper}>
                 <form className={`${formStyle.form}`} action="">
                     <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
@@ -102,11 +99,11 @@ export default function ResetPassword() {
                     </div>
                 </form>
             </div>
-
+            :
+            <Redirect
+            to={{
+                pathname: '/forgot-password'
+            }}
+        />
         )
-    } else {
-        history.push('/forgot-password')
-        return null
-    }
-
 }

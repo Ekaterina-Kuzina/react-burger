@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 
-import AppHeader from '../app-header/app-header';
 import appStyle from "./app.module.css";
 import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
 import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
-import { USER_INFO } from '../../services/actions'
-import {userInfoRequest, refreshToken} from '../../services/actions/user-info'
-import ModalSwitch from '../../pages/modal-switch'
+import { userInfoRequest } from '../../services/actions/user-info'
+import { getIngredients } from '../../services/actions/get-ingredients-data'
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
+    useLocation,
+    useHistory
 } from "react-router-dom";
+import IngredientDetails from '../modal/ingredient-details'
+import { IngredientModal } from '../../pages/index'
+
 
 export default function App() {
     const dispatch = useDispatch()
@@ -21,43 +23,52 @@ export default function App() {
     const loginData = useSelector(state => state.login.loginData)
     const registerData = useSelector(state => state.register.registerData)
 
+    let location = useLocation();
+    let history = useHistory();
+
+    const action = history.action === 'PUSH' || history.action === 'REPLACE';
+    const ingredientsModal = action && location.state && location.state.ingredientsModal;
+
     useEffect(() => {
         dispatch(userInfoRequest())
-
     }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')])
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <Router>
-                <AppHeader />
-                <Switch>
-                    <Route path='/' exact>
-                        <HomePage />
-                    </Route>
-                    <Route path='/login'>
-                        {loginData|| userInfo ? <Redirect to="/" /> : <SignIn />}
-                    </Route>
-                    <Route path='/register'>
-                        {registerData ? <Redirect to="/" /> : <Registration />}
-                    </Route>
-                    <Route path='/forgot-password'>
-                        {userInfo ? <Redirect to="/" /> : <ForgotPassword />}
-                    </Route>
-                    <Route path='/reset-password'>
-                        {userInfo ? <Redirect to="/" /> : <ResetPassword />}
-                    </Route>
-                    <ProtectedRoute path='/profile'>
-                        <Profile />
-                    </ProtectedRoute>
-                    <Route>
-                        <ModalSwitch />
-                    </Route>
+            <Switch location={ingredientsModal || location}>
+                <Route path='/' exact>
+                    <HomePage />
+                </Route>
+                <Route path='/login'>
+                    {loginData || userInfo ? <Redirect to="/" /> : <SignIn />}
+                </Route>
+                <Route path='/register'>
+                    {registerData ? <Redirect to="/" /> : <Registration />}
+                </Route>
+                <Route path='/forgot-password'>
+                    {userInfo ? <Redirect to="/" /> : <ForgotPassword />}
+                </Route>
+                <Route path='/reset-password'>
+                    {userInfo ? <Redirect to="/" /> : <ResetPassword />}
+                </Route>
+                <ProtectedRoute path='/profile'>
+                    <Profile />
+                </ProtectedRoute>
+                <Route path='/ingredients/:id'>
+                    <IngredientDetails />
+                </Route>
+                <Route path='*'>
+                    <Page404 />
+                </Route>
 
-                    <Route path='*'>
-                        <Page404 />
-                    </Route>
-                </Switch>
-            </Router>
+            </Switch>
+
+            {ingredientsModal && <Route path='/ingredients/:id'><IngredientModal /></Route>}
         </div>
+
     )
 }

@@ -9,8 +9,6 @@ import {
     CLEAR_LOGIN_USER,
 
     LOGOUT_USER ,
-    LOGOUT_USER_SUCCESS ,
-    LOGOUT_USER_FAILED,
     CLEAR_USER_INFO ,
 
     FLAG_FORGOT_PASSWORD,
@@ -35,7 +33,8 @@ const initialState = {
     refreshTokenRequest: false,
     refreshTokenFailed: false,
 
-    flagForgotPass: false
+    flagForgotPass: false,
+    successResetPassword: null
 }
 
 export const register = (state = initialState, action) => {
@@ -148,7 +147,8 @@ export const flagForForgotPassword = (state = initialState, action) => {
         case REMOVE_FLAG_FORGOT_PASSWORD: {
             return {
                 ...state,
-                flagForgotPass: false
+                flagForgotPass: false,
+                successResetPassword: action.successResetPassword
             }
         }
 

@@ -72,7 +72,7 @@ export default function BurgerIngredients(props) {
                                                 counter++;
                                             }
                                         })
-                                        if(constructerBun === item){
+                                        if (constructerBun === item) {
                                             counter = 2;
                                         }
 

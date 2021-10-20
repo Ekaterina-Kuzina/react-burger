@@ -24,7 +24,7 @@ export default function IngredientCard({ item, openModal, counter }) {
         !isDrag && (
             <Link to={{
                 pathname: `/ingredients/${item._id}`,
-                state: { background: location }
+                state: { ingredientsModal: location }
             }}
                 ref={dragRef}
                 onClick={() => {

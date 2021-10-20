@@ -11,12 +11,12 @@ import OrderDetails from '../components/modal/order-details';
 import appStyle from "../components/app/app.module.css"
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../services/actions/get-ingredients-data'
 import { CLEAR_ORDER, COUNT_PRICE, CLEAR_LOGIN_USER } from '../services/actions'
 import { useHistory } from 'react-router-dom';
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
+
 
 export default function HomePage() {
     const [cardType, setCardType] = useState('')
@@ -50,12 +50,12 @@ export default function HomePage() {
     }, [constructerBun, constructerIngredients])
 
     useEffect(() => {
-        dispatch(getIngredients())
-        dispatch({type: CLEAR_LOGIN_USER})
-    }, [])
+        dispatch({ type: CLEAR_LOGIN_USER })
+    }, [dispatch])
 
     return (
         <>
+
             <div style={{ display: 'flex', justifyContent: "space-between" }} className={appStyle.container}>
 
                 {ingredients &&
@@ -64,9 +64,9 @@ export default function HomePage() {
                             setCardType(ingridientCardType)
                         }} />
                         <BurgerConstructor orderButtonClicked={() => {
-                            if(userInfo){
+                            if (userInfo) {
                                 setCardType(orderCardType)
-                            }else{
+                            } else {
                                 history.push('/login')
                             }
                         }} />

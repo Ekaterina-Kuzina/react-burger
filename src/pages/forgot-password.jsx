@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react';
-import { Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
+import React, { useEffect } from 'react';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import {FLAG_FORGOT_PASSWORD} from '../services/actions'
-import {forgotPassword} from '../services/actions/requests-from-forms'
-
-const url = 'https://norma.nomoreparties.space/api/password-reset'
+import { forgotPassword } from '../services/actions/requests-from-forms'
 
 export default function ForgotPassword() {
     const history = useHistory()
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef(null)
-    const flagForgotPass =  useSelector(state => state.flagForForgotPassword.flagForgotPass)
-console.log(flagForgotPass);
+    const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
+
     const onIconClickEmail = () => {
         setTimeout(() => inputRefEmail.current.focus(), 0)
         alert('Icon Click Callback')
@@ -26,20 +23,20 @@ console.log(flagForgotPass);
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if(newPost.email){
+        if (newPost.email) {
             dispatch(forgotPassword(newPost))
         }
     }
 
     useEffect(() => {
-        if(flagForgotPass){
+        if (flagForgotPass) {
             history.push('/reset-password')
         }
-    }, [flagForgotPass])
+    }, [flagForgotPass, history])
 
     return (
-        <div className ={formStyle.wrapper }>
-            <form  onSubmit={onSubmit} className={`${formStyle.form}`} action="">
+        <div className={formStyle.wrapper}>
+            <form onSubmit={onSubmit} className={`${formStyle.form}`} action="">
                 <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
 
                 <div className='mb-6'>

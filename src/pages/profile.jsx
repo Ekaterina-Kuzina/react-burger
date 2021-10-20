@@ -1,10 +1,10 @@
 import React from 'react';
 import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import {changeUserInfo} from '../services/actions/user-info'
-import {sendReqLogOutUser} from '../services/actions/requests-from-forms'
+import { changeUserInfo } from '../services/actions/user-info'
+import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
 
 export default function Profile() {
     const dispatch = useDispatch()
@@ -31,12 +31,16 @@ export default function Profile() {
         name: valueName,
         email: value
     }
-    const changeUserInfoRequest =(changedBody)=>{
-        dispatch(changeUserInfo(changedBody)) 
+    const changeUserInfoRequest = (changedBody) => {
+        dispatch(changeUserInfo(changedBody))
     }
-    const logoutRequest = (e)=>{
+    const logoutRequest = (e) => {
         e.preventDefault()
         dispatch(sendReqLogOutUser())
+    }
+    const saveUser = (e) => {
+        e.preventDefault()
+        changeUserInfoRequest(changedBody)
     }
 
     return (
@@ -52,10 +56,7 @@ export default function Profile() {
                     <p className={`${formStyle.subtext} text text_type_main-default mt-20`}>В этом разделе вы можете <br />
                         изменить свои персональные данные</p>
                 </div>
-                <form onSubmit={(e)=>{
-                    e.preventDefault()
-                    changeUserInfoRequest(changedBody)
-                }} className={`${formStyle.form_profile}`} action="">
+                <form onSubmit={saveUser} className={`${formStyle.form_profile}`} action="">
                     <div className='mb-6'>
                         <Input
                             type={'text'}

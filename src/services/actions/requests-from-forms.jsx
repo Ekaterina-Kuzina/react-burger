@@ -1,4 +1,4 @@
-import {url} from './index'
+import { url } from './index'
 
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -11,7 +11,7 @@ export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED';
-export const CLEAR_LOGIN_USER= 'CLEAR_LOGIN_USER'
+export const CLEAR_LOGIN_USER = 'CLEAR_LOGIN_USER'
 
 export const USER_INFO = 'USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
@@ -129,29 +129,29 @@ export function sendReqLogOutUser() {
     }
 }
 
-export function forgotPassword (newPost){
-    return function (dispatch){
+export function forgotPassword(newPost) {
+    return function (dispatch) {
         fetch(`${url}/password-reset`, {
             method: "POST",
-            body: JSON.stringify(newPost), 
+            body: JSON.stringify(newPost),
             headers: {
-              "Content-type": "application/json; charset=UTF-8",
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
-        .then(res => res.json())
-        .then(res => {
-            if(res && res.success){
-                dispatch({type: FLAG_FORGOT_PASSWORD})
-                console.log(res)
-            }else{
-                console.log('err');
-            }
-        })
-        .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(res => {
+                if (res && res.success) {
+                    dispatch({ type: FLAG_FORGOT_PASSWORD })
+                    console.log(res)
+                } else {
+                    console.log('err');
+                }
+            })
+            .catch(err => console.log(err))
     }
 }
-export function resetPassword (newPost){
-    return function (dispatch){
+export function resetPassword(newPost) {
+    return function (dispatch) {
         fetch(`${url}/password-reset/reset`, {
             method: "POST",
             body: JSON.stringify(newPost),
@@ -161,10 +161,10 @@ export function resetPassword (newPost){
         })
             .then(res => res.json())
             .then(res => {
-                if(res && res.success){
-                    dispatch({ type: REMOVE_FLAG_FORGOT_PASSWORD })
+                if (res && res.success) {
+                    dispatch({ type: REMOVE_FLAG_FORGOT_PASSWORD, successResetPassword: res })
                     console.log(res)
-                }else{
+                } else {
                     console.log('err');
                 }
 
@@ -173,33 +173,3 @@ export function resetPassword (newPost){
 
     }
 }
-
-
-
-
-// async function logout() {
-//     return fetch(`https://norma.nomoreparties.space/api/auth/logout`, {
-//         method: 'POST',
-//         body: JSON.stringify({
-//             token: localStorage.getItem('refreshToken')
-//         }),
-//         mode: 'cors',
-//         cache: 'no-cache',
-//         credentials: 'same-origin',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-// }
-
-// const logoutRequest = async () => {
-//     if (localStorage.getItem('refreshToken')) {
-//         let res = await (await logout()).json()
-//         if (res.success) {
-//             localStorage.removeItem('refreshToken')
-//             localStorage.removeItem('accessToken')
-//             dispatch({ type: CLEAR_USER_INFO })
-//         }
-//     }
-
-//}

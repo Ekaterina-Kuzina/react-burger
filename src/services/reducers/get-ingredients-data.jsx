@@ -9,6 +9,7 @@ const initialState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
+    flagSuccess: false
 }
 
 export const ingredientsData = (state = initialState, action) => {
@@ -24,7 +25,8 @@ export const ingredientsData = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: action.ingredients,
-                ingredientsRequest: false
+                ingredientsRequest: false,
+                flagSuccess: true
             }
         }
 
