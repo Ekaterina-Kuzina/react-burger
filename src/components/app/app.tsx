@@ -15,15 +15,21 @@ import {
 } from "react-router-dom";
 import IngredientDetails from '../modal/ingredient-details'
 import { IngredientModal } from '../../pages/index'
+import {Location} from 'history';
+
+type TLocationState = {
+    from?: Location;
+    ingredientsModal?: Location;
+}
 
 
 export default function App() {
     const dispatch = useDispatch()
-    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
-    const loginData = useSelector(state => state.login.loginData)
-    const registerData = useSelector(state => state.register.registerData)
+    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
+    const loginData = useSelector((state: any) => state.login.loginData)
+    const registerData = useSelector((state: any) => state.register.registerData)
 
-    let location = useLocation();
+    let location = useLocation<TLocationState>();
     let history = useHistory();
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
