@@ -6,11 +6,12 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import constructor from './burger-constructor.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { sendOrder } from '../../services/actions/index'
+import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
 export default function BurgerConstructor({orderButtonClicked}) {
     const dispatch = useDispatch();
+    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
 
     const price = useSelector((state) => state.countedPrice.price)
     const [orderList, setOrderList] = useState([])
@@ -129,8 +130,13 @@ export default function BurgerConstructor({orderButtonClicked}) {
                     </div>
 
                     <Button onClick={() => {
-                        orderButtonClicked();
-                        sendRequest(orderList)
+                        if(constructerBun) {
+                            orderButtonClicked();
+                            if(userInfo){
+                                sendRequest(orderList)
+                            }
+                        }
+
                     }} type="primary" size="large">Оформить заказ</Button>
 
                 </div>

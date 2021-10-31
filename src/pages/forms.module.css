@@ -1,0 +1,69 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.link_wrapper {
+    display: flex;
+}
+
+.text {
+    color: #8585AD;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}
+
+.profile_link_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 320px;
+}
+
+.wrapper_profile{
+    display: flex;
+    align-items: flex-start;
+} 
+
+.form_profile {
+    margin-top: 0;
+}
+
+.selected_link {
+    text-decoration: none;
+    color: #F2F2F3;
+}
+
+.inactive_link{
+    text-decoration: none;
+    color: #8585AD;
+}
+
+.subtext {
+    color: #8585AD;
+    opacity: 0.4;
+}
+.changeColor{
+    color: #F2F2F3;
+}
+.color{    
+    color: #8585AD;
+}

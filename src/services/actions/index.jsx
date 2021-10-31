@@ -1,84 +1,9 @@
-export const GET_INGREDIENTS = 'GET_INGREDIENTS';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+import { GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED } from './get-ingredients-data'
+import { SEND_INGREDIENTS, SEND_INGREDIENTS_SUCCESS, SEND_INGREDIENTS_FAILED, CLEAR_ORDER, CLEAR_BUN_DATA, CLEAR_CONSTRUCTER_DATA } from './make-order'
+import { SELECT_INGREDIENT, CLEAR_INGREDIENT } from './burger-ingredients'
+import { GET_CONSTRUCTER_DATA, REMOVE_CONSTRUCTER_DATA, FILTER_CONSTRUCTER, GET_BUN_DATA, COUNT_PRICE } from './burger-constructor'
+import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILED, REGISTER_USER, REGISTER_USER_SUCCESS, REGISTER_USER_FAILED, LOGOUT_USER, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILED, CLEAR_LOGIN_USER , FLAG_FORGOT_PASSWORD, REMOVE_FLAG_FORGOT_PASSWORD} from './requests-from-forms';
+import { USER_INFO,USER_INFO_SUCCESS,USER_INFO_FAILED, CLEAR_USER_INFO} from './user-info'
 
-export const SELECT_INGREDIENT = 'SELECT_INGREDIENT';
-export const CLEAR_INGREDIENT = 'CLEAR_INGREDIENT'
-
-export const GET_CONSTRUCTER_DATA = 'GET_CONSTRUCTER_DATA';
-export const REMOVE_CONSTRUCTER_DATA = 'REMOVE_CONSTRUCTER_DATA'
-export const CLEAR_CONSTRUCTER_DATA = 'CLEAR_CONSTRUCTER_DATA'
-export const FILTER_CONSTRUCTER = 'FILTER_CONSTRUCTER'
-export const GET_BUN_DATA = 'GET_BUN_DATA';
-export const CLEAR_BUN_DATA = 'CLEAR_BUN_DATA'
-export const COUNT_PRICE = 'COUNT_PRICE';
-
-export const SEND_INGREDIENTS = 'SEND_INGREDIENTS';
-export const SEND_INGREDIENTS_SUCCESS = 'SEND_INGREDIENTS_SUCCESS';
-export const SEND_INGREDIENTS_FAILED = 'SEND_INGREDIENTS_FAILED';
-export const CLEAR_ORDER = 'CLEAR_ORDER';
-
-const urlIngredients = 'https://norma.nomoreparties.space/api/ingredients';
-const urlOrder = 'https://norma.nomoreparties.space/api/orders'
-
-export function getIngredients() {
-    return function (dispatch) {
-        dispatch({
-            type: GET_INGREDIENTS
-        })
-        fetch(urlIngredients)
-            .then(res=> res.json())
-            .then(res => {
-                if (res && res.success) {
-                    dispatch({
-                        type: GET_INGREDIENTS_SUCCESS,
-                        ingredients: res.data
-                    })
-                } else {
-                    dispatch({
-                        type: GET_INGREDIENTS_FAILED,
-                    })
-                }
-            })
-            .catch(err =>{
-                dispatch({
-                    type: GET_INGREDIENTS_FAILED,
-                })
-            })
-    }
-}
-
-export function sendOrder(orderList){
-    return function (dispatch){
-        dispatch({
-            type: SEND_INGREDIENTS
-        })
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "ingredients": orderList })
-        };
-        fetch(urlOrder, requestOptions)
-        .then(res=> res.json())
-        .then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: SEND_INGREDIENTS_SUCCESS,
-                    order: res.order
-                })
-                dispatch({ type: CLEAR_CONSTRUCTER_DATA })
-                dispatch({ type: CLEAR_BUN_DATA })
-            } else {
-                dispatch({
-                    type: SEND_INGREDIENTS_FAILED,
-                })
-            }
-        })
-        .catch(err =>{
-            dispatch({
-                type: SEND_INGREDIENTS_FAILED,
-            })
-        })
-    }
-}
-
+export const url = 'https://norma.nomoreparties.space/api'
+export { GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED, SEND_INGREDIENTS, SEND_INGREDIENTS_SUCCESS, SEND_INGREDIENTS_FAILED, CLEAR_ORDER, CLEAR_BUN_DATA, CLEAR_CONSTRUCTER_DATA, SELECT_INGREDIENT, CLEAR_INGREDIENT, GET_CONSTRUCTER_DATA, REMOVE_CONSTRUCTER_DATA, FILTER_CONSTRUCTER, GET_BUN_DATA, COUNT_PRICE, LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILED, REGISTER_USER, REGISTER_USER_SUCCESS, REGISTER_USER_FAILED, LOGOUT_USER, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILED, CLEAR_LOGIN_USER, USER_INFO,USER_INFO_SUCCESS,USER_INFO_FAILED, CLEAR_USER_INFO, FLAG_FORGOT_PASSWORD, REMOVE_FLAG_FORGOT_PASSWORD }
