@@ -8,42 +8,53 @@ import ingredientsStyle from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 
-export default function BurgerIngredients(props) {
-    const dispatch = useDispatch()
-    const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
-    const constructerBun = useSelector((state) => state.bunData.constructerBun)
+import {TItemData} from '../../utils/types'
 
-    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
+type TBurgerIngredientsProps = {
+    ingridientClicked: ()=> void;
+}
+
+export default function BurgerIngredients({ingridientClicked}:TBurgerIngredientsProps) {
+    const dispatch = useDispatch()
+    const constructerIngredients = useSelector((state: any) => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector((state: any) => state.bunData.constructerBun)
+
+    const ingredients = useSelector((state: any) => state.ingredientsData.ingredients)
     const [tabIndex, setTabIndex] = useState(0)
-    const listRef = useRef()
+    const listRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        listRef.current.addEventListener('scroll', () => {
-            const parentY = listRef.current.getBoundingClientRect().y
-            const childrenArray = Array.from(listRef.current.children)
-            const sortedByY = childrenArray
-                .filter((child) => {
-                    return child.getBoundingClientRect().y >= parentY
-                })
-                .sort((a, b) => a.getBoundingClientRect().y - b.getBoundingClientRect().y)
+        if(listRef.current){
+            listRef.current.addEventListener('scroll', () => {
+                if(listRef.current){
+                    const parentY = listRef.current.getBoundingClientRect().y
+                    const childrenArray = Array.from(listRef.current.children)
+                    const sortedByY = childrenArray
+                    .filter((child) => {
+                        return child.getBoundingClientRect().y >= parentY
+                    })
+                    .sort((a, b) => a.getBoundingClientRect().y - b.getBoundingClientRect().y)
 
-            if (sortedByY.lenght !== 0) {
-                const nearestChild = sortedByY[0]
-                const index = childrenArray.indexOf(nearestChild)
-                setTabIndex(index)
-            }
-        })
+                        
+                if (sortedByY.length !== 0) {
+                    const nearestChild = sortedByY[0]
+                    const index = childrenArray.indexOf(nearestChild)
+                    setTabIndex(index)
+                }
+                }
+            })
+        }
     })
 
-    let types = []
+    let types: string[] = []
 
-    ingredients.forEach(element => {
+    ingredients.forEach((element:TItemData) => {
         if (!types.includes(element.type)) {
             types.push(element.type)
         }
     });
 
-    const handleSelectedData = (item) => {
+    const handleSelectedData = (item: TItemData) => {
         dispatch({
             type: SELECT_INGREDIENT,
             selected: item
@@ -62,12 +73,12 @@ export default function BurgerIngredients(props) {
                         <div className={`${ingredientsStyle.cards} mt-6`}>
                             {
                                 ingredients
-                                    .filter(item => {
+                                    .filter((item:TItemData) => {
                                         return item.type === type;
                                     })
-                                    .map((item) => {
+                                    .map((item:TItemData) => {
                                         let counter = 0
-                                        constructerIngredients.forEach(constructerIng => {
+                                        constructerIngredients.forEach((constructerIng: TItemData) => {
                                             if (constructerIng === item) {
                                                 counter++;
                                             }
@@ -78,12 +89,12 @@ export default function BurgerIngredients(props) {
 
                                         return (
                                             <IngredientCard openModal={() => {
-                                                props.ingridientClicked();
+                                                ingridientClicked();
                                                 handleSelectedData(item)
                                             }} key={item._id} item={item} counter={counter} />
                                         )
                                     })
-                            }
+                            } 
                         </div>
                     </div>)
                 })}
@@ -93,7 +104,7 @@ export default function BurgerIngredients(props) {
 }
 
 
-function getTypeName(type) {
+function getTypeName(type: string) {
     if (type === "bun") {
         return "Булки"
     } else if (type === "sauce") {

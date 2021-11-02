@@ -9,22 +9,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
+import {TItemData} from '../../utils/types'
 type TBurgerConstructorProps = {
     orderButtonClicked: () => void
 }
-export type TItem = {
-    _id: string;
-    type: string;
-}
+// export type TItem = {
+//     _id: string;
+//     type: string;
+// }
 
-export type TConstructerItemData = TItem & {
-    name: string;
-    constructerID: string;
-    index: number;
-    price: number;
-    image: string;
+// export type TConstructerItemData = TItem & {
+//     name: string;
+//     constructerID: string;
+//     index: number;
+//     price: number;
+//     image: string;
 
-}
+// }
 
 
 export default function BurgerConstructor({orderButtonClicked}: TBurgerConstructorProps) {
@@ -41,7 +42,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
     useEffect(() => {
         if(constructerBun){
             let ids = [constructerBun._id]
-            constructerIngredients.forEach((item: TItem) => {
+            constructerIngredients.forEach((item: TItemData) => {
                 ids.push(item._id)
             });
             setOrderList(ids)
@@ -53,7 +54,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
         dispatch(sendOrder(orderListParam))
     }
 
-    const onDropHandler = (item: TItem) => {
+    const onDropHandler = (item: TItemData) => {
         if (item.type === 'bun') {
             dispatch({
                 type: GET_BUN_DATA,
@@ -68,7 +69,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
     }
     const [{ isOver }, dropTarget] = useDrop({
         accept: "ingredients",
-        drop(item: TItem) {
+        drop(item: TItemData) {
             onDropHandler(item);
         },
         collect: monitor => ({
@@ -112,7 +113,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
 
                     <div className={`${constructor.item_wrapper} ${constructor.custom_scroll}`}>
                         {constructerIngredients !== null &&
-                            constructerIngredients.map((constructerItemData: TConstructerItemData, index:number) => {
+                            constructerIngredients.map((constructerItemData: TItemData, index:number) => {
                                 constructerItemData.constructerID = uuidv4();
                                 constructerItemData.index = index
                                 return (

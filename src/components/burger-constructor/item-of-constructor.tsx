@@ -3,10 +3,10 @@ import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import { REMOVE_CONSTRUCTER_DATA } from '../../services/actions/index'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {TConstructerItemData} from './burger-constructor'
+import {TItemData} from '../../utils/types'
 
 type TItemOfConstructorProps = { 
-    constructerItemData: TConstructerItemData;
+    constructerItemData: TItemData;
     id: number;
     index: number;
     moveCard: (dragIndex: number,hoverIndex : number ) => void

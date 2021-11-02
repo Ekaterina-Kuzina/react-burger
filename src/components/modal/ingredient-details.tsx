@@ -5,12 +5,16 @@ import { useSelector } from 'react-redux';
 import {
     useParams
 } from "react-router-dom";
+import {TItemData} from '../../utils/types'
 
+type TParamTypes = {
+    id: string;
+}
 export default function IngredientDetails() {
-    let { id } = useParams();
-    const ingredients = useSelector((state) => state.ingredientsData.ingredients)
-    const flagSuccess = useSelector((state) => state.ingredientsData.flagSuccess)
-    let setIng = ingredients.find((item)=> item._id === id)
+    let { id } = useParams<TParamTypes>();
+    const ingredients = useSelector((state: any) => state.ingredientsData.ingredients)
+    const flagSuccess = useSelector((state: any) => state.ingredientsData.flagSuccess)
+    let setIng = ingredients.find((item:TItemData)=> item._id === id)
 
         return (flagSuccess &&
             <div className={`${modalStyle.wrapper} pl-15 pr-15`}>

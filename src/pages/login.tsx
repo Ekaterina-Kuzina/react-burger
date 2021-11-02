@@ -5,17 +5,26 @@ import formStyle from './forms.module.css'
 import { useDispatch } from 'react-redux';
 import { sendReqLoginUser } from '../services/actions/requests-from-forms'
 
+export type TLoginBody ={
+    email: string,
+    password: string
+}
 export default function SignIn() {
     const dispatch = useDispatch()
     const [value, setValue] = React.useState('')
-    const inputRef = React.useRef(null)
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
     const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0)
+        setTimeout(() =>{
+            if(inputRef.current){
+                inputRef.current.focus()
+            }
+        } , 0)
+
     }
 
     const [valuePassword, setValuePassword] = React.useState('')
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValuePassword(e.target.value)
     }
 
@@ -24,7 +33,7 @@ export default function SignIn() {
         password: valuePassword
     }
 
-    const sendRequest = (loginBody) => {
+    const sendRequest = (loginBody: TLoginBody) => {
         dispatch(sendReqLoginUser(loginBody))
     }
 
@@ -51,7 +60,7 @@ export default function SignIn() {
                 </div>
 
                 <div className='mb-6'>
-                    <PasswordInput className='mb-6' onChange={onChange} value={valuePassword} name={'password'} />
+                    <PasswordInput onChange={onChange} value={valuePassword} name={'password'} />
                 </div>
 
                 <div className='mb-20'>

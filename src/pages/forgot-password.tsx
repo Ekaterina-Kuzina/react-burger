@@ -6,22 +6,29 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../services/actions/requests-from-forms'
 
+export type TNewPost = {
+    email: string;
+}
+
 export default function ForgotPassword() {
     const history = useHistory()
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
-    const inputRefEmail = React.useRef(null)
-    const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
+    const inputRefEmail = React.useRef<HTMLInputElement>(null)
+    const flagForgotPass = useSelector((state: any) => state.flagForForgotPassword.flagForgotPass)
 
     const onIconClickEmail = () => {
-        setTimeout(() => inputRefEmail.current.focus(), 0)
-        alert('Icon Click Callback')
+        setTimeout(() => {
+            if(inputRefEmail.current){
+                inputRefEmail.current.focus()
+            }
+        }, 0)
     }
-    const newPost = {
+    const newPost : TNewPost = {
         email: valueEmail
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
         if (newPost.email) {
             dispatch(forgotPassword(newPost))

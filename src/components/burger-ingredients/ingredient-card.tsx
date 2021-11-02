@@ -8,7 +8,14 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 import { useLocation } from 'react-router-dom'
-export default function IngredientCard({ item, openModal, counter }) {
+import {TItemData} from '../../utils/types'
+
+type TIngredientCardProps = {
+    item: TItemData;
+    counter: number;
+    openModal: ()=> void;
+}
+const  IngredientCard = ({ item,openModal, counter }: TIngredientCardProps ): JSX.Element => {
     const dispatch = useDispatch()
     const [{ isDrag }, dragRef] = useDrag({
         type: "ingredients",
@@ -46,15 +53,6 @@ export default function IngredientCard({ item, openModal, counter }) {
                 <p className="mt-1 text text_type_main-default">{item.name}</p>
             </Link>
         )
-    )
-}
-
-IngredientCard.propTypes = {
-    counter: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }),
-    openModal: PropTypes.func,
-}
+    ) as JSX.Element
+} 
+export default IngredientCard
