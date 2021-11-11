@@ -6,5 +6,6 @@ import ForgotPassword from './forgot-password';
 import ResetPassword from './reset-password';
 import Profile from './profile'
 import IngredientModal from './ingredients'
+import OrderFeed from './feed'
 
-export {HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, IngredientModal};
+export {HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, IngredientModal, OrderFeed};

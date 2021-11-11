@@ -1,0 +1,40 @@
+.card_wrapper {
+    padding: 24px;
+    max-width: 584px;
+    height: 214px;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+
+.info_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredients_wrapper{
+    max-width: 304px;
+    height: 64px;
+    display: flex;
+}
+
+.round {
+    margin-left: -16px;
+    width: 64px;
+    height: 64px;
+    background: #131316;
+    border-radius: 100px;
+    border: 2px solid linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-color: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+}
+
+.round:first-child{
+    margin-left: 0;
+}

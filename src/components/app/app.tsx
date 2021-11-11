@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import appStyle from "./app.module.css";
 import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
-import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile } from '../../pages';
+import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, OrderFeed } from '../../pages';
 import { useSelector, useDispatch } from 'react-redux';
 import { userInfoRequest } from '../../services/actions/user-info'
 import { getIngredients } from '../../services/actions/get-ingredients-data'
@@ -48,6 +48,9 @@ export default function App() {
             <Switch location={ingredientsModal || location}>
                 <Route path='/' exact>
                     <HomePage />
+                </Route>
+                <Route path='/feed'>
+                    <OrderFeed/>
                 </Route>
                 <Route path='/login'>
                     {loginData || userInfo ? <Redirect to="/" /> : <SignIn />}
