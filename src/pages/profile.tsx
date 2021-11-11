@@ -6,24 +6,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeUserInfo } from '../services/actions/user-info'
 import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
 
+type TChangedBody = {
+    name: string,
+    email: string
+}
 export default function Profile() {
     const dispatch = useDispatch()
-    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
+    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
 
     const [valueName, setValueName] = React.useState(userInfo.name)
-    const inputRefName = React.useRef(null)
+    const inputRefName = React.useRef<HTMLInputElement>(null)
     const onIconClickName = () => {
-        inputRefName.current.style.color = '#F2F2F3';
-        inputRefName.current.focus()
+        if(inputRefName.current){
+            inputRefName.current.style.color = '#F2F2F3';
+            inputRefName.current.focus()
+        }
     }
 
     const [value, setValue] = React.useState(userInfo.email)
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value)
     }
 
     const [valuePassword, setValuePassword] = React.useState('')
-    const onChangePass = e => {
+    const onChangePass = (e: React.ChangeEvent<HTMLInputElement> ) => {
         setValuePassword(e.target.value)
     }
 
@@ -31,14 +37,14 @@ export default function Profile() {
         name: valueName,
         email: value
     }
-    const changeUserInfoRequest = (changedBody) => {
+    const changeUserInfoRequest = (changedBody: TChangedBody) => {
         dispatch(changeUserInfo(changedBody))
     }
-    const logoutRequest = (e) => {
+    const logoutRequest = (e: React.SyntheticEvent) => {
         e.preventDefault()
         dispatch(sendReqLogOutUser())
     }
-    const saveUser = (e) => {
+    const saveUser = (e: React.SyntheticEvent) => {
         e.preventDefault()
         changeUserInfoRequest(changedBody)
     }
@@ -78,7 +84,7 @@ export default function Profile() {
                     </div>
 
                     <div className='mb-6'>
-                        <PasswordInput className='mb-6' onChange={onChangePass} value={valuePassword} name={'password'} />
+                        <PasswordInput onChange={onChangePass} value={valuePassword} name={'password'} />
                     </div>
                     <Button type="secondary" size="medium" onClick={(e) => {
                         e.preventDefault()

@@ -1,4 +1,8 @@
 import { url } from './index'
+import {TLoginBody} from '../../pages/login'
+import {TNewPost} from '../../pages/forgot-password'
+import {TNewPostReset} from '../../pages/reset-password'
+import {TRequestBody} from '../../pages/register'
 
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -20,8 +24,8 @@ export const FLAG_FORGOT_PASSWORD = 'FLAG_FORGOT_PASSWORD';
 export const REMOVE_FLAG_FORGOT_PASSWORD = 'REMOVE_FLAG_FORGOT_PASSWORD'
 
 
-export function sendReqRegisterUser(registerBody) {
-    return function (dispatch) {
+export function sendReqRegisterUser(registerBody: TRequestBody) {
+    return function (dispatch: any) {
 
         fetch(`${url}/auth/register`, {
             method: 'POST',
@@ -53,8 +57,8 @@ export function sendReqRegisterUser(registerBody) {
 
 }
 
-export function sendReqLoginUser(loginBody) {
-    return function (dispatch) {
+export function sendReqLoginUser(loginBody: TLoginBody) {
+    return function (dispatch: any) {
         dispatch({
             type: LOGIN_USER
         })
@@ -91,7 +95,7 @@ export function sendReqLoginUser(loginBody) {
 }
 
 export function sendReqLogOutUser() {
-    return function (dispatch) {
+    return function (dispatch: any) {
         dispatch({
             type: LOGOUT_USER
         })
@@ -129,8 +133,8 @@ export function sendReqLogOutUser() {
     }
 }
 
-export function forgotPassword(newPost) {
-    return function (dispatch) {
+export function forgotPassword(newPost: TNewPost) {
+    return function (dispatch : any ) {
         fetch(`${url}/password-reset`, {
             method: "POST",
             body: JSON.stringify(newPost),
@@ -150,11 +154,11 @@ export function forgotPassword(newPost) {
             .catch(err => console.log(err))
     }
 }
-export function resetPassword(newPost) {
-    return function (dispatch) {
+export function resetPassword(newPostReset:TNewPostReset) {
+    return function (dispatch: any) {
         fetch(`${url}/password-reset/reset`, {
             method: "POST",
-            body: JSON.stringify(newPost),
+            body: JSON.stringify(newPostReset),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
             },

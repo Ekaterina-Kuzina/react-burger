@@ -9,21 +9,40 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
-export default function BurgerConstructor({orderButtonClicked}) {
+import {TItemData} from '../../utils/types'
+type TBurgerConstructorProps = {
+    orderButtonClicked: () => void
+}
+// export type TItem = {
+//     _id: string;
+//     type: string;
+// }
+
+// export type TConstructerItemData = TItem & {
+//     name: string;
+//     constructerID: string;
+//     index: number;
+//     price: number;
+//     image: string;
+
+// }
+
+
+export default function BurgerConstructor({orderButtonClicked}: TBurgerConstructorProps) {
     const dispatch = useDispatch();
-    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
+    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
 
-    const price = useSelector((state) => state.countedPrice.price)
-    const [orderList, setOrderList] = useState([])
+    const price = useSelector((state: any) => state.countedPrice.price)
+    const [orderList, setOrderList] = useState<number[]>([])
 
-    const constructerIngredients = useSelector((state) => state.constructerData.constructerIngredients)
-    const constructerBun = useSelector((state) => state.bunData.constructerBun)
+    const constructerIngredients = useSelector((state: any) => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector((state: any) => state.bunData.constructerBun)
 
 
     useEffect(() => {
         if(constructerBun){
             let ids = [constructerBun._id]
-            constructerIngredients.forEach(item => {
+            constructerIngredients.forEach((item: TItemData) => {
                 ids.push(item._id)
             });
             setOrderList(ids)
@@ -31,11 +50,11 @@ export default function BurgerConstructor({orderButtonClicked}) {
 
     }, [constructerIngredients, constructerBun])
 
-    const sendRequest = (orderList) => {
-        dispatch(sendOrder(orderList))
+    const sendRequest = (orderListParam: number[]) => {
+        dispatch(sendOrder(orderListParam))
     }
 
-    const onDropHandler = (item) => {
+    const onDropHandler = (item: TItemData) => {
         if (item.type === 'bun') {
             dispatch({
                 type: GET_BUN_DATA,
@@ -50,7 +69,7 @@ export default function BurgerConstructor({orderButtonClicked}) {
     }
     const [{ isOver }, dropTarget] = useDrop({
         accept: "ingredients",
-        drop(item) {
+        drop(item: TItemData) {
             onDropHandler(item);
         },
         collect: monitor => ({
@@ -94,7 +113,7 @@ export default function BurgerConstructor({orderButtonClicked}) {
 
                     <div className={`${constructor.item_wrapper} ${constructor.custom_scroll}`}>
                         {constructerIngredients !== null &&
-                            constructerIngredients.map((constructerItemData, index) => {
+                            constructerIngredients.map((constructerItemData: TItemData, index:number) => {
                                 constructerItemData.constructerID = uuidv4();
                                 constructerItemData.index = index
                                 return (

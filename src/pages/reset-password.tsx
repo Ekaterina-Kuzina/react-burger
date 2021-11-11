@@ -7,42 +7,56 @@ import { useDispatch } from 'react-redux';
 import { resetPassword } from '../services/actions/requests-from-forms'
 import { Redirect } from 'react-router-dom'
 
+export type TNewPostReset = {
+    password: string;
+    token: string;
+}
+
 export default function ResetPassword() {
     const history = useHistory()
     const [valuePass, setValuePass] = React.useState('')
     const [switchIcon, setSwitchIcon] = React.useState(true)
-    const inputRefPass = React.useRef(null)
+    const inputRefPass = React.useRef<HTMLInputElement>(null)
 
     const dispatch = useDispatch()
-    const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
-    const successResetPassword = useSelector(state => state.flagForForgotPassword.successResetPassword)
+    const flagForgotPass = useSelector((state: any) => state.flagForForgotPassword.flagForgotPass)
+    const successResetPassword = useSelector((state: any)=> state.flagForForgotPassword.successResetPassword)
 
     const onIconClickPass = () => {
-        setTimeout(() => inputRefPass.current.focus(), 0)
+        setTimeout(() => {
+            if(inputRefPass.current){
+                inputRefPass.current.focus()
+            }
+        }, 0)
         setSwitchIcon(!switchIcon)
-        if (inputRefPass.current.type === 'password') {
-            inputRefPass.current.type = 'text';
-        } else {
-            inputRefPass.current.type = 'password'
+        if(inputRefPass.current){
+            if (inputRefPass.current.type === 'password') {
+                inputRefPass.current.type = 'text';
+            } else {
+                inputRefPass.current.type = 'password'
+            }
         }
     }
 
 
     const [valueToken, setValueToken] = React.useState('')
-    const inputRefToken = React.useRef(null)
+    const inputRefToken = React.useRef<HTMLInputElement>(null)
     const onIconClickToken = () => {
-        setTimeout(() => inputRefToken.current.focus(), 0)
+        setTimeout(() => {
+            if(inputRefToken.current){
+                inputRefToken.current.focus()
+            }
+        }, 0)
     }
 
-    const newPost = {
+    const newPostReset : TNewPostReset = {
         password: valuePass,
         token: valueToken
-
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
-        dispatch(resetPassword(newPost))
+        dispatch(resetPassword(newPostReset))
 
     }
     useEffect(() => {

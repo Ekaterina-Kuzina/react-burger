@@ -5,7 +5,7 @@ import done from "../../images/done.png";
 import { useSelector } from 'react-redux';
 
 export default function OrderDetails() {
-    const order = useSelector(state => state.orderData.order)
+    const order = useSelector((state: any) => state.orderData.order)
 
     return (
         <div className={`${modalStyle.order_wrapper} pl-15 pr-15`}>

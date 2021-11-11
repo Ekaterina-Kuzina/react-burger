@@ -1,15 +1,22 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import { REMOVE_CONSTRUCTER_DATA } from '../../services/actions/index'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {TItemData} from '../../utils/types'
 
-export default function ItemOfConstructor({ constructerItemData, id, index, moveCard }) {
+type TItemOfConstructorProps = { 
+    constructerItemData: TItemData;
+    id: number;
+    index: number;
+    moveCard: (dragIndex: number,hoverIndex : number ) => void
+
+}
+export default function ItemOfConstructor({ constructerItemData, id, index, moveCard } : TItemOfConstructorProps) {
 
     const dispatch = useDispatch();
-    const ref = useRef(null)
-    const handleClose = (removedElement) => {
+    const ref = useRef<HTMLDivElement>(null)
+    const handleClose = (removedElement: string) => {
         dispatch({
             type: REMOVE_CONSTRUCTER_DATA,
             _id: removedElement
@@ -23,7 +30,7 @@ export default function ItemOfConstructor({ constructerItemData, id, index, move
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: {index: number}, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -34,7 +41,7 @@ export default function ItemOfConstructor({ constructerItemData, id, index, move
             }
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
+            const clientOffset = monitor.getClientOffset()!!;
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;        
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
@@ -58,7 +65,6 @@ export default function ItemOfConstructor({ constructerItemData, id, index, move
 
     drag(drop(ref));
 
-
     return (
         <div ref={ref} data-handler-id={handlerId} style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '10px' }} className="mt-4 mb-4">
             <DragIcon type="primary" />
@@ -74,15 +80,4 @@ export default function ItemOfConstructor({ constructerItemData, id, index, move
             </div>
         </div>
     )
-}
-
-ItemOfConstructor.propTypes = {
-    constructerItemData: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    }),
-    index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func
 }

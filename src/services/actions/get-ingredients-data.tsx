@@ -1,11 +1,16 @@
 import {url} from './index'
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
+type TMyState = {
+
+}
 export function getIngredients() {
-    return function (dispatch) {
+    return function (dispatch: ThunkDispatch<TMyState, void, Action>) {
         dispatch({
             type: GET_INGREDIENTS
         })

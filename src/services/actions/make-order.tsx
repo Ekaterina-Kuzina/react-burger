@@ -8,8 +8,8 @@ export const CLEAR_ORDER = 'CLEAR_ORDER';
 export const CLEAR_CONSTRUCTER_DATA = 'CLEAR_CONSTRUCTER_DATA';
 export const CLEAR_BUN_DATA = 'CLEAR_BUN_DATA';
 
-export function sendOrder(orderList){
-    return function (dispatch){
+export function sendOrder(orderList: number[]){
+    return function (dispatch: any){
         dispatch({
             type: SEND_INGREDIENTS
         })

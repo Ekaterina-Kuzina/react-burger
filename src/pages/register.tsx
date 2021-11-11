@@ -5,22 +5,36 @@ import formStyle from './forms.module.css'
 import { useDispatch } from 'react-redux';
 import { sendReqRegisterUser } from '../services/actions/requests-from-forms'
 
+export type TRequestBody = {
+    email: string;
+    password: string;
+    name: string;
+}
+
 export default function Registration() {
     const dispatch = useDispatch();
     const [valueName, setValueName] = React.useState('')
-    const inputRefName = React.useRef(null)
+    const inputRefName = React.useRef<HTMLInputElement>(null)
     const onIconClickName = () => {
-        setTimeout(() => inputRefName.current.focus(), 0)
+        setTimeout(() => {
+            if (inputRefName.current) {
+                inputRefName.current.focus()
+            }
+        }, 0)
     }
 
     const [valueEmail, setValueEmail] = React.useState('')
-    const inputRefEmail = React.useRef(null)
+    const inputRefEmail = React.useRef<HTMLInputElement>(null)
     const onIconClickEmail = () => {
-        setTimeout(() => inputRefEmail.current.focus(), 0)
+        setTimeout(() => {
+            if (inputRefEmail.current) {
+                inputRefEmail.current.focus()
+            }
+        }, 0)
     }
 
     const [valuePassword, setValuePassword] = React.useState('')
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValuePassword(e.target.value)
     }
 
@@ -29,7 +43,7 @@ export default function Registration() {
         password: valuePassword,
         name: valueName
     }
-    const sendRequest = (body) => {
+    const sendRequest = (body: TRequestBody) => {
         dispatch(sendReqRegisterUser(body))
     }
 
@@ -75,7 +89,7 @@ export default function Registration() {
                 </div>
 
                 <div className='mb-6'>
-                    <PasswordInput className='mb-6' onChange={onChange} value={valuePassword} name={'password'} />
+                    <PasswordInput onChange={onChange} value={valuePassword} name={'password'} />
                 </div>
 
                 <div className='mb-20'>
