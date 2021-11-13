@@ -29,13 +29,17 @@
     text-decoration: none;
     color: #4C4CFF;
 }
-
 .profile_link_wrapper{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     max-width: 320px;
+
+}
+.profile_link_wrapper a {
+    text-decoration: none;
+    color: #8585AD;
 }
 
 .wrapper_profile{
@@ -43,18 +47,9 @@
     align-items: flex-start;
 } 
 
-.form_profile {
-    margin-top: 0;
-}
-
-.selected_link {
+.profile_link_wrapper a.selected_link {
     text-decoration: none;
     color: #F2F2F3;
-}
-
-.inactive_link{
-    text-decoration: none;
-    color: #8585AD;
 }
 
 .subtext {

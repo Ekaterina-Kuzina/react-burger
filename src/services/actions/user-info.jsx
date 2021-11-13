@@ -82,7 +82,7 @@ export function userInfoRequest() {
 
 
 export function changeUserInfo(changedBody) {
-    return function (dispatch: any) {
+    return function (dispatch) {
         dispatch({
             type: USER_INFO
         })

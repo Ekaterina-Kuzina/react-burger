@@ -5,12 +5,54 @@ import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserInfo } from '../services/actions/user-info'
 import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
+import {
+    Switch,
+    Route,
+} from "react-router-dom";
+import OrderList from '../components/order-feed/order-list'
+
 
 type TChangedBody = {
     name: string,
     email: string
 }
 export default function Profile() {
+    const dispatch = useDispatch()
+
+    const logoutRequest = (e: React.SyntheticEvent) => {
+        e.preventDefault()
+        dispatch(sendReqLogOutUser())
+    }
+
+    return (
+        <div className={formStyle.container}>
+            <div className={`${formStyle.wrapper_profile} `}>
+                <div className={`${formStyle.profile_link_wrapper} mt-30 mr-15`}>
+                    <NavLink exact to='/profile' activeClassName={formStyle.selected_link} className='text text_type_main-medium mt-6 mb-6'>Профиль</NavLink>
+                    <NavLink exact to='/profile/orders' activeClassName={formStyle.selected_link}  className={`text text_type_main-medium mt-6 mb-6`}>История заказов</NavLink>
+                    <NavLink exact to='/login' activeClassName={formStyle.selected_link}  onClick={(e) => {
+                        logoutRequest(e)
+                    }} className={`${formStyle.inactive_link} text text_type_main-medium mt-6 mb-6`}>Выход</NavLink>
+
+                    <p className={`${formStyle.subtext} text text_type_main-default mt-20`}>В этом разделе вы можете <br />
+                        изменить свои персональные данные</p>
+                </div>
+
+                <Switch>
+                    <Route path='/profile' exact>
+                        <ProfileUser/>
+                    </Route>
+                    <Route path='/profile/orders' exact>
+                        <OrderList/>
+                    </Route>
+                </Switch>
+
+            </div>
+        </div>
+    )
+}
+
+export function ProfileUser(){
     const dispatch = useDispatch()
     const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
 
@@ -40,29 +82,13 @@ export default function Profile() {
     const changeUserInfoRequest = (changedBody: TChangedBody) => {
         dispatch(changeUserInfo(changedBody))
     }
-    const logoutRequest = (e: React.SyntheticEvent) => {
-        e.preventDefault()
-        dispatch(sendReqLogOutUser())
-    }
+
     const saveUser = (e: React.SyntheticEvent) => {
         e.preventDefault()
         changeUserInfoRequest(changedBody)
     }
-
-    return (
-        <div className={formStyle.container}>
-            <div className={`${formStyle.wrapper_profile} mt-30`}>
-                <div className={`${formStyle.profile_link_wrapper} mr-15`}>
-                    <NavLink to='/profile' activeClassName={formStyle.selected_link} className='text text_type_main-medium mt-6 mb-6'>Профиль</NavLink>
-                    <NavLink to='/profile' className={`${formStyle.inactive_link} text text_type_main-medium mt-6 mb-6`}>История заказов</NavLink>
-                    <NavLink to='/profile' onClick={(e) => {
-                        logoutRequest(e)
-                    }} className={`${formStyle.inactive_link} text text_type_main-medium mt-6 mb-6`}>Выход</NavLink>
-
-                    <p className={`${formStyle.subtext} text text_type_main-default mt-20`}>В этом разделе вы можете <br />
-                        изменить свои персональные данные</p>
-                </div>
-                <form onSubmit={saveUser} className={`${formStyle.form_profile}`} action="">
+    return(
+            <form onSubmit={saveUser} className={`${formStyle.form_profile} mt-30`} action="">
                     <div className='mb-6'>
                         <Input
                             type={'text'}
@@ -98,8 +124,6 @@ export default function Profile() {
                         Сохранить
                     </Button>
 
-                </form>
-            </div>
-        </div>
+            </form> 
     )
 }
