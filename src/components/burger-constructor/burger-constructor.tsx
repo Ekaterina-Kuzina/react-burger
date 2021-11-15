@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 type TBurgerConstructorProps = {
     orderButtonClicked: () => void
 }

@@ -4,24 +4,44 @@ import {TNewPost} from '../../pages/forgot-password'
 import {TNewPostReset} from '../../pages/reset-password'
 import {TRequestBody} from '../../pages/register'
 
-export const LOGIN_USER = 'LOGIN_USER';
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
+// export const LOGIN_USER = 'LOGIN_USER';
+// export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+// export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
 
-export const REGISTER_USER = 'REGISTER_USER';
-export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
-export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
+// export const REGISTER_USER = 'REGISTER_USER';
+// export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+// export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
 
-export const LOGOUT_USER = 'LOGOUT_USER';
-export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
-export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED';
-export const CLEAR_LOGIN_USER = 'CLEAR_LOGIN_USER'
+// export const LOGOUT_USER = 'LOGOUT_USER';
+// export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+// export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED';
+// export const CLEAR_LOGIN_USER = 'CLEAR_LOGIN_USER'
 
-export const USER_INFO = 'USER_INFO';
-export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
+// export const USER_INFO = 'USER_INFO';
+// export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 
-export const FLAG_FORGOT_PASSWORD = 'FLAG_FORGOT_PASSWORD';
-export const REMOVE_FLAG_FORGOT_PASSWORD = 'REMOVE_FLAG_FORGOT_PASSWORD'
+// export const FLAG_FORGOT_PASSWORD = 'FLAG_FORGOT_PASSWORD';
+// export const REMOVE_FLAG_FORGOT_PASSWORD = 'REMOVE_FLAG_FORGOT_PASSWORD'
+
+import {
+    LOGIN_USER, 
+    LOGIN_USER_SUCCESS, 
+    LOGIN_USER_FAILED,
+    REGISTER_USER,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAILED,
+
+    LOGOUT_USER,
+    LOGOUT_USER_SUCCESS,
+    LOGOUT_USER_FAILED,
+    CLEAR_LOGIN_USER,
+
+    USER_INFO,
+    CLEAR_USER_INFO,
+    FLAG_FORGOT_PASSWORD,
+    REMOVE_FLAG_FORGOT_PASSWORD
+
+} from '../constants'
 
 
 export function sendReqRegisterUser(registerBody: TRequestBody) {

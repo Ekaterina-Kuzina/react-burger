@@ -6,5 +6,4 @@ export type TItemData = {
     index: number;
     price: number;
     image: string;
-
 }

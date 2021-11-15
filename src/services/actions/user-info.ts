@@ -1,9 +1,15 @@
 import { url } from './index'
 
-export const USER_INFO = 'USER_INFO';
-export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
-export const USER_INFO_FAILED = 'USER_INFO_FAILED';
-export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
+import {
+    USER_INFO,
+    USER_INFO_SUCCESS,
+    USER_INFO_FAILED,
+    CLEAR_USER_INFO
+} from '../constants'
+
+const requestHeaders: HeadersInit = new Headers();
+requestHeaders.set('Content-Type', 'application/json');
+requestHeaders.set('Authorization', `${localStorage.getItem('accessToken')}`);
 
 function authUser() {
     return fetch(`${url}/auth/user`, {
@@ -11,10 +17,7 @@ function authUser() {
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('accessToken')
-        },
+        headers: requestHeaders,
         redirect: 'follow',
         referrerPolicy: 'no-referrer'
     })
@@ -36,7 +39,7 @@ function authToken() {
 }
 
 export function userInfoRequest() {
-    return function (dispatch) {
+    return function (dispatch: any) {
         dispatch({
             type: USER_INFO
         })
@@ -81,8 +84,9 @@ export function userInfoRequest() {
 }
 
 
-export function changeUserInfo(changedBody) {
-    return function (dispatch) {
+
+export function changeUserInfo(changedBody: any) {
+    return function (dispatch:any) {
         dispatch({
             type: USER_INFO
         })
@@ -92,10 +96,7 @@ export function changeUserInfo(changedBody) {
             mode: 'cors',
             cache: 'no-cache',
             credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('accessToken')
-            }
+            headers: requestHeaders
         })
             .then(res => res.json())
             .then(res => {

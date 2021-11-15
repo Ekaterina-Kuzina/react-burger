@@ -3,7 +3,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import { REMOVE_CONSTRUCTER_DATA } from '../../services/actions/index'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 
 type TItemOfConstructorProps = { 
     constructerItemData: TItemData;

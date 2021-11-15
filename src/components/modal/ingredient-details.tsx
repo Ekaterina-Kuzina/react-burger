@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import {
     useParams
 } from "react-router-dom";
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 
 type TParamTypes = {
     id: string;

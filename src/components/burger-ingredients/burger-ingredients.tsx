@@ -8,7 +8,7 @@ import ingredientsStyle from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 
 type TBurgerIngredientsProps = {
     ingridientClicked: ()=> void;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './burger-ingredients.module.css';
@@ -8,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 import { useLocation } from 'react-router-dom'
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 
 type TIngredientCardProps = {
     item: TItemData;

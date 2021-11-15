@@ -2,9 +2,26 @@ import {url} from './index'
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 
-export const GET_INGREDIENTS = 'GET_INGREDIENTS';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+import {
+    GET_INGREDIENTS, 
+    GET_INGREDIENTS_SUCCESS, 
+    GET_INGREDIENTS_FAILED, 
+} from '../constants'
+
+import {TItemData} from '../types/data'
+
+export interface IGetIngredients{
+    readonly type: typeof GET_INGREDIENTS;
+}
+
+export interface IGetIngredientsSuccess{
+    readonly type: typeof GET_INGREDIENTS_SUCCESS;
+    readonly ingredients: TItemData;
+}
+
+export interface IGetIngredientsFailed{
+    readonly type: typeof GET_INGREDIENTS_FAILED;
+}
 
 type TMyState = {
 

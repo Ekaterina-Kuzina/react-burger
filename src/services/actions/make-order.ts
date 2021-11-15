@@ -1,12 +1,14 @@
 import {url} from './index'
 
-export const SEND_INGREDIENTS = 'SEND_INGREDIENTS';
-export const SEND_INGREDIENTS_SUCCESS = 'SEND_INGREDIENTS_SUCCESS';
-export const SEND_INGREDIENTS_FAILED = 'SEND_INGREDIENTS_FAILED';
-export const CLEAR_ORDER = 'CLEAR_ORDER';
+import {
+    SEND_INGREDIENTS, 
+    SEND_INGREDIENTS_SUCCESS, 
+    SEND_INGREDIENTS_FAILED,
+    CLEAR_ORDER,
+    CLEAR_CONSTRUCTER_DATA,
+    CLEAR_BUN_DATA,
 
-export const CLEAR_CONSTRUCTER_DATA = 'CLEAR_CONSTRUCTER_DATA';
-export const CLEAR_BUN_DATA = 'CLEAR_BUN_DATA';
+} from '../constants'
 
 export function sendOrder(orderList: number[]){
     return function (dispatch: any){
