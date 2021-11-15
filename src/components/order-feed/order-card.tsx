@@ -13,7 +13,7 @@ export default function OrderCard() {
 
             <h2 className="text text_type_main-medium mb-6">Death Star Starship Main бургер</h2>
 
-            <div className = {orderFeedStyle.wrapper}>
+            <div className = {orderFeedStyle.info_wrapper}>
                 <div className= {orderFeedStyle.ingredients_wrapper}>
                     <div className={orderFeedStyle.round}>
                         <img src={bun} alt="ingredient" />

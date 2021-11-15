@@ -35,15 +35,21 @@
     justify-content: flex-start;
     align-items: flex-start;
     max-width: 320px;
-
 }
 .profile_link_wrapper a {
     text-decoration: none;
     color: #8585AD;
 }
 
+.wrapper_router{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .wrapper_profile{
     display: flex;
+    justify-content: flex-start;
     align-items: flex-start;
 } 
 

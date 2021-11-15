@@ -5,12 +5,12 @@ import formStyle from './forms.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserInfo } from '../services/actions/user-info'
 import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
+import HistoryList from '../components/history-feed/history-list'
 import {
     Switch,
     Route,
+    useRouteMatch
 } from "react-router-dom";
-import OrderList from '../components/order-feed/order-list'
-
 
 type TChangedBody = {
     name: string,
@@ -18,6 +18,7 @@ type TChangedBody = {
 }
 export default function Profile() {
     const dispatch = useDispatch()
+    const { path } = useRouteMatch();
 
     const logoutRequest = (e: React.SyntheticEvent) => {
         e.preventDefault()
@@ -27,6 +28,7 @@ export default function Profile() {
     return (
         <div className={formStyle.container}>
             <div className={`${formStyle.wrapper_profile} `}>
+
                 <div className={`${formStyle.profile_link_wrapper} mt-30 mr-15`}>
                     <NavLink exact to='/profile' activeClassName={formStyle.selected_link} className='text text_type_main-medium mt-6 mb-6'>Профиль</NavLink>
                     <NavLink exact to='/profile/orders' activeClassName={formStyle.selected_link}  className={`text text_type_main-medium mt-6 mb-6`}>История заказов</NavLink>
@@ -39,11 +41,11 @@ export default function Profile() {
                 </div>
 
                 <Switch>
-                    <Route path='/profile' exact>
+                    <Route path={`${path}/`} exact>
                         <ProfileUser/>
                     </Route>
-                    <Route path='/profile/orders' exact>
-                        <OrderList/>
+                    <Route path={`${path}/orders`} exact>
+                        <HistoryList/>
                     </Route>
                 </Switch>
 
@@ -127,3 +129,4 @@ export function ProfileUser(){
             </form> 
     )
 }
+

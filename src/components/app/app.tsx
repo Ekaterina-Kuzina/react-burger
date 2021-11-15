@@ -7,6 +7,8 @@ import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword,
 import { useSelector, useDispatch } from 'react-redux';
 import { userInfoRequest } from '../../services/actions/user-info'
 import { getIngredients } from '../../services/actions/get-ingredients-data'
+import OrderFullPage from '../../pages/order-full-page'
+import OrderFullPageModal from '../order-feed/order-full-page-modal'
 
 import {
     Switch,
@@ -21,8 +23,8 @@ import {Location} from 'history';
 type TLocationState = {
     from?: Location;
     ingredientsModal?: Location;
+    orderModal?: Location;
 }
-
 
 export default function App() {
     const dispatch = useDispatch()
@@ -35,7 +37,8 @@ export default function App() {
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
     const ingredientsModal = action && location.state && location.state.ingredientsModal;
-
+    const orderModal = action && location.state && location.state.orderModal;
+    
     useEffect(() => {
         dispatch(userInfoRequest())
     }, [localStorage.getItem('accessToken'), localStorage.getItem('refreshToken')])
@@ -46,12 +49,18 @@ export default function App() {
 
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
-            <Switch location={ingredientsModal || location}>
+            <Switch location={(ingredientsModal || orderModal || location)}>
                 <Route path='/' exact>
                     <HomePage />
                 </Route>
-                <Route path='/feed'>
+                <Route path='/feed' exact>
                     <OrderFeed/>
+                </Route>
+                <Route path='/feed/:id'>
+                    <OrderFullPage/>
+                </Route>
+                <Route path='/profile/orders/:id'>
+                    <OrderFullPage/>
                 </Route>
                 <Route path='/login'>
                     {loginData || userInfo ? <Redirect to="/" /> : <SignIn />}
@@ -78,6 +87,8 @@ export default function App() {
             </Switch>
 
             {ingredientsModal && <Route path='/ingredients/:id'><IngredientModal /></Route>}
+            {orderModal && <Route path='/profile/orders/:id'><OrderFullPageModal/></Route>}
+            {orderModal && <Route path='/feed/:id'><OrderFullPageModal/></Route>}
         </div>
 
     )
