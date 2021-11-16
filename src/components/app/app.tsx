@@ -4,7 +4,7 @@ import appStyle from "./app.module.css";
 import { ProtectedRoute } from '../protected-route';
 import { Redirect } from 'react-router-dom'
 import { HomePage, Page404, SignIn, Registration, ForgotPassword, ResetPassword, Profile, OrderFeed } from '../../pages';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { userInfoRequest } from '../../services/actions/user-info'
 import { getIngredients } from '../../services/actions/get-ingredients-data'
 import OrderFullPage from '../../pages/order-full-page'
@@ -28,9 +28,9 @@ type TLocationState = {
 
 export default function App() {
     const dispatch = useDispatch()
-    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
-    const loginData = useSelector((state: any) => state.login.loginData)
-    const registerData = useSelector((state: any) => state.register.registerData)
+    const userInfo = useSelector((state) => state.getUserInfo.userInfo);
+    const loginData = useSelector((state) => state.login.loginData)
+    const registerData = useSelector((state) => state.register.registerData)
 
     let location = useLocation<TLocationState>();
     let history = useHistory();

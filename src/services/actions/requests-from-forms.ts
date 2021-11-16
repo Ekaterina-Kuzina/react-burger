@@ -1,51 +1,96 @@
 import { url } from './index'
-import {TLoginBody} from '../../pages/login'
-import {TNewPost} from '../../pages/forgot-password'
-import {TNewPostReset} from '../../pages/reset-password'
-import {TRequestBody} from '../../pages/register'
+import { AppThunk, AppDispatch } from '../types/index'
 
-// export const LOGIN_USER = 'LOGIN_USER';
-// export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-// export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
-
-// export const REGISTER_USER = 'REGISTER_USER';
-// export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
-// export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
-
-// export const LOGOUT_USER = 'LOGOUT_USER';
-// export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
-// export const LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED';
-// export const CLEAR_LOGIN_USER = 'CLEAR_LOGIN_USER'
-
-// export const USER_INFO = 'USER_INFO';
-// export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
-
-// export const FLAG_FORGOT_PASSWORD = 'FLAG_FORGOT_PASSWORD';
-// export const REMOVE_FLAG_FORGOT_PASSWORD = 'REMOVE_FLAG_FORGOT_PASSWORD'
+import { TLoginBody } from '../../pages/login'
+import { TNewPost } from '../../pages/forgot-password'
+import { TNewPostReset } from '../../pages/reset-password'
+import { TRequestBody } from '../../pages/register'
 
 import {
-    LOGIN_USER, 
-    LOGIN_USER_SUCCESS, 
+    LOGIN_USER,
+    LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILED,
+
     REGISTER_USER,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
 
     LOGOUT_USER,
-    LOGOUT_USER_SUCCESS,
     LOGOUT_USER_FAILED,
-    CLEAR_LOGIN_USER,
 
-    USER_INFO,
+    CLEAR_LOGIN_USER,
     CLEAR_USER_INFO,
     FLAG_FORGOT_PASSWORD,
     REMOVE_FLAG_FORGOT_PASSWORD
 
 } from '../constants'
 
+import { TLoginData, TLogout } from '../types/data'
 
-export function sendReqRegisterUser(registerBody: TRequestBody) {
-    return function (dispatch: any) {
+export interface ILoginUser {
+    readonly type: typeof LOGIN_USER;
+}
+export interface ILoginUserSuccess {
+    readonly type: typeof LOGIN_USER_SUCCESS;
+    readonly loginData: TLoginData;
+}
+
+export interface ILoginUserFailed {
+    readonly type: typeof LOGIN_USER_FAILED;
+}
+export interface IRegisterUser {
+    readonly type: typeof REGISTER_USER;
+}
+export interface IRegisterUserSuccess {
+    readonly type: typeof REGISTER_USER_SUCCESS;
+    readonly registerData: TLoginData;
+}
+
+export interface IRegisterUserFalied {
+    readonly type: typeof REGISTER_USER_FAILED;
+}
+
+export interface ILogoutUser {
+    readonly type: typeof LOGOUT_USER;
+}
+
+export interface ILogoutUserFailed {
+    readonly type: typeof LOGOUT_USER_FAILED;
+}
+export interface IClearLoginUser {
+    readonly type: typeof CLEAR_LOGIN_USER;
+}
+
+export interface IClearUserInfo {
+    readonly type: typeof CLEAR_USER_INFO;
+}
+
+export interface IFlagForgotPassword {
+    readonly type: typeof FLAG_FORGOT_PASSWORD;
+}
+
+export interface IRemoveFlagForgotPassword {
+    readonly type: typeof REMOVE_FLAG_FORGOT_PASSWORD;
+    readonly successResetPassword: TLogout;
+}
+
+export type TRequestsFromFormsActions =
+    | ILoginUser
+    | ILoginUserSuccess
+    | ILoginUserFailed
+    | IRegisterUser
+    | IRegisterUserSuccess
+    | IRegisterUserFalied
+    | ILogoutUser
+    | ILogoutUserFailed
+    | IClearLoginUser
+    | IClearUserInfo
+    | IFlagForgotPassword
+    | IRemoveFlagForgotPassword
+
+
+export const sendReqRegisterUser: AppThunk = (registerBody: TRequestBody) => {
+    return function (dispatch: AppDispatch) {
 
         fetch(`${url}/auth/register`, {
             method: 'POST',
@@ -56,7 +101,7 @@ export function sendReqRegisterUser(registerBody: TRequestBody) {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+
                 if (res && res.success) {
                     dispatch({
                         type: REGISTER_USER_SUCCESS,
@@ -77,8 +122,8 @@ export function sendReqRegisterUser(registerBody: TRequestBody) {
 
 }
 
-export function sendReqLoginUser(loginBody: TLoginBody) {
-    return function (dispatch: any) {
+export const sendReqLoginUser: AppThunk = (loginBody: TLoginBody) => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: LOGIN_USER
         })
@@ -92,6 +137,7 @@ export function sendReqLoginUser(loginBody: TLoginBody) {
         })
             .then(res => res.json())
             .then(res => {
+                console.group('login');
                 console.log(res);
                 if (res && res.success) {
                     localStorage.setItem('refreshToken', res.refreshToken);
@@ -114,8 +160,8 @@ export function sendReqLoginUser(loginBody: TLoginBody) {
     }
 }
 
-export function sendReqLogOutUser() {
-    return function (dispatch: any) {
+export const sendReqLogOutUser: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: LOGOUT_USER
         })
@@ -153,8 +199,8 @@ export function sendReqLogOutUser() {
     }
 }
 
-export function forgotPassword(newPost: TNewPost) {
-    return function (dispatch : any ) {
+export const forgotPassword: AppThunk = (newPost: TNewPost) => {
+    return function (dispatch: AppDispatch) {
         fetch(`${url}/password-reset`, {
             method: "POST",
             body: JSON.stringify(newPost),
@@ -174,8 +220,8 @@ export function forgotPassword(newPost: TNewPost) {
             .catch(err => console.log(err))
     }
 }
-export function resetPassword(newPostReset:TNewPostReset) {
-    return function (dispatch: any) {
+export const resetPassword: AppThunk = (newPostReset: TNewPostReset) => {
+    return function (dispatch: AppDispatch) {
         fetch(`${url}/password-reset/reset`, {
             method: "POST",
             body: JSON.stringify(newPostReset),

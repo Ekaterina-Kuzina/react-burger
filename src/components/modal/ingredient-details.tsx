@@ -1,7 +1,7 @@
 import React from 'react'
 
 import modalStyle from "./modal.module.css"
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import {
     useParams
 } from "react-router-dom";
@@ -10,13 +10,13 @@ import {TItemData} from '../../services/types/data'
 type TParamTypes = {
     id: string;
 }
-export default function IngredientDetails() {
+const IngredientDetails = () => {
     let { id } = useParams<TParamTypes>();
-    const ingredients = useSelector((state: any) => state.ingredientsData.ingredients)
-    const flagSuccess = useSelector((state: any) => state.ingredientsData.flagSuccess)
+    const ingredients = useSelector(state => state.ingredientsData.ingredients)
+    const flagSuccess = useSelector( state => state.ingredientsData.flagSuccess)
     let setIng = ingredients.find((item:TItemData)=> item._id === id)
 
-        return (flagSuccess &&
+        return (flagSuccess && setIng ?
             <div className={`${modalStyle.wrapper} pl-15 pr-15`}>
                 <div className={modalStyle.ingredient_img}>
                     <img src={setIng.image_large} alt="ingredient" />
@@ -41,6 +41,8 @@ export default function IngredientDetails() {
                     </div>
                 </div>
             </div>
+            :
+            <></>
         )
     }
-
+    export default IngredientDetails

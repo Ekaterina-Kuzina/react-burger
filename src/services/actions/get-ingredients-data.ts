@@ -1,38 +1,39 @@
-import {url} from './index'
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
+import { url } from './index'
+import { AppThunk, AppDispatch } from '../types/index'
 
 import {
-    GET_INGREDIENTS, 
-    GET_INGREDIENTS_SUCCESS, 
-    GET_INGREDIENTS_FAILED, 
+    GET_INGREDIENTS,
+    GET_INGREDIENTS_SUCCESS,
+    GET_INGREDIENTS_FAILED,
 } from '../constants'
 
-import {TItemData} from '../types/data'
-
-export interface IGetIngredients{
+import { TItemData } from '../types/data'
+export interface IGetIngredients {
     readonly type: typeof GET_INGREDIENTS;
 }
 
-export interface IGetIngredientsSuccess{
+export interface IGetIngredientsSuccess {
     readonly type: typeof GET_INGREDIENTS_SUCCESS;
-    readonly ingredients: TItemData;
+    readonly ingredients: TItemData[];
 }
 
-export interface IGetIngredientsFailed{
+export interface IGetIngredientsFailed {
     readonly type: typeof GET_INGREDIENTS_FAILED;
 }
 
-type TMyState = {
+export type TGetIngredientsDataActions =
+    | IGetIngredients
+    | IGetIngredientsSuccess
+    | IGetIngredientsFailed
 
-}
-export function getIngredients() {
-    return function (dispatch: ThunkDispatch<TMyState, void, Action>) {
+
+export const getIngredients: AppThunk = () => {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_INGREDIENTS
         })
         fetch(`${url}/ingredients`)
-            .then(res=> res.json())
+            .then(res => res.json())
             .then(res => {
                 if (res && res.success) {
                     dispatch({
@@ -45,7 +46,7 @@ export function getIngredients() {
                     })
                 }
             })
-            .catch(err =>{
+            .catch(err => {
                 dispatch({
                     type: GET_INGREDIENTS_FAILED,
                 })

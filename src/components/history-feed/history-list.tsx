@@ -4,7 +4,7 @@ import OrderCard from '../order-feed/order-card'
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 
-export default function HistoryList(){
+export default function HistoryList() {
     let location = useLocation();
 
     return (
@@ -13,7 +13,7 @@ export default function HistoryList(){
                 pathname: `/profile/orders/:id`,
                 state: { orderModal: location }
             }} className={orderFeedStyle.link}>
-                <OrderCard/>
+                <OrderCard />
             </Link>
         </div>
     )

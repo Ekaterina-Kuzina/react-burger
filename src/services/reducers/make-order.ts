@@ -6,13 +6,21 @@ import {
 
 } from '../actions/index'
 
-const initialState = {
-    order: {},
+import {TMakeOrderActions} from '../actions/make-order'
+
+type TMakeOrderInitialState = {
+    order: null | {number: number};
+    orderRequest: boolean;
+    orderFailed: boolean;
+}
+
+const initialState : TMakeOrderInitialState = {
+    order: null,
     orderRequest: false,
     orderFailed: false,
 }
 
-export const orderData = (state = initialState, action) => {
+export const orderData = (state = initialState, action: TMakeOrderActions) : TMakeOrderInitialState => {
     switch (action.type) {
         case SEND_INGREDIENTS: {
             return {
@@ -39,7 +47,7 @@ export const orderData = (state = initialState, action) => {
         case CLEAR_ORDER: {
             return {
                 ...state,
-                order: [],
+                order: null,
                 orderFailed: false,
                 orderRequest: false
             }

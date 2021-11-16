@@ -5,42 +5,27 @@ import ItemOfConstructor from './item-of-constructor'
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructor from './burger-constructor.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { sendOrder } from '../../services/actions/make-order'
 import { GET_CONSTRUCTER_DATA, GET_BUN_DATA, FILTER_CONSTRUCTER } from '../../services/actions/index'
 
-import {TItemData} from '../../services/types/data'
+import { TItemData } from '../../services/types/data'
 type TBurgerConstructorProps = {
     orderButtonClicked: () => void
 }
-// export type TItem = {
-//     _id: string;
-//     type: string;
-// }
-
-// export type TConstructerItemData = TItem & {
-//     name: string;
-//     constructerID: string;
-//     index: number;
-//     price: number;
-//     image: string;
-
-// }
-
-
-export default function BurgerConstructor({orderButtonClicked}: TBurgerConstructorProps) {
+export default function BurgerConstructor({ orderButtonClicked }: TBurgerConstructorProps) {
     const dispatch = useDispatch();
-    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
+    const userInfo = useSelector(state => state.getUserInfo.userInfo);
 
-    const price = useSelector((state: any) => state.countedPrice.price)
-    const [orderList, setOrderList] = useState<number[]>([])
+    const price = useSelector(state => state.countedPrice.price)
+    const [orderList, setOrderList] = useState<string[]>([])
 
-    const constructerIngredients = useSelector((state: any) => state.constructerData.constructerIngredients)
-    const constructerBun = useSelector((state: any) => state.bunData.constructerBun)
+    const constructerIngredients = useSelector(state => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector(state => state.bunData.constructerBun)
 
 
     useEffect(() => {
-        if(constructerBun){
+        if (constructerBun) {
             let ids = [constructerBun._id]
             constructerIngredients.forEach((item: TItemData) => {
                 ids.push(item._id)
@@ -50,7 +35,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
 
     }, [constructerIngredients, constructerBun])
 
-    const sendRequest = (orderListParam: number[]) => {
+    const sendRequest = (orderListParam: string[]) => {
         dispatch(sendOrder(orderListParam))
     }
 
@@ -88,7 +73,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
 
 
     }, [constructerIngredients]);
-    
+
     return (
 
         <section className={`${constructor.wrapper} pt-15`}>
@@ -102,7 +87,7 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
                                 text={`${constructerBun.name} (верх)`}
                                 price={constructerBun.price}
                                 thumbnail={constructerBun.image}
-                            />:
+                            /> :
                             <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_top} text text_type_main-default`}>
                                 Выберите булку
                             </div>
@@ -113,28 +98,28 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
 
                     <div className={`${constructor.item_wrapper} ${constructor.custom_scroll}`}>
                         {constructerIngredients !== null &&
-                            constructerIngredients.map((constructerItemData: TItemData, index:number) => {
+                            constructerIngredients.map((constructerItemData: TItemData, index: number) => {
                                 constructerItemData.constructerID = uuidv4();
                                 constructerItemData.index = index
                                 return (
                                     constructerItemData.type !== 'bun' &&
                                     <div key={index} className={`${constructor.item}pl-2 `}>
-                                        <ItemOfConstructor id={constructerIngredients._id} moveCard={moveCard} index={index} constructerItemData={constructerItemData} />
+                                        <ItemOfConstructor id={constructerItemData._id} moveCard={moveCard} index={index} constructerItemData={constructerItemData} />
                                     </div>
                                 )
                             })
                         }
                     </div>
 
-                    <div className= {`${constructor.bun_wrapper} pl-10 `}>
-                        {constructerBun?
+                    <div className={`${constructor.bun_wrapper} pl-10 `}>
+                        {constructerBun ?
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
                                 text={`${constructerBun.name} (низ)`}
                                 price={constructerBun.price}
                                 thumbnail={constructerBun.image}
-                            />:
+                            /> :
                             <div className={`${constructor.constructor_empty} ${constructor.constructor_empty_bottom} text text_type_main-default `}>
                                 Выберите булку
                             </div>
@@ -149,9 +134,9 @@ export default function BurgerConstructor({orderButtonClicked}: TBurgerConstruct
                     </div>
 
                     <Button onClick={() => {
-                        if(constructerBun) {
+                        if (constructerBun) {
                             orderButtonClicked();
-                            if(userInfo){
+                            if (userInfo) {
                                 sendRequest(orderList)
                             }
                         }

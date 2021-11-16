@@ -4,17 +4,17 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientsStyles from './burger-ingredients.module.css';
 import { useDrag } from "react-dnd";
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 import { useLocation } from 'react-router-dom'
-import {TItemData} from '../../services/types/data'
+import { TItemData } from '../../services/types/data'
 
 type TIngredientCardProps = {
     item: TItemData;
     counter: number;
-    openModal: ()=> void;
+    openModal: () => void;
 }
-const  IngredientCard = ({ item,openModal, counter }: TIngredientCardProps ): JSX.Element => {
+const IngredientCard = ({ item, openModal, counter }: TIngredientCardProps): JSX.Element => {
     const dispatch = useDispatch()
     const [{ isDrag }, dragRef] = useDrag({
         type: "ingredients",
@@ -53,5 +53,5 @@ const  IngredientCard = ({ item,openModal, counter }: TIngredientCardProps ): JS
             </Link>
         )
     ) as JSX.Element
-} 
+}
 export default IngredientCard

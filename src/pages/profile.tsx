@@ -2,7 +2,7 @@ import React from 'react';
 import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from "react-router-dom"
 import formStyle from './forms.module.css'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { changeUserInfo } from '../services/actions/user-info'
 import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
 import HistoryList from '../components/history-feed/history-list'
@@ -56,9 +56,9 @@ export default function Profile() {
 
 export function ProfileUser(){
     const dispatch = useDispatch()
-    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
+    const userInfo = useSelector(state => state.getUserInfo.userInfo);
+    const [valueName, setValueName] = React.useState(userInfo? userInfo.name : '' )
 
-    const [valueName, setValueName] = React.useState(userInfo.name)
     const inputRefName = React.useRef<HTMLInputElement>(null)
     const onIconClickName = () => {
         if(inputRefName.current){
@@ -67,7 +67,8 @@ export function ProfileUser(){
         }
     }
 
-    const [value, setValue] = React.useState(userInfo.email)
+    const [value, setValue] = React.useState(userInfo? userInfo.email: '')
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value)
     }
@@ -89,7 +90,7 @@ export function ProfileUser(){
         e.preventDefault()
         changeUserInfoRequest(changedBody)
     }
-    return(
+    return( userInfo &&
             <form onSubmit={saveUser} className={`${formStyle.form_profile} mt-30`} action="">
                     <div className='mb-6'>
                         <Input

@@ -11,13 +11,22 @@ import {
 
 } from '../actions/index'
 
-const initialState = {
-    constructerIngredients: [],
-    constructerBun: null,
-    price: ''
+import { TItemData } from '../types/data'
+import { TBurgerConstructorActions } from '../actions/burger-constructor'
+
+type TBurgerConstructorInitialState = {
+    constructerIngredients: Array<TItemData>;
+    constructerBun: null | TItemData;
+    price: number;
 }
 
-export const constructerData = (state = initialState, action) => {
+const initialState: TBurgerConstructorInitialState = {
+    constructerIngredients: [],
+    constructerBun: null,
+    price: 0
+}
+
+export const constructerData = (state = initialState, action: TBurgerConstructorActions): TBurgerConstructorInitialState => {
     switch (action.type) {
         case GET_CONSTRUCTER_DATA: {
             return {
@@ -35,7 +44,7 @@ export const constructerData = (state = initialState, action) => {
         }
 
         case REMOVE_CONSTRUCTER_DATA: {
-            const itemToRemove = state.constructerIngredients.find(item => item._id === action._id)
+            const itemToRemove = state.constructerIngredients.find((item: TItemData) => item._id === action._id)
             if (!itemToRemove) {
                 return state
             }
@@ -61,7 +70,7 @@ export const constructerData = (state = initialState, action) => {
     }
 }
 
-export const bunData = (state = initialState, action) => {
+export const bunData = (state = initialState, action: TBurgerConstructorActions) => {
     switch (action.type) {
         case GET_BUN_DATA: {
             return {
@@ -82,7 +91,7 @@ export const bunData = (state = initialState, action) => {
     }
 }
 
-export const countedPrice = (state = initialState, action) => {
+export const countedPrice = (state = initialState, action: TBurgerConstructorActions) => {
     switch (action.type) {
         case COUNT_PRICE: {
             return {

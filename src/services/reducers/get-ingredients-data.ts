@@ -5,14 +5,24 @@ import {
 
 } from '../actions/index'
 
-const initialState = {
+import { TItemData } from '../types/data'
+import { TGetIngredientsDataActions } from '../actions/get-ingredients-data'
+
+type TGetIngredientsDataInitialState = {
+    ingredients: [] | Array<TItemData>;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
+    flagSuccess: boolean;
+}
+
+const initialState: TGetIngredientsDataInitialState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
     flagSuccess: false
 }
 
-export const ingredientsData = (state = initialState, action) => {
+export const ingredientsData = (state = initialState, action: TGetIngredientsDataActions): TGetIngredientsDataInitialState => {
     switch (action.type) {
         case GET_INGREDIENTS: {
             return {

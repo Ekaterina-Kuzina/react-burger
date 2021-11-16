@@ -3,6 +3,8 @@ import {
     REMOVE_CONSTRUCTER_DATA, 
     FILTER_CONSTRUCTER, 
     GET_BUN_DATA, 
+    CLEAR_BUN_DATA,
+    CLEAR_CONSTRUCTER_DATA,
     COUNT_PRICE 
 } from '../constants'
 
@@ -20,8 +22,8 @@ export interface IRemoveConstructerData {
 
 export interface IFilterConstructer {
     readonly type: typeof FILTER_CONSTRUCTER;
-    readonly dragIndex: number;
-    readonly hoverIndex : number;
+    readonly fromIndex: number;
+    readonly toIndex : number;
 }
 
 export interface IGetBunData{
@@ -29,7 +31,23 @@ export interface IGetBunData{
     readonly constructerBun: TItemData;
 }
 
-export interface ICountPrice{
+export interface IClearBunData{
     readonly type: typeof COUNT_PRICE;
     readonly price: number;
 }
+export interface IClearConstructerData{
+    readonly type: typeof CLEAR_CONSTRUCTER_DATA;
+}
+export interface ICountPrice{
+    readonly type: typeof CLEAR_BUN_DATA;
+}
+
+export type TBurgerConstructorActions = 
+    | IGetConstructerData
+  | IRemoveConstructerData
+  | IFilterConstructer
+  | IGetBunData
+  | ICountPrice
+  | IClearBunData
+  | IClearConstructerData
+

@@ -6,13 +6,23 @@ import {
 
 } from '../actions'
 
-const initialState = {
+import { TUserInfo } from '../types/data'
+import { TUserInfoActions } from '../actions/user-info'
+
+type TRequestsFromFormsInitialState = {
+    userInfo: null | TUserInfo,
+    userInfoRequest: boolean,
+    userInfoFailed: boolean,
+    ingredientsRequest?: boolean
+}
+
+const initialState: TRequestsFromFormsInitialState = {
     userInfo: null,
-    userInfoRequest : false,
+    userInfoRequest: false,
     userInfoFailed: false,
 }
 
-export const getUserInfo =(state = initialState, action) =>{
+export const getUserInfo = (state = initialState, action: TUserInfoActions): TRequestsFromFormsInitialState => {
     switch (action.type) {
         case USER_INFO: {
             return {
@@ -49,7 +59,7 @@ export const getUserInfo =(state = initialState, action) =>{
     }
 }
 
-export const changeUserInfo =(state = initialState, action) =>{
+export const changeUserInfo = (state = initialState, action: TUserInfoActions): TRequestsFromFormsInitialState => {
     switch (action.type) {
         case USER_INFO: {
             return {

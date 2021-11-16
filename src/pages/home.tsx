@@ -10,7 +10,7 @@ import OrderDetails from '../components/modal/order-details';
 
 import appStyle from "../components/app/app.module.css"
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { CLEAR_ORDER, COUNT_PRICE, CLEAR_LOGIN_USER } from '../services/actions'
 import { useHistory } from 'react-router-dom';
 
@@ -21,12 +21,12 @@ const orderCardType = 'order_card'
 export default function HomePage() {
     const [cardType, setCardType] = useState('')
     const history = useHistory()
-    const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
+    const userInfo = useSelector(state => state.getUserInfo.userInfo);
 
     const dispatch = useDispatch();
-    const ingredients = useSelector((state: any) => state.ingredientsData.ingredients)
-    const constructerIngredients = useSelector((state: any) => state.constructerData.constructerIngredients)
-    const constructerBun = useSelector((state: any) => state.bunData.constructerBun)
+    const ingredients = useSelector(state => state.ingredientsData.ingredients)
+    const constructerIngredients = useSelector(state => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector(state => state.bunData.constructerBun)
 
     const handlePriceState = () => {
         if (constructerBun) {
