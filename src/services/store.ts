@@ -2,6 +2,8 @@ import  {rootReducer}  from './reducers/index'
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import {socketMiddleware} from './middleware/socketMiddleware'
+import {socketMiddlewareForHistory} from './middleware/socketMiddlewareForHistory'
+
 
 import {
   WS_INIT_CONNECTION,
@@ -28,6 +30,8 @@ export const composeEnhancers =
 
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all'
+const wsUrlForHistory = 'wss://norma.nomoreparties.space/orders'
+
 const wsActions = {
   wsInitConnection: WS_INIT_CONNECTION,
   wsOnOpen: WS_ON_OPEN,
@@ -37,7 +41,7 @@ const wsActions = {
   onError: WS_CONNECTION_ERROR,
 };
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions), socketMiddlewareForHistory(wsUrlForHistory,wsActions)));
 
 export const store = createStore(rootReducer, enhancer)
 

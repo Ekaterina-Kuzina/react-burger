@@ -9,11 +9,11 @@ import { wsGetMessage, wsSendMessage } from '../services/actions/wsActions';
 export default function OrderFeed (){
     const userInfo = useSelector(state => state.getUserInfo.userInfo);
     const dispatch = useDispatch()
-    const wsInit = ()=> {dispatch( wsInitConnection())}
+
     useEffect(
         () => {
           if (userInfo) {
-            wsInit()
+            dispatch( wsInitConnection())
           }
         },
         [userInfo] 

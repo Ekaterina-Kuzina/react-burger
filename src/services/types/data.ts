@@ -30,3 +30,21 @@ export type TUserInfo = {
     email: string;
     name: string;
 }
+
+export type TWsOrder = {
+    ingredients: string[];
+    name: string;
+    _id:  string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type TWsUserOrders = {
+    success: boolean;
+    orders: TWsOrder[];
+    total: number;
+    totalToday: number;
+}
+

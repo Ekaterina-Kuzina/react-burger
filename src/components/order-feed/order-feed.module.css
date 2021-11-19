@@ -94,7 +94,11 @@
 
 .summary_block {
     width: 272px;
-    max-height: 206px;
+    height: 236px;
+}
+.list{    
+    height: 206px;
+    overflow: hidden;
 }
 
 .list_of_ready {
@@ -102,6 +106,7 @@
     color: #00CCCC;
     list-style-type: none;
 }
+
 
 .list_in_progress {
     margin-bottom: 8px;
