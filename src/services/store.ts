@@ -12,6 +12,13 @@ import {
   WS_GET_MESSAGE,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
+
+  WS_INIT_CONNECTION_HISTORY, 
+  WS_ON_OPEN_HISTORY, 
+  WS_CONNECTION_ERROR_HISTORY, 
+  WS_CONNECTION_CLOSED_HISTORY, 
+  WS_GET_MESSAGE_HISTORY, 
+  WS_SEND_MESSAGE_HISTORY
 } from './constants'
 
 import { 
@@ -41,7 +48,16 @@ const wsActions = {
   onError: WS_CONNECTION_ERROR,
 };
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions), socketMiddlewareForHistory(wsUrlForHistory,wsActions)));
+const wsActionsHistory = {
+  wsInitConnectionHistiry: WS_INIT_CONNECTION_HISTORY,
+  wsOnOpenHistiry: WS_ON_OPEN_HISTORY,
+  wsSendMessageHistiry: WS_SEND_MESSAGE_HISTORY,
+  onMessageHistiry: WS_GET_MESSAGE_HISTORY,
+  onCloseHistiry:WS_CONNECTION_CLOSED_HISTORY,
+  onErrorHistiry: WS_CONNECTION_ERROR_HISTORY,
+}
+
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions), socketMiddlewareForHistory(wsUrlForHistory,wsActionsHistory)));
 
 export const store = createStore(rootReducer, enhancer)
 

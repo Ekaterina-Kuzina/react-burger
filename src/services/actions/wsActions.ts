@@ -5,7 +5,13 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE,
-    WS_USER_NAME_UPDATE
+
+    WS_INIT_CONNECTION_HISTORY, 
+    WS_ON_OPEN_HISTORY, 
+    WS_CONNECTION_ERROR_HISTORY, 
+    WS_CONNECTION_CLOSED_HISTORY, 
+    WS_GET_MESSAGE_HISTORY, 
+    WS_SEND_MESSAGE_HISTORY
 } from '../constants';
 
 export interface IwsInitConnection {
@@ -28,18 +34,42 @@ export interface IWsSendMessage {
     readonly type: typeof WS_SEND_MESSAGE;
     payload: string
 }
-export interface IWsUserNameUpdate {
-    readonly type: typeof WS_USER_NAME_UPDATE;
+
+export interface IwsInitConnectionHistory {
+    readonly type: typeof WS_INIT_CONNECTION_HISTORY;
+}
+export interface IwsOnOpenHistory {
+    readonly type: typeof WS_ON_OPEN_HISTORY;
+}
+export interface IWsConnectionErrorHistory {
+    readonly type: typeof WS_CONNECTION_ERROR_HISTORY;
+}
+export interface IWsConnectionClosedHistory {
+    readonly type: typeof WS_CONNECTION_CLOSED_HISTORY;
+}
+export interface IWsGetMessageHistory {
+    readonly type: typeof WS_GET_MESSAGE_HISTORY;
     payload: string
 }
+export interface IWsSendMessageHistory {
+    readonly type: typeof WS_SEND_MESSAGE_HISTORY;
+    payload: string
+}
+
 export type TWsActions =
     | IwsInitConnection
-    |IwsOnOpen
+    | IwsOnOpen
     | IWsConnectionError
     | IWsConnectionClosed
     | IWsGetMessage
     | IWsSendMessage
-    | IWsUserNameUpdate
+    |IwsInitConnectionHistory
+    | IwsOnOpenHistory
+    | IWsConnectionErrorHistory
+    | IWsConnectionClosedHistory
+    | IWsGetMessageHistory
+    | IWsSendMessageHistory
+
 
 export const wsInitConnection = (): IwsInitConnection => {
     return {
@@ -78,11 +108,3 @@ export const wsSendMessage = (message: string): IWsSendMessage => {
         payload: message
     };
 };
-
-export const wsUserNameUpdate = (userName: any): IWsUserNameUpdate => {
-    return {
-        type: WS_USER_NAME_UPDATE,
-        payload: userName
-    };
-};
-

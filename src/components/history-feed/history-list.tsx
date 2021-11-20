@@ -4,7 +4,7 @@ import OrderCard from '../order-feed/order-card'
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from '../../services/hooks';
-import{wsInitConnection} from '../../services/actions/wsActions'
+import{WS_INIT_CONNECTION_HISTORY, WS_SEND_MESSAGE_HISTORY} from '../../services/constants'
 
 export default function HistoryList() {
     let location = useLocation();
@@ -13,7 +13,9 @@ export default function HistoryList() {
     useEffect(
         () => {
           if (userInfo) {
-            dispatch( wsInitConnection())
+            dispatch({type: WS_INIT_CONNECTION_HISTORY})
+            // dispatch({type: WS_SEND_MESSAGE_HISTORY})
+            
           }
         },
         [userInfo] 

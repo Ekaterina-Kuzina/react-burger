@@ -3,18 +3,29 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
-    WS_ON_OPEN
+    WS_ON_OPEN,
+
+    WS_INIT_CONNECTION_HISTORY,
+    WS_CONNECTION_ERROR_HISTORY,
+    WS_CONNECTION_CLOSED_HISTORY,
+    WS_GET_MESSAGE_HISTORY,
+    WS_ON_OPEN_HISTORY,
+    WS_SEND_MESSAGE_HISTORY
 } from '../constants';
   import { TWsActions } from '../actions/wsActions'
   type TWsReducerInitialState = {
     wsConnected: boolean,
+    wsConnectedHistory: boolean,
     messages: any,
+    messagesHistory: any
     user?: any
 }
 
   const initialState:TWsReducerInitialState = {
     wsConnected: false,
-    messages: []
+    wsConnectedHistory: false,
+    messages: [],
+    messagesHistory:[]
   };
   
   export const wsReducer = (state = initialState, action: TWsActions): TWsReducerInitialState => {
@@ -54,36 +65,36 @@ import {
     }
   };
 
-  export const wsReducerForHistory = (state = initialState, action: TWsActions): TWsReducerInitialState => {
+  export const wsReducerForHistory = (state = initialState, action: any): TWsReducerInitialState => {
     switch (action.type) {
-      case WS_INIT_CONNECTION:
+      case WS_INIT_CONNECTION_HISTORY:
         return {
           ...state,
-          wsConnected: true
+          wsConnectedHistory: true
         };
 
-      case WS_ON_OPEN:
+      case WS_ON_OPEN_HISTORY:
         return {
           ...state,
-          wsConnected: true
+          wsConnectedHistory: true
         };
   
-      case WS_CONNECTION_ERROR:
+      case WS_CONNECTION_ERROR_HISTORY:
         return {
           ...state,
-          wsConnected: false
+          wsConnectedHistory: false
         };
   
-      case WS_CONNECTION_CLOSED:
+      case WS_CONNECTION_CLOSED_HISTORY:
         return {
           ...state,
-          wsConnected: false
+          wsConnectedHistory: false
         };
   
-      case WS_GET_MESSAGE:
+      case WS_GET_MESSAGE_HISTORY:
         return {
           ...state,
-          messages: [action.payload]
+          messagesHistory: [action.payload]
         };
   
       default:
