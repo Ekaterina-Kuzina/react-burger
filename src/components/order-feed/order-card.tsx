@@ -36,7 +36,9 @@ export function OrderCard({ wsMessagesItem, order}: any) {
                         if(index < 5){
                             return(
                                 <div className={orderFeedStyle.round}>
-                                    <img src={ingredientInfo[ingredientId].image_mobile} alt="ingredient" />
+                                    {ingredientInfo &&
+                                        <img src={ingredientInfo[ingredientId].image_mobile} alt="ingredient" />
+                                    }
                                 </div>
                             )
                         }else if (index === 6){

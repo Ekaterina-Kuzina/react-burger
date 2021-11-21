@@ -9,6 +9,8 @@ import { userInfoRequest } from '../../services/actions/user-info'
 import { getIngredients } from '../../services/actions/get-ingredients-data'
 import OrderFullPage from '../../pages/order-full-page'
 import OrderFullPageModal from '../order-feed/order-full-page-modal'
+import {GET_INGREDIENTS_INFO_WITH_KEY_ID} from '../../services/constants/get-ingredients-data'
+import { wsGetMessage, wsSendMessage } from '../../services/actions/wsActions';
 
 import {
     Switch,
@@ -31,6 +33,7 @@ export default function App() {
     const userInfo = useSelector((state) => state.getUserInfo.userInfo);
     const loginData = useSelector((state) => state.login.loginData)
     const registerData = useSelector((state) => state.register.registerData)
+
 
     let location = useLocation<TLocationState>();
     let history = useHistory();

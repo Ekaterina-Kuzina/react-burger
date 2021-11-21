@@ -17,6 +17,14 @@ export default function OrderFeed (){
           if (userInfo) {
             dispatch( wsInitConnection())
           }
+          let obj: any = {}
+          ingredients.forEach((item)=>{
+            obj[item._id] = item
+          })
+  
+          dispatch({
+            type:GET_INGREDIENTS_INFO_WITH_KEY_ID,
+            ingredientsObjectWithKeyId: obj })
         },
         [userInfo] 
       );
