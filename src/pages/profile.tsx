@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { PasswordInput, Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from "react-router-dom"
 import formStyle from './forms.module.css'
@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from '../services/hooks';
 import { changeUserInfo } from '../services/actions/user-info'
 import { sendReqLogOutUser } from '../services/actions/requests-from-forms'
 import HistoryList from '../components/history-feed/history-list'
+import {GET_INGREDIENTS_INFO_WITH_KEY_ID} from '../services/constants/get-ingredients-data'
+import { wsGetMessage, wsSendMessage } from '../services/actions/wsActions';
 import {
     Switch,
     Route,
@@ -17,6 +19,7 @@ type TChangedBody = {
     email: string
 }
 export default function Profile() {
+    const ingredients = useSelector(state => state.ingredientsData.ingredients)
     const dispatch = useDispatch()
     const { path } = useRouteMatch();
 
@@ -24,6 +27,18 @@ export default function Profile() {
         e.preventDefault()
         dispatch(sendReqLogOutUser())
     }
+
+    useEffect(() => {
+        let obj: any = {}
+        ingredients.forEach((item)=>{
+          obj[item._id] = item
+        })
+
+        dispatch({
+          type:GET_INGREDIENTS_INFO_WITH_KEY_ID,
+          ingredientsObjectWithKeyId: obj })
+    }, [])
+
 
     return (
         <div className={formStyle.container}>

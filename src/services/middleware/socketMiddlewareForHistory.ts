@@ -1,6 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 
-export const socketMiddlewareForHistory = (wsUrl: string, wsActionsHistory: any): Middleware=> {
+export const socketMiddlewareForHistory = (wsUrlForHistory: string, wsActionsHistory: any): Middleware=> {
     return (store) => {
         let socket: WebSocket | null = null;
 
@@ -11,7 +11,7 @@ export const socketMiddlewareForHistory = (wsUrl: string, wsActionsHistory: any)
             const token = localStorage.getItem('accessToken')?.replace('Bearer ', '');
 
             if (type === wsInitConnectionHistiry && token ) {
-              socket = new WebSocket(`${wsUrl}?token=${token}`);
+              socket = new WebSocket(`${wsUrlForHistory}?token=${token}`);
             }
             if (socket) {
                 socket.onopen = event => {

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { ingredientsData } from './get-ingredients-data'
+import { ingredientsData, getIngredientsInfoWithKeyId } from './get-ingredients-data'
 import { orderData } from './make-order'
 import {selectedIngredient} from './burger-ingredients'
 import {constructerData, bunData, countedPrice,} from './burger-constructor'
@@ -10,6 +10,7 @@ import {wsReducer, wsReducerForHistory} from './wsReducer'
 
 export const rootReducer = combineReducers({
     ingredientsData,
+    getIngredientsInfoWithKeyId,
     selectedIngredient,
     constructerData,
     bunData,

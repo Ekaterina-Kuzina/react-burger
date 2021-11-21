@@ -1,12 +1,12 @@
 import React from 'react';
 import orderFeedStyle from './order-feed.module.css'
-import OrderCard from './order-card'
+import {OrderCard} from './order-card'
 import { Link } from "react-router-dom"
 import { useLocation } from 'react-router-dom'
 import { useSelector } from '../../services/hooks';
 import {TWsOrder} from '../../services/types/data'
 
-export default function OrderList({imgByIngredientId, priceByIngredientId}:any): JSX.Element{
+export default function OrderList(): JSX.Element{
     let location = useLocation();
     const wsMessagesItem = useSelector(state => state.wsReducer.messages[0]);
 
@@ -20,7 +20,7 @@ export default function OrderList({imgByIngredientId, priceByIngredientId}:any):
                         state: { orderModal: location }
                     }}  className={orderFeedStyle.link} >
                         {wsMessagesItem &&
-                            <OrderCard order={order} imgByIngredientId={imgByIngredientId} priceByIngredientId={priceByIngredientId} wsMessagesItem ={wsMessagesItem} />
+                            <OrderCard order={order} wsMessagesItem ={wsMessagesItem} />
                         }
 
                     </Link>

@@ -5,6 +5,8 @@ import {
     GET_INGREDIENTS,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
+
+    GET_INGREDIENTS_INFO_WITH_KEY_ID,
 } from '../constants'
 
 import { TItemData } from '../types/data'
@@ -21,10 +23,16 @@ export interface IGetIngredientsFailed {
     readonly type: typeof GET_INGREDIENTS_FAILED;
 }
 
+export interface IGetIngredientsInfoWithKeyId {
+    readonly type: typeof GET_INGREDIENTS_INFO_WITH_KEY_ID;
+    readonly ingredientsObjectWithKeyId: any;
+}
+
 export type TGetIngredientsDataActions =
     | IGetIngredients
     | IGetIngredientsSuccess
     | IGetIngredientsFailed
+    | IGetIngredientsInfoWithKeyId
 
 
 export const getIngredients: AppThunk = () => {

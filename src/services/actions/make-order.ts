@@ -44,7 +44,7 @@ export const sendOrder: AppThunk = (orderList: number[]) => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorizarion': `${localStorage.getItem('accessToken')}`
+                'Authorization': `${localStorage.getItem('accessToken')}`
          },
             body: JSON.stringify({ "ingredients": orderList })
         };
