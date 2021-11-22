@@ -4,6 +4,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     WS_ON_OPEN,
+    FULL_OBJ_FROM_WS,
 
     WS_INIT_CONNECTION_HISTORY,
     WS_CONNECTION_ERROR_HISTORY,
@@ -27,6 +28,10 @@ import {
     messages: [],
     messagesHistory:[]
   };
+
+  const forFullObjFromWsInitialState ={
+    objFromWs: null
+  }
   
   export const wsReducer = (state = initialState, action: TWsActions): TWsReducerInitialState => {
     switch (action.type) {
@@ -101,3 +106,17 @@ import {
         return state;
     }
   };
+
+  export const fullObjFromWs = (state = forFullObjFromWsInitialState, action: any): any => {
+    switch (action.type) {
+      case FULL_OBJ_FROM_WS:
+        return {
+          ...state,
+          objFromWs: action.objFromWs
+        };
+  
+      default:
+        return state;
+    }
+  };
+

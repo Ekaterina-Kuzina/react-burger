@@ -160,7 +160,7 @@
 .full_page_num {
     margin: 20px auto;
     width: 640px;
-    height: 620px;
+    max-height: 620px;
 }
 
 .centered_text{

@@ -14,6 +14,7 @@ type TGetIngredientsDataInitialState = {
     ingredientsRequest: boolean;
     ingredientsFailed: boolean;
     flagSuccess: boolean;
+    ingredientsObjectWithKeyId: any
 
 }
 
@@ -26,6 +27,8 @@ const initialState: TGetIngredientsDataInitialState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     flagSuccess: false,
+    ingredientsObjectWithKeyId: null
+
 }
 const stateForIngredientsObjectWithKeyId: TStateForIngredientsObjectWithKeyId = {
     ingredientsObjectWithKeyId: null
@@ -45,6 +48,10 @@ export const ingredientsData = (state = initialState, action: TGetIngredientsDat
             return {
                 ...state,
                 ingredients: action.ingredients,
+                ingredientsObjectWithKeyId: action.ingredients.reduce((map:any, item)=>{
+                    map[item._id] = item;
+                    return map
+                }, {}),
                 ingredientsRequest: false,
                 flagSuccess: true
             }
@@ -57,6 +64,12 @@ export const ingredientsData = (state = initialState, action: TGetIngredientsDat
                 ingredientsRequest: false
             }
         }
+        // case GET_INGREDIENTS_INFO_WITH_KEY_ID: {
+        //     return {
+        //         ...state,
+ 
+        //     }
+        // }
 
         default: {
             return state

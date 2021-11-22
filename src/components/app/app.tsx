@@ -34,7 +34,6 @@ export default function App() {
     const loginData = useSelector((state) => state.login.loginData)
     const registerData = useSelector((state) => state.register.registerData)
 
-
     let location = useLocation<TLocationState>();
     let history = useHistory();
 
@@ -50,6 +49,7 @@ export default function App() {
         dispatch(getIngredients())
     }, [dispatch])
 
+
     return (
         <div className={`${appStyle.app} pt-10 pb-10`}>
             <Switch location={(ingredientsModal || orderModal || location)}>
@@ -60,10 +60,10 @@ export default function App() {
                     <OrderFeed/>
                 </Route>
                 <Route path='/feed/:id'>
-                    <OrderFullPage/>
+                    <OrderFullPage feed='feed'/>
                 </Route>
                 <Route path='/profile/orders/:id'>
-                    <OrderFullPage/>
+                    <OrderFullPage profile = 'profile'/>
                 </Route>
                 <Route path='/login'>
                     {loginData || userInfo ? <Redirect to="/" /> : <SignIn />}

@@ -5,6 +5,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE,
+    FULL_OBJ_FROM_WS,
 
     WS_INIT_CONNECTION_HISTORY, 
     WS_ON_OPEN_HISTORY, 
@@ -34,7 +35,9 @@ export interface IWsSendMessage {
     readonly type: typeof WS_SEND_MESSAGE;
     payload: string
 }
-
+export interface IFullArrFromWs {
+    readonly type: typeof FULL_OBJ_FROM_WS;
+}
 export interface IwsInitConnectionHistory {
     readonly type: typeof WS_INIT_CONNECTION_HISTORY;
 }
@@ -63,7 +66,8 @@ export type TWsActions =
     | IWsConnectionClosed
     | IWsGetMessage
     | IWsSendMessage
-    |IwsInitConnectionHistory
+    | IFullArrFromWs
+    | IwsInitConnectionHistory
     | IwsOnOpenHistory
     | IWsConnectionErrorHistory
     | IWsConnectionClosedHistory
