@@ -51,3 +51,7 @@ export type TWsUserOrders = {
 export type TUseParamsType = {
     id: string;
 }
+
+export type TIngredientsObjectWithKeyId = {
+    [key: string]:  TItemData;
+}

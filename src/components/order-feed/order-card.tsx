@@ -26,8 +26,8 @@ export function OrderCard({ wsMessagesItem, order }: TOrderCardProps) {
 
             <div className={orderFeedStyle.info_wrapper}>
                 <div className={orderFeedStyle.ingredients_wrapper}>
-                    {wsMessagesItem.orders && ingredientInfo &&
-                        order.ingredients.map((ingredientId: any, index: any) => {
+                    {wsMessagesItem.orders && order.ingredients && ingredientInfo &&
+                        order.ingredients.map((ingredientId: string, index: number) => {
                             let quantityOfIndexes = order.ingredients.length
                             let quantityOfIndexesWithoutFirstFive = quantityOfIndexes - 5
                             if (index < 5) {

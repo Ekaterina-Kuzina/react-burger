@@ -1,3 +1,4 @@
+import {TWsOrder, TIngredientsObjectWithKeyId} from '../services/types/data'
 //подсчет даты заказа
 
 export function getDate (date: string) {
@@ -30,10 +31,10 @@ export function getDate (date: string) {
 
 //подсчет суммы заказа
 
-export const countPrice = (objectOfIdIngredients:any, ingredientObjectWithKeyId:any) => {
+export const countPrice = (objectOfIdIngredients:TWsOrder, ingredientObjectWithKeyId:TIngredientsObjectWithKeyId | null) => {
     let price = 0
     if(objectOfIdIngredients.ingredients){
-        objectOfIdIngredients.ingredients.forEach((ingredientId: any, index: any) => {
+        objectOfIdIngredients.ingredients.forEach((ingredientId: string, index: number) => {
             if (ingredientObjectWithKeyId) {
                 price += Number(ingredientObjectWithKeyId[ingredientId].price)
             }

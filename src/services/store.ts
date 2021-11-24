@@ -20,7 +20,7 @@ export const composeEnhancers =
     : compose;
 
 
-const wsActions = {
+export const wsActions = {
   wsInitConnection: WS_INIT_CONNECTION,
   wsOnOpen: WS_ON_OPEN,
   wsSendMessage: WS_SEND_MESSAGE,

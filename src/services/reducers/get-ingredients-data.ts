@@ -6,7 +6,7 @@ import {
 
 } from '../actions/index'
 
-import { TItemData } from '../types/data'
+import { TItemData , TIngredientsObjectWithKeyId} from '../types/data'
 import { TGetIngredientsDataActions } from '../actions/get-ingredients-data'
 
 type TGetIngredientsDataInitialState = {
@@ -14,12 +14,11 @@ type TGetIngredientsDataInitialState = {
     ingredientsRequest: boolean;
     ingredientsFailed: boolean;
     flagSuccess: boolean;
-    ingredientsObjectWithKeyId: any
-
+    ingredientsObjectWithKeyId: TIngredientsObjectWithKeyId | null;
 }
 
 type TStateForIngredientsObjectWithKeyId={
-    ingredientsObjectWithKeyId: null | {}
+    ingredientsObjectWithKeyId: null | TIngredientsObjectWithKeyId
 }
 
 const initialState: TGetIngredientsDataInitialState = {
@@ -48,7 +47,7 @@ export const ingredientsData = (state = initialState, action: TGetIngredientsDat
             return {
                 ...state,
                 ingredients: action.ingredients,
-                ingredientsObjectWithKeyId: action.ingredients.reduce((map:any, item)=>{
+                ingredientsObjectWithKeyId: action.ingredients.reduce((map: TIngredientsObjectWithKeyId , item)=>{
                     map[item._id] = item;
                     return map
                 }, {}),
@@ -62,28 +61,6 @@ export const ingredientsData = (state = initialState, action: TGetIngredientsDat
                 ...state,
                 ingredientsFailed: true,
                 ingredientsRequest: false
-            }
-        }
-        // case GET_INGREDIENTS_INFO_WITH_KEY_ID: {
-        //     return {
-        //         ...state,
- 
-        //     }
-        // }
-
-        default: {
-            return state
-        }
-
-    }
-}
-
-export const getIngredientsInfoWithKeyId = (state = stateForIngredientsObjectWithKeyId, action: any): any => {
-    switch (action.type) {
-        case GET_INGREDIENTS_INFO_WITH_KEY_ID: {
-            return {
-                ...state,
-                ingredientsObjectWithKeyId: action.ingredientsObjectWithKeyId
             }
         }
 

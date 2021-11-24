@@ -21,10 +21,15 @@ export default function OrderFullPage({ feed, profile }: TOrderFullPageProps) {
         }
     });
 
-    const [selectedOrder, setSelectedOrder] = useState<TWsOrder| any>({})
+    const [selectedOrder, setSelectedOrder] = useState<TWsOrder| null>(null)
     let { id } = useParams<TUseParamsType>();
     const token = localStorage.getItem('accessToken')?.replace('Bearer ', '');
-    let date = getDate(selectedOrder.createdAt)
+    let date;
+    if(selectedOrder){
+        date = getDate(selectedOrder.createdAt)
+    }
+
+
     useEffect(() => {
         if (feed) {
             dispatch(wsInitConnection('wss://norma.nomoreparties.space/orders/all'))
@@ -47,7 +52,7 @@ export default function OrderFullPage({ feed, profile }: TOrderFullPageProps) {
                 if (String(order.number) === id) {
                     return order
                 }
-            })
+            }) as TWsOrder
             setSelectedOrder(item)
         }
 

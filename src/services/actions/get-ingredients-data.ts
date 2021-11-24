@@ -23,16 +23,11 @@ export interface IGetIngredientsFailed {
     readonly type: typeof GET_INGREDIENTS_FAILED;
 }
 
-export interface IGetIngredientsInfoWithKeyId {
-    readonly type: typeof GET_INGREDIENTS_INFO_WITH_KEY_ID;
-    readonly ingredientsObjectWithKeyId: any;
-}
 
 export type TGetIngredientsDataActions =
     | IGetIngredients
     | IGetIngredientsSuccess
     | IGetIngredientsFailed
-    | IGetIngredientsInfoWithKeyId
 
 
 export const getIngredients: AppThunk = () => {
