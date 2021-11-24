@@ -13,8 +13,6 @@ import appStyle from "../components/app/app.module.css"
 import { useSelector, useDispatch } from '../services/hooks';
 import { CLEAR_ORDER, COUNT_PRICE, CLEAR_LOGIN_USER } from '../services/actions'
 import { useHistory } from 'react-router-dom';
-import {GET_INGREDIENTS_INFO_WITH_KEY_ID} from '../services/constants/get-ingredients-data'
-import { wsGetMessage, wsSendMessage } from '../services/actions/wsActions';
 
 const ingridientCardType = 'indridient_card'
 const orderCardType = 'order_card'
@@ -33,13 +31,13 @@ export default function HomePage() {
     const handlePriceState = () => {
         if (constructerBun) {
             let sum = constructerBun.price * 2
-            constructerIngredients.forEach((item: {price: number}) => {
+            constructerIngredients.forEach((item: { price: number }) => {
                 sum += item.price
             })
             dispatch({ type: COUNT_PRICE, price: sum })
         } else {
             let sum = 0;
-            constructerIngredients.forEach((item: {price: number}) => {
+            constructerIngredients.forEach((item: { price: number }) => {
                 sum += item.price
             })
             dispatch({ type: COUNT_PRICE, price: sum })
@@ -52,9 +50,8 @@ export default function HomePage() {
     }, [constructerBun, constructerIngredients])
 
     useEffect(() => {
-
         dispatch({ type: CLEAR_LOGIN_USER })
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -80,7 +77,7 @@ export default function HomePage() {
 
             {
                 cardType === orderCardType &&
-                <Modal title = {null} closeModal={
+                <Modal title={null} closeModal={
                     () => {
                         setCardType('')
                         dispatch({ type: CLEAR_ORDER })

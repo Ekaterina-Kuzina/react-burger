@@ -48,3 +48,6 @@ export type TWsUserOrders = {
     totalToday: number;
 }
 
+export type TUseParamsType = {
+    id: string;
+}

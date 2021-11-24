@@ -13,7 +13,7 @@ export default function OrderFullPageModal() {
                 history.goBack();
             }
         }>
-            <OrderFullPage/>
+            <OrderFullPage />
         </Modal>
     )
 

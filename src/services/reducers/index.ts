@@ -6,7 +6,7 @@ import {selectedIngredient} from './burger-ingredients'
 import {constructerData, bunData, countedPrice,} from './burger-constructor'
 import { register,login, logout, flagForForgotPassword} from './requests-from-forms'
 import {getUserInfo,changeUserInfo} from './user-info'
-import {wsReducer, wsReducerForHistory, fullObjFromWs} from './wsReducer'
+import {wsReducer} from './wsReducer'
 
 export const rootReducer = combineReducers({
     ingredientsData,
@@ -23,6 +23,4 @@ export const rootReducer = combineReducers({
     changeUserInfo,
     flagForForgotPassword,
     wsReducer,
-    wsReducerForHistory,
-    fullObjFromWs,
 })

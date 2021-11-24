@@ -42,10 +42,10 @@ export const sendOrder: AppThunk = (orderList: number[]) => {
         })
         const requestOptions = {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${localStorage.getItem('accessToken')}`
-         },
+            },
             body: JSON.stringify({ "ingredients": orderList })
         };
         fetch(`${url}/orders`, requestOptions)

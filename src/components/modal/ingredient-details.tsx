@@ -6,12 +6,10 @@ import {
     useParams
 } from "react-router-dom";
 import {TItemData} from '../../services/types/data'
+import {TUseParamsType} from '../../services/types/data'
 
-type TParamTypes = {
-    id: string;
-}
 const IngredientDetails = () => {
-    let { id } = useParams<TParamTypes>();
+    let { id } = useParams<TUseParamsType>();
     const ingredients = useSelector(state => state.ingredientsData.ingredients)
     const flagSuccess = useSelector( state => state.ingredientsData.flagSuccess)
     let setIng = ingredients.find((item:TItemData)=> item._id === id)

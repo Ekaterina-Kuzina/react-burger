@@ -1,15 +1,16 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
+import {AppDispatch,RootState} from '../types/index'
 
-export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware=> {
-    return (store) => {
+export const socketMiddleware = ( wsActions: any): Middleware=> {
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
         return next => (action) => {
             const { dispatch } = store;
             const { type, payload } = action;
-            const { wsInitConnection, wsOnOpen, wsSendMessage, onMessage, onClose, onError } = wsActions;
+            const { wsInitConnection, wsOnOpen, onMessage, onClose, onError } = wsActions;
             if (type === wsInitConnection ) {
-              socket = new WebSocket(wsUrl);
+              socket = new WebSocket(payload);
             }
             if (socket) {
                 socket.onopen = event => {
