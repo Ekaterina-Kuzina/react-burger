@@ -43,7 +43,10 @@ function authUser() {
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: requestHeaders,
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": `${localStorage.getItem('accessToken')}`
+        },
         redirect: 'follow',
         referrerPolicy: 'no-referrer'
     })
@@ -108,8 +111,6 @@ export const userInfoRequest: AppThunk = () => {
         }
     }
 }
-
-
 
 export const changeUserInfo: AppThunk = (changedBody) => {
     return function (dispatch: AppDispatch) {

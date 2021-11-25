@@ -36,7 +36,7 @@ export const countPrice = (objectOfIdIngredients:TWsOrder, ingredientObjectWithK
     if(objectOfIdIngredients.ingredients){
         objectOfIdIngredients.ingredients.forEach((ingredientId: string, index: number) => {
             if (ingredientObjectWithKeyId) {
-                price += Number(ingredientObjectWithKeyId[ingredientId].price)
+                price += Number(ingredientObjectWithKeyId[ingredientId]?.price)
             }
         })
     }

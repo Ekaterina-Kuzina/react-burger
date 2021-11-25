@@ -19,7 +19,7 @@ export default function OrderList(): JSX.Element {
                             pathname: `/feed/${order.number}`,
                             state: { orderModal: location }
                         }} className={orderFeedStyle.link} >
-                            {wsMessagesItem &&
+                            {wsMessagesItem && wsMessagesItem.orders &&
                                 <OrderCard order={order} wsMessagesItem={wsMessagesItem} />
                             }
 

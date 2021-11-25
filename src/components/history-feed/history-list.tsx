@@ -31,7 +31,9 @@ export default function HistoryList() {
               pathname: `/profile/orders/${order.number}`,
               state: { orderModal: location }
             }} className={orderFeedStyle.link}>
-              <OrderCard order={order} wsMessagesItem={wsMessagesItem} />
+              {wsMessagesItem && wsMessagesItem.orders &&
+                <OrderCard order={order} wsMessagesItem={wsMessagesItem} />
+              }
             </Link>
           )
         })

@@ -34,7 +34,7 @@ export function OrderCard({ wsMessagesItem, order }: TOrderCardProps) {
                                 return (
                                     <div key={index} className={orderFeedStyle.round}>
                                         {ingredientInfo &&
-                                            <img src={ingredientInfo[ingredientId].image_mobile} alt="ingredient" />
+                                            <img src={ingredientInfo[ingredientId]?.image_mobile} alt="ingredient" />
                                         }
                                     </div>
                                 )
