@@ -4,10 +4,10 @@ import {
     USER_INFO_FAILED,
     CLEAR_USER_INFO,
 
-} from '../actions'
+} from '../../actions'
 
-import { TUserInfo } from '../types/data'
-import { TUserInfoActions } from '../actions/user-info'
+import { TUserInfo } from '../../types/data'
+import { TUserInfoActions } from '../../actions/user-info'
 
 type TRequestsFromFormsInitialState = {
     userInfo: null | TUserInfo,

@@ -14,10 +14,10 @@ import {
     FLAG_FORGOT_PASSWORD,
     REMOVE_FLAG_FORGOT_PASSWORD
 
-} from '../actions'
+} from '../../actions'
 
-import { TLoginData, TLogout } from '../types/data'
-import { TRequestsFromFormsActions } from '../actions/requests-from-forms'
+import { TLoginData, TLogout } from '../../types/data'
+import { TRequestsFromFormsActions } from '../../actions/requests-from-forms'
 
 type TRequestsFromFormsInitialState = {
     registerData: null | TLoginData;

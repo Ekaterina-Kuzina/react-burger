@@ -4,10 +4,10 @@ import {
     GET_INGREDIENTS_FAILED,
     GET_INGREDIENTS_INFO_WITH_KEY_ID
 
-} from '../actions/index'
+} from '../../actions/index'
 
-import { TItemData , TIngredientsObjectWithKeyId} from '../types/data'
-import { TGetIngredientsDataActions } from '../actions/get-ingredients-data'
+import { TItemData , TIngredientsObjectWithKeyId} from '../../types/data'
+import { TGetIngredientsDataActions } from '../../actions/get-ingredients-data'
 
 type TGetIngredientsDataInitialState = {
     ingredients: [] | Array<TItemData>;

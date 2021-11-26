@@ -9,10 +9,10 @@ import {
     CLEAR_BUN_DATA,
     COUNT_PRICE,
 
-} from '../actions/index'
+} from '../../actions/index'
 
-import { TItemData } from '../types/data'
-import { TBurgerConstructorActions } from '../actions/burger-constructor'
+import { TItemData } from '../../types/data'
+import { TBurgerConstructorActions } from '../../actions/burger-constructor'
 
 type TBurgerConstructorInitialState = {
     constructerIngredients: Array<TItemData>;

@@ -4,9 +4,9 @@ import {
     SEND_INGREDIENTS_FAILED,
     CLEAR_ORDER
 
-} from '../actions/index'
+} from '../../actions/index'
 
-import {TMakeOrderActions} from '../actions/make-order'
+import {TMakeOrderActions} from '../../actions/make-order'
 
 type TMakeOrderInitialState = {
     order: null | {number: number};
