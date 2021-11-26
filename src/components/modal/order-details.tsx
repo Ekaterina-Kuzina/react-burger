@@ -2,15 +2,15 @@ import React from 'react'
 
 import modalStyle from "./modal.module.css";
 import done from "../../images/done.png";
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 export default function OrderDetails() {
-    const order = useSelector((state: any) => state.orderData.order)
+    const order = useSelector(state => state.orderData.order)
 
     return (
         <div className={`${modalStyle.order_wrapper} pl-15 pr-15`}>
             <p className="mt-4 text text_type_digits-large">
-                {order !== {} &&
+                {order !== null &&
                     order.number
                 }
             </p>

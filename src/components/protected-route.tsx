@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useSelector } from '../services/hooks';
 
 type TProtectedRouteProps = { 
   children: React.ReactNode;
@@ -7,7 +7,7 @@ type TProtectedRouteProps = {
 }
 
 export const ProtectedRoute: React.FC<TProtectedRouteProps> =({ children, ...rest })=>{
-  const userInfo = useSelector((state: any) => state.getUserInfo.userInfo);
+  const userInfo = useSelector(state => state.getUserInfo.userInfo);
   console.log(userInfo);
 
   return (

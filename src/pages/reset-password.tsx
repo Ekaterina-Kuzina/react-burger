@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useHistory } from "react-router-dom"
 import formStyle from './forms.module.css';
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { resetPassword } from '../services/actions/requests-from-forms'
 import { Redirect } from 'react-router-dom'
 
@@ -19,8 +18,8 @@ export default function ResetPassword() {
     const inputRefPass = React.useRef<HTMLInputElement>(null)
 
     const dispatch = useDispatch()
-    const flagForgotPass = useSelector((state: any) => state.flagForForgotPassword.flagForgotPass)
-    const successResetPassword = useSelector((state: any)=> state.flagForForgotPassword.successResetPassword)
+    const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
+    const successResetPassword = useSelector(state=> state.flagForForgotPassword.successResetPassword)
 
     const onIconClickPass = () => {
         setTimeout(() => {

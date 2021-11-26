@@ -5,10 +5,10 @@ import IngredientCard from './ingredient-card'
 import TabsContent from './tabs-content';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { SELECT_INGREDIENT } from '../../services/actions/index'
 
-import {TItemData} from '../../utils/types'
+import {TItemData} from '../../services/types/data'
 
 type TBurgerIngredientsProps = {
     ingridientClicked: ()=> void;
@@ -16,10 +16,10 @@ type TBurgerIngredientsProps = {
 
 export default function BurgerIngredients({ingridientClicked}:TBurgerIngredientsProps) {
     const dispatch = useDispatch()
-    const constructerIngredients = useSelector((state: any) => state.constructerData.constructerIngredients)
-    const constructerBun = useSelector((state: any) => state.bunData.constructerBun)
+    const constructerIngredients = useSelector(state => state.constructerData.constructerIngredients)
+    const constructerBun = useSelector(state => state.bunData.constructerBun)
 
-    const ingredients = useSelector((state: any) => state.ingredientsData.ingredients)
+    const ingredients = useSelector(state => state.ingredientsData.ingredients)
     const [tabIndex, setTabIndex] = useState(0)
     const listRef = useRef<HTMLDivElement>(null)
 

@@ -3,7 +3,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link } from "react-router-dom"
 import formStyle from './forms.module.css'
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { forgotPassword } from '../services/actions/requests-from-forms'
 
 export type TNewPost = {
@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const inputRefEmail = React.useRef<HTMLInputElement>(null)
-    const flagForgotPass = useSelector((state: any) => state.flagForForgotPassword.flagForgotPass)
+    const flagForgotPass = useSelector(state => state.flagForForgotPassword.flagForgotPass)
 
     const onIconClickEmail = () => {
         setTimeout(() => {
