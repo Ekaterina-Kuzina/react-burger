@@ -11,13 +11,11 @@ import {
   
   type TWsReducerInitialState = {
     wsConnected: boolean,
-    wsConnectedHistory: boolean,
     messages: TWsUserOrders[]| [],
 }
 
   const initialState:TWsReducerInitialState = {
     wsConnected: false,
-    wsConnectedHistory: false,
     messages: [],
   };
 

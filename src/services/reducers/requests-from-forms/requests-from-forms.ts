@@ -9,6 +9,7 @@ import {
     CLEAR_LOGIN_USER,
 
     LOGOUT_USER,
+    LOGOUT_USER_FAILED,
     CLEAR_USER_INFO,
 
     FLAG_FORGOT_PASSWORD,
@@ -19,42 +20,51 @@ import {
 import { TLoginData, TLogout } from '../../types/data'
 import { TRequestsFromFormsActions } from '../../actions/requests-from-forms'
 
-type TRequestsFromFormsInitialState = {
+type TInitialStateForRegister = {
     registerData: null | TLoginData;
     regirterRequest: boolean;
     registerFailed: boolean;
+}
 
+type TInitialStateForLogIn = {
     loginData: null | TLoginData;
     loginRequest: boolean;
     loginFailed: boolean;
-
+}
+type TInitialStateForLogOut = {
     logoutData: null | TLogout;
     logoutRequest: boolean;
     logoutFailed: boolean;
-
-    flagForgotPass: boolean;
-    successResetPassword: null | TLogout;
     userInfo?: null;
 }
 
-const initialState: TRequestsFromFormsInitialState = {
+type TInitialStateForFlagForgotPass = {
+    flagForgotPass: boolean;
+    successResetPassword: null | TLogout;
+}
+const initialStateForRegister: TInitialStateForRegister = {
     registerData: null,
     regirterRequest: false,
     registerFailed: false,
-
+}
+const initialStateForLogIn: TInitialStateForLogIn = {
     loginData: null,
     loginRequest: false,
     loginFailed: false,
+}
 
+const initialStateForLogOut: TInitialStateForLogOut = {
     logoutData: null,
     logoutRequest: false,
     logoutFailed: false,
+}
 
+const initialStateForFlagForgotPass: TInitialStateForFlagForgotPass = {
     flagForgotPass: false,
     successResetPassword: null
 }
 
-export const register = (state = initialState, action: TRequestsFromFormsActions): TRequestsFromFormsInitialState => {
+export const register = (state = initialStateForRegister, action: TRequestsFromFormsActions): TInitialStateForRegister => {
     switch (action.type) {
         case REGISTER_USER: {
             return {
@@ -86,7 +96,7 @@ export const register = (state = initialState, action: TRequestsFromFormsActions
     }
 }
 
-export const login = (state = initialState, action: TRequestsFromFormsActions): TRequestsFromFormsInitialState => {
+export const login = (state = initialStateForLogIn, action: TRequestsFromFormsActions): TInitialStateForLogIn => {
     switch (action.type) {
         case LOGIN_USER: {
             return {
@@ -124,7 +134,7 @@ export const login = (state = initialState, action: TRequestsFromFormsActions): 
     }
 }
 
-export const logout = (state = initialState, action: TRequestsFromFormsActions): TRequestsFromFormsInitialState => {
+export const logout = (state = initialStateForLogOut, action: TRequestsFromFormsActions): TInitialStateForLogOut => {
     switch (action.type) {
         case LOGOUT_USER: {
             return {
@@ -133,7 +143,7 @@ export const logout = (state = initialState, action: TRequestsFromFormsActions):
             }
         }
 
-        case LOGIN_USER_FAILED: {
+        case LOGOUT_USER_FAILED: {
             return {
                 ...state,
                 logoutFailed: true,
@@ -153,7 +163,7 @@ export const logout = (state = initialState, action: TRequestsFromFormsActions):
 
     }
 }
-export const flagForForgotPassword = (state = initialState, action: TRequestsFromFormsActions): TRequestsFromFormsInitialState => {
+export const flagForForgotPassword = (state = initialStateForFlagForgotPass, action: TRequestsFromFormsActions): TInitialStateForFlagForgotPass => {
     switch (action.type) {
         case FLAG_FORGOT_PASSWORD: {
             return {

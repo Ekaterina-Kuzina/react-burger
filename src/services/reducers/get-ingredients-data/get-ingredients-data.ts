@@ -2,7 +2,6 @@ import {
     GET_INGREDIENTS,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
-    GET_INGREDIENTS_INFO_WITH_KEY_ID
 
 } from '../../actions/index'
 
@@ -17,10 +16,6 @@ type TGetIngredientsDataInitialState = {
     ingredientsObjectWithKeyId: TIngredientsObjectWithKeyId | null;
 }
 
-type TStateForIngredientsObjectWithKeyId={
-    ingredientsObjectWithKeyId: null | TIngredientsObjectWithKeyId
-}
-
 const initialState: TGetIngredientsDataInitialState = {
     ingredients: [],
     ingredientsRequest: false,
@@ -29,10 +24,6 @@ const initialState: TGetIngredientsDataInitialState = {
     ingredientsObjectWithKeyId: null
 
 }
-const stateForIngredientsObjectWithKeyId: TStateForIngredientsObjectWithKeyId = {
-    ingredientsObjectWithKeyId: null
-}
-
 
 export const ingredientsData = (state = initialState, action: TGetIngredientsDataActions): TGetIngredientsDataInitialState => {
     switch (action.type) {

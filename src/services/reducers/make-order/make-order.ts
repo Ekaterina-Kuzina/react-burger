@@ -53,7 +53,6 @@ export const orderData = (state = initialState, action: TMakeOrderActions) : TMa
             }
         }
 
-
         default: {
             return state
         }

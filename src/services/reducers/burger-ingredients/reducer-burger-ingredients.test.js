@@ -24,12 +24,24 @@ describe('selectedIngredient reducer', () => {
         __v: 0,
     }
 
+    test('should have initial state', () =>{
+        const action = {type: ''}
+        const reducer = selectedIngredient(undefined, action)
+        expect(reducer).toEqual(initialState)
+    });
+
     test('should handle SELECT_INGREDIENT', () => {
         const reducer = selectedIngredient(initialState,{type: SELECT_INGREDIENT, selected: selectedItem})
 
         expect(reducer).toEqual({
             selected: selectedItem,
         })
+    })
+    
+    test('should handle CLEAR_INGREDIENT', () => {
+        const reducer = selectedIngredient(initialState,{type: CLEAR_INGREDIENT})
+
+        expect(reducer).toEqual(initialState)
     })
 
 })

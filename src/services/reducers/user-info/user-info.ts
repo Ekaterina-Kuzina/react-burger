@@ -27,7 +27,7 @@ export const getUserInfo = (state = initialState, action: TUserInfoActions): TRe
         case USER_INFO: {
             return {
                 ...state,
-                ingredientsRequest: true
+                userInfoRequest: true
             }
         }
 
@@ -64,7 +64,7 @@ export const changeUserInfo = (state = initialState, action: TUserInfoActions): 
         case USER_INFO: {
             return {
                 ...state,
-                ingredientsRequest: true
+                userInfoRequest: true
             }
         }
 

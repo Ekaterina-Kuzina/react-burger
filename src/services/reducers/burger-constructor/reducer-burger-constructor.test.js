@@ -143,6 +143,11 @@ describe('bunData reducer', () => {
         image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
         __v: 0,
     }
+    test('should have initial state', () =>{
+        const action = {type: ''}
+        const reducer = constructerData(undefined, action)
+        expect(reducer).toEqual(initialState)
+    });
 
     test('should handle GET_BUN_DATA', () => {
         const reducer = bunData(initialState, {type: GET_BUN_DATA, constructerBun: addBunItem})
@@ -169,6 +174,12 @@ describe('countedPrice reducer', () => {
     }
 
     const priceItem = 1000
+
+    test('should have initial state', () =>{
+        const action = {type: ''}
+        const reducer = constructerData(undefined, action)
+        expect(reducer).toEqual(initialState)
+    });
 
     test('should handle COUNT_PRICE', () => {
         const reducer = countedPrice(initialState, {type: COUNT_PRICE, price: priceItem })
