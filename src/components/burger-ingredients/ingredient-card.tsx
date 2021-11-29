@@ -39,6 +39,7 @@ const IngredientCard = ({ item, openModal, counter }: TIngredientCardProps): JSX
                         selected: item
                     })
                 }}
+                id = 'ingredientCard'
                 className={`${ingredientsStyles.card} mt-6 mb-2`}>
 
                 <img src={item.image} alt="bun" />
