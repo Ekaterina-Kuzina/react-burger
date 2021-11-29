@@ -11,13 +11,11 @@ export default function OrderFeed (){
 
   useEffect(
     () => {
-      if (userInfo) {
         dispatch(wsInitConnection('wss://norma.nomoreparties.space/orders/all'))
-      }
       return () => {
         dispatch(wsConnectionClosed());
       };
-    }, [userInfo, dispatch]);
+    }, [dispatch]);
     return(
         <div className ={orderFeedStyle.feed_container}>
             <h1 className="text text_type_main-large mb-5">Лента заказов</h1>
