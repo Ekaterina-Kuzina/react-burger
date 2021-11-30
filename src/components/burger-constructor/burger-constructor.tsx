@@ -78,7 +78,7 @@ export default function BurgerConstructor({ orderButtonClicked }: TBurgerConstru
 
         <section className={`${constructor.wrapper} pt-15`}>
             <div className={`${constructor.inner_wrapper}`}>
-                <div style={{ border: '2px solid #131316', borderRadius: '20px', borderColor }} ref={dropTarget}>
+                <div id = 'constructor' style={{ border: '2px solid #131316', borderRadius: '20px', borderColor }} ref={dropTarget}>
                     <div className={`${constructor.bun_wrapper} pl-10 `}>
                         {constructerBun ?
                             <ConstructorElement

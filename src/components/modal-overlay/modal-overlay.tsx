@@ -7,6 +7,6 @@ type TModalOverlayProps = {
 
 export default function ModalOverlay({closeModal}: TModalOverlayProps) {
     return (
-        <div onClick={closeModal} className={modalOverlay.modal_overlay}></div>
+        <div id = 'overlay' onClick={closeModal} className={modalOverlay.modal_overlay}></div>
     )
 }

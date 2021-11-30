@@ -4,10 +4,10 @@ import {
     USER_INFO_FAILED,
     CLEAR_USER_INFO,
 
-} from '../actions'
+} from '../../actions'
 
-import { TUserInfo } from '../types/data'
-import { TUserInfoActions } from '../actions/user-info'
+import { TUserInfo } from '../../types/data'
+import { TUserInfoActions } from '../../actions/user-info'
 
 type TRequestsFromFormsInitialState = {
     userInfo: null | TUserInfo,
@@ -27,7 +27,7 @@ export const getUserInfo = (state = initialState, action: TUserInfoActions): TRe
         case USER_INFO: {
             return {
                 ...state,
-                ingredientsRequest: true
+                userInfoRequest: true
             }
         }
 
@@ -64,7 +64,7 @@ export const changeUserInfo = (state = initialState, action: TUserInfoActions): 
         case USER_INFO: {
             return {
                 ...state,
-                ingredientsRequest: true
+                userInfoRequest: true
             }
         }
 

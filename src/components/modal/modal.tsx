@@ -38,7 +38,7 @@ const Modal: React.FC<TModalProps> =  (props) => {
                             :
                             <div></div>
                     }
-                    <div className={modalStyle.close} >
+                    <div id ='close' className={modalStyle.close} >
                         <CloseIcon onClick={props.closeModal} type="primary" />
                     </div>
                 </div>

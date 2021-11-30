@@ -9,7 +9,7 @@ export default function OrderDetails() {
 
     return (
         <div className={`${modalStyle.order_wrapper} pl-15 pr-15`}>
-            <p className="mt-4 text text_type_digits-large">
+            <p id = 'numberOfOrder' className="mt-4 text text_type_digits-large">
                 {order !== null &&
                     order.number
                 }

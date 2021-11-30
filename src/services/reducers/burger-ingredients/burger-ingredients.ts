@@ -2,10 +2,10 @@ import {
     SELECT_INGREDIENT,
     CLEAR_INGREDIENT,
 
-} from '../actions/index';
+} from '../../actions/index';
 
-import { TItemData } from '../types/data'
-import { TBurgerIngredientsActions } from '../actions/burger-ingredients'
+import { TItemData } from '../../types/data'
+import { TBurgerIngredientsActions } from '../../actions/burger-ingredients'
 
 type TBurgerIngredientsInitialState = {
     selected: {} | TItemData;

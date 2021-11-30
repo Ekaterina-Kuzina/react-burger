@@ -4,20 +4,18 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
     WS_ON_OPEN,
-} from '../constants';
+} from '../../constants';
 
-  import { TWsActions } from '../actions/wsActions'
-  import{TWsUserOrders} from '../types/data'
+  import { TWsActions } from '../../actions/wsActions'
+  import{TWsUserOrders} from '../../types/data'
   
   type TWsReducerInitialState = {
     wsConnected: boolean,
-    wsConnectedHistory: boolean,
     messages: TWsUserOrders[]| [],
 }
 
   const initialState:TWsReducerInitialState = {
     wsConnected: false,
-    wsConnectedHistory: false,
     messages: [],
   };
 
